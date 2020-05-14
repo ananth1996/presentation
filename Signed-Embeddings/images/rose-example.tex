@@ -1,0 +1,91 @@
+\tikzset{
+  invisible/.style={opacity=0},
+  visible on/.style={alt={#1{}{invisible}}},
+  alt/.code args={<#1>#2#3}{%
+    \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+  },
+  position/.style args={#1:#2 from #3}{
+        at=(#3.#1), anchor=#1+180, shift=(#1:#2)
+    },
+}
+
+
+\begin{tikzpicture}
+    \begin{scope}[
+        every node/.style={draw,circle,thick,scale=0.5,minimum size=1.2cm}
+        ]
+        \node (1) at (0,0) {$1$};
+        \node[position=-120:1cm from 1] (2) {$2$};
+        \node[position=-60:1cm from 1] (3) {$3$};
+
+        \node[below left=1.5cm and 4cm of 2] (1out) {$1_{out}$};
+        \node[right=0.5cm of 1out] (2out) {$2_{out}$};
+        \node[right=0.5cm of 2out] (3out) {$3_{out}$};
+        \node[below=1cm of 1out] (1in) {$1_{in}$};
+        \node[below=1cm of 2out] (2in) {$2_{in}$};
+        \node[below=1cm of 3out] (3in) {$3_{in}$};
+        
+        \node[right=4cm of 3out] (1out') {$1_{out}$};
+        \node[right=0.5cm of 1out'] (2out') {$2_{out}$};
+        \node[right=0.5cm of 2out'] (3out') {$3_{out}$};
+        
+        \node[right=2.5cm of 3in,green,text=black] (1in+) {$1_{in}^{+}$};
+        \node[right=0.5cm of 1in+,red,text=black] (1in-) {$1_{in}^{-}$};
+        \node[right=0.5cm of 1in-,green,text=black] (2in+) {$2_{in}^{+}$};
+        \node[right=0.5cm of 2in+,red,text=black] (2in-) {$2_{in}^{-}$};
+        \node[right=0.5cm of 2in-,green,text=black] (3in+) {$3_{in}^{+}$};
+        \node[right=0.5cm of 3in+,red,text=black] (3in-) {$3_{in}^{-}$};
+        
+        \node[below=3cm of 1out',visible on =<14->] (1outd) {$1_{out}^{dum}$};
+        \node[below=3cm of 2out',visible on =<14->] (2outd) {$2_{out}^{dum}$};
+        \node[below=3cm of 3out',visible on =<14->] (3outd) {$3_{out}^{dum}$};
+    \end{scope}
+    
+    \begin{scope}[
+        positive/.style = {draw,thick,green,-latex,>=stealth},
+        negative/.style = {draw,thick,red,-latex,>=stealth},
+        positive'u/.style = {draw,thick,green},
+        negative'u/.style = {draw,thick,red},
+        normal/.style = {draw,thick},
+        dummy/.style = {draw,thick,dashed},
+        highlight/.style={draw,thick,yellow,-,double=yellow,double distance=4\pgflinewidth}
+    ]
+    \path 
+    (1) edge[positive,bend right=40,preaction={highlight,visible on=<2-4>}] (2)
+    (2) edge[negative,bend right=40,preaction={highlight,visible on =<5-7>}] (1)
+    (2) edge[negative,preaction={highlight,visible on=<8-10>}] (3)
+    (3) edge[positive,preaction={highlight,visible on=<11-13>}] (1)
+    ; 
+    \path
+    (1out) edge[positive'u,visible on=<3->] (2in)
+    (2out) edge[negative'u,visible on=<6->] (1in)
+    (2out) edge[negative'u,visible on=<9->] (3in)
+    (3out) edge[positive'u,visible on=<12->] (1in)
+    ;
+    
+    \path
+    (1out') edge[normal,visible on=<4->] (2in+)
+    (2out') edge[normal,visible on=<7->] (1in-)
+    (2out') edge[normal,visible on=<10->] (3in-)
+    (3out') edge[normal,visible on=<13->] (1in+)
+    ;
+    
+    \path
+    (1outd) edge[dummy,visible on =<15->] (2in-)
+    (2outd) edge[dummy,visible on =<15->] (1in+)
+    (2outd) edge[dummy,visible on =<15->] (3in+)
+    (3outd) edge[dummy,visible on =<15->] (1in-)
+    ;
+    \end{scope}
+
+    \begin{scope}[
+        every node/.style={draw=none,rectangle},
+        every edge/.style={draw=none},
+    ]
+    \path 
+    (2) edge node[above=1.5cm] {Signed Network} (3)
+    (1out) edge node[above=0.5cm] {Bipartite Signed Network} (3out)
+    (1out') edge node[above=0.5cm] {Unsigned Bipartite Role Network} (3out')
+    ;
+    \end{scope}
+\end{tikzpicture}
