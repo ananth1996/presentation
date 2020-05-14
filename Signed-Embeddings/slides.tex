@@ -37,7 +37,7 @@
 \colorlet{colBorder}{gray!70}
 
 
-\title[Singed Network Embeddings]{ROSE: Role-based Signed Network Embedding
+\title[Signed Network Embeddings]{ROSE: Role-based Signed Network Embedding
 }
 
 \author[Javari et al.]{Amin Javari \and Tyler Derr \and Pouya Esmailian \and Jiliang Tang \and Kevin Chen-Chuan Chang}
@@ -86,7 +86,7 @@
     \begin{itemize}
         \item A high level view of the existing Network Embedding approaches \cite{chami2020machine}
         \item Graph Encoder Decoder Model (GraphEDM) as a framework 
-        \item Graph $G=(V,R)$, weight matrix $W\in \mathbb{R}^{|V|\times|V|}$
+        \item Graph $G=(V,E)$, weight matrix $W\in \mathbb{R}^{|V|\times|V|}$
         \item Optional \textit{node features} of dimension $d_{0}$, $X \in \mathbb{R}^{|V|\times d_{0}}$
         \item Goal is to learn a vector representation, $Z \in \mathbb{R}^{|V|\times d}$, where $d \ll |V|$
     \end{itemize}
@@ -176,7 +176,7 @@
     \begin{itemize}
         \item Define the probability as a softmax
     \end{itemize}
-    \[P(v \mid \mathbf{z}) = \frac{\exp(\mathbf{z}_{u}^{\top}\mathbf{z}_{v})}{\sum_{n \in V}\mathbf{z}_{u}^{\top}\mathbf{z}_{n}} \]
+    \[P(v \mid \z_u) = \frac{\exp(\mathbf{z}_{u}^{\top}\mathbf{z}_{v})}{\sum_{n \in V}\mathbf{z}_{u}^{\top}\mathbf{z}_{n}} \]
     \begin{itemize}
         \item Drawback is that $\mathcal{L}$ has a quadratic complexity $\mathcal{O}(|V|^{2})$
     \end{itemize}
@@ -388,7 +388,7 @@
         \item Embed the "out" node $\uout$ wrt target node $v$, $\z_{\uout}^{v}$
         \item Combine target aware embedding along with personal embedding to get $u$ wrt $v$
     \end{itemize}
-    \[ \z_{u}^{v} = [z_{\uout}^{v},\z_{u}].\]
+    \[ \z_{u}^{v} = [\z_{\uout}^{v},\z_{u}].\]
     \end{enumerate}
 \end{frame}
 
@@ -457,7 +457,7 @@
         \begin{itemize}
             \item "$u$ and $v$ rate similar nodes more similarly when there is a positive link
             between them than when there is a negative a link connecting them."
-            \item When edge $u \plusrightarrow$ , $d_{avg}(\uout,\vout)$ is small and vice-versa
+            \item When edge $u \plusrightarrow v$ , $d_{avg}(\uout,\vout)$ is small and vice-versa
             \item Balance theory is a special case of this pattern
         \end{itemize}
         \item \textit{Pattern 3}: Revered Direction Edges 
