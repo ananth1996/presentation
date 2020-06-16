@@ -126,35 +126,172 @@
 \begin{frame}
     \frametitle{Adaptive Dropout}
     \begin{itemize}
-        \item \cite{Lei_adaptive_dropout}
+        \item $p$ is \structure{chosen adaptively} based on activation of neurons in a layer
+        \item And perform forward and backward propagation only on the \structure{active neurons} in each layer
+        \item Reduces the number of neurons to compute in each layer
+        \item RELU is sparse in nature and filters negative activations
+        \item \cite{Lei_adaptive_dropout} use a Bernoulli distribution proportional to activation of each neuron
+        \item Still requires computing \structure{all activations} to identify active neurons
     \end{itemize}
     
 
 \end{frame}
 \subsection{Problem Setting}
+\begin{frame}
+    \frametitle{Sampling Problem}
+    \begin{itemize}
+        \item Each layer has $N$ time-varying sampling weights
+        \item Weights a function of activations of neurons, $w_{1}^{t},w_{2}^{t},\dots,w_{N}^{t}$
+        \item At each time $t$, we need to sample $x_i$ with probability $w_{i}^{t}$
+        \item Sampling cost is $\mathcal{O}(N)$ for each time step $t$
+    \end{itemize}
+    \begin{block}<1>{Problem}<2>
+        Can we efficiently sample the neurons in a layer to find the \structure<2>{active neurons} given the input to the layer?
+    \end{block}
 
+\end{frame}
 \section{Contributions}
 \begin{frame}
     \frametitle{Main Contributions}
 
+    \begin{block}{\cite{mlsys2020_SLIDE} Contributions}
+        \begin{itemize}
+            \item C++ OpenMP implementation for "standard" CPU
+            \item Sparsity inspired, LSH based backpropagation algorithm
+            \item Rigorous evaluation with TensorFlow(TF)-GPU and CPU
+            \item Further optimizations using Hugepages and SIMD instructions
+        \end{itemize}
+    \end{block}
+    \begin{block}<2>{\cite{Spring_hashing} Contributions}
+        \begin{itemize}
+            \item LSH and hash tables based identification of active neurons
+            \item Sparse gradient updates in backpropagation
+            \item Gains in computations using Asynchronous SGD (ASGD) 
+        \end{itemize}
+    \end{block}
+
+\end{frame}
+
+\section{Locality Sensitive Hashing}
+\begin{frame}
+    \frametitle{LSH Family}
+    \begin{block}{Definition: LSH Famiy}
+        A family $\mathcal{H}$ is called $\left(S_{0}, c S_{0}, p_{1}, p_{2}\right)$ -sensitive if for any two points $x, y \in \mathbb{R}^{D}$ and h chosen uniformly from $\mathcal{H}$ satisfies the following:
+        \begin{itemize}
+            \item if $\operatorname{Sim}(x, y) \geq S_{0}$ then $\operatorname{Pr}(h(x)=h(y)) \geq p_{1}$
+            \item  if $\operatorname{Sim}(x, y) \leq c S_{0}$ then $\operatorname{Pr}(h(x)=h(y)) \leq p_{2}$
+        \end{itemize}
+    \end{block}
     \begin{itemize}
-        \item C++ OpenMP implementation for "standard" CPU
-        \item Sparsity inspired, LSH based backpropagation algorithm
-        \item Rigorous evaluation with TF-GPU and CPU
-        \item Further optimizations using Hugepages and SIMD instructions
+        \item For approx nearest neighbour search, $p_1>p_2$ and $c<1$
+        \item $\operatorname{Pr}_{\mathcal{H}}(h(x)h(y)) \propto \operatorname{Sim}(x,y)$ is sufficient for $\mathcal{H}$ to be a LSH family
+        \item A LSH family is sufficient to solve nearest-neighbour search in \structure{sub-linear time}
+        \item There is a \structure{preprocessing} and \structure{query} phase
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{LSH Preprocessing phase}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/lsh.png}
+\end{frame}
+
+\begin{frame}
+    \frametitle{LSH query phase}
+    \begin{itemize}
+        \item Now, given a query $Q$, we first compute the $K$ hashes for each table 
+        \item Then we retrieve all the elements in the corresponding bucket of that table
+        \item The union of all the elements from the $L$ buckets is the \structure{candidate set}
+        \item for nearest-neighbour we then further filter the candidate set to get the possible answers
+        \item $K$ reduces false positives and $L$ decreases false 
+        negatives
+        \item An item $x$ is in the candidate set with probability $1-(1-p^{K})^{L}$
+        \item Here $p \propto \operatorname{Sim}(Q,x)$
     \end{itemize}
     
 
 \end{frame}
 
-\section{Locality Sensitive Hashing}
 \subsection{Sampling Approach to LSH}
-\subsection{Additional Optimizations}
+
+\begin{frame}
+    \frametitle{Hashing-Based Sampling}
+    \begin{itemize}
+        \item Essentially LSH samples, in sub-linear time, elements with probability $1-(1-p^{K})^{L}$
+        \item Therefore, we can use the candidate set returned by LSH as the result of an adaptive sampling algorithm
+    \end{itemize}
+    \begin{block}{Intuition}
+        \begin{itemize}
+            \item Consider a node $i$ with weight $w_{i}$ and an input $x$
+            \item Activation is monotonic function of $w_{i}^{T}\cdot x$
+            \item Finding the \structure{active neurons} is searching each $w_{i}$ and finding the ones with largest inner product
+            \item Can do this efficiently using LSH and hash tables
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Intuition}
+    \centering
+    \includegraphics[width=\textwidth]{images/intuition.png}
+    
+
+\end{frame}
+\subsection{Additional LSH tricks}
+\begin{frame}
+    \frametitle{LSH tricks}
+    \begin{enumerate}
+        \item Hashing inner products 
+        \begin{itemize}
+            \item Maximum Inner Product Search (MIPS): $p = \argmax_{x\in \mathcal{S}}q^{T}x$
+            \item Nearest neighbour search (NNS): $p=\argmin_{x\in \mathcal{S}}\|q-x\|_{2}^{2}$
+            \item Equivalent if norm of every element $x\in \mathcal{S}$ is constant. This is not the case for neural network weights.
+            \item In regular LSH, $\operatorname{Pr}[h(x)=h(x)]=1$ is closest neighbour for query $x$
+            \item \cite{shrivastava2014asymmetric} proposes using an asymmetric transformation to solve MIPS using LSH
+        \end{itemize}
+        \item Large $L$ for good estimates in vanilla LSH
+        \begin{itemize}
+            \item \cite{lv2007multi} proposes Multi-probe LSH which  reduces number of tables
+            \item When querying, probe nearby buckets as well
+            \item Do this by flipping a few bits in the hash for that table 
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
 
 \section{Implementation}
 
+\begin{frame}
+    \frametitle{LSH Implementation}
 
+    \centering
+    \includegraphics[width=\textwidth]{images/SLIDE.png}
+    
 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Overview of Implementation}
+    \begin{itemize}
+        \item Each batch is \structure{processed in parallel} using simple OpenMP
+        \item Only active neurons take part in forward and backpropagation
+        \item The \structure{output softmax} is also computed only on active neurons
+        \item After gradients are updates the hash tables are updated
+        \item Can use Simhash or Densified Winner Take All (DWTA) hash families
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Benefits}
+    \begin{itemize}
+        \item Highly sparse active set, as small 5\% of all neurons
+        \item Each update is computationally efficient
+        \item Gradient updates are sparse $\rightarrow$ parallel ASGD
+        \item Can choose different sampling  
+    \end{itemize}
+    
+
+\end{frame}
 \section{Results}
 
 \begin{frame}
