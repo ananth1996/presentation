@@ -1,0 +1,46 @@
+\frametitle{Algorithm}
+  % \includegraphics[width=0.4\textwidth]{images/Screenshot 2020-09-29 at 17.10.21.png}
+
+\begin{algorithm}[H]
+  \small
+  % \footnotesize
+  % \SetKwInOut{Input}{Input}
+  % \SetKwInOut{Output}{Output}
+  % \Input{The full training set $\left(\textbf{X}, \textbf{Y}\right)$, model parameters cached during the training phase over the full training samples $\{\w_{0}, \w_{1}, \dots, \w_{t}\}$ and corresponding gradients $\{\nabla F\left(\w_{0}\right), \nabla F\left(\w_{1}\right), \dots, \nabla F\left(\w_{t}\right)\}$, the indices of the removed training samples $R$, period $T_0$, total iteration number $T$, history size $m$, ``burn-in'' iteration number $j_0$, learning rate $\eta_t$}
+  % \Output{Updated model parameter $\iw_{t}$}
+  % Initialize $\iw_{0} \leftarrow \w_{0}$
+
+  % Initialize an array $\Delta G = \left[\right]$
+
+  % Initialize an array $\Delta W = \left[\right]$
+
+  % \For{$t=0;t<T; t++$}{
+
+  % \eIf{$[((t-j_0) \mod T_0) == 0]$ or $t \leq j_0$}
+  % {
+  %     compute $\nabla F\left(\iw_{t}\right)$ exactly
+
+  %     compute $\nabla F\left(\iw_{t}\right) - \nabla F\left(\w_{t}\right)$ based on the cached gradient $\nabla F\left(\w_{t}\right)$
+
+  %     set $\Delta G\left[k\right] = \nabla F\left(\iw_{t}\right) - \nabla F\left(\w_{t}\right)$
+
+  %     set $\Delta W\left[k\right] = \iw_{t} - \w_{t}$, based on the cached parameters $\w_{t}$
+
+  %     $k\leftarrow k+1$
+
+  %     compute $\iw_{t+1}$ by using exact GD update (equation \eqref{eq: update_rule_naive})
+  % }
+  % {
+  %     Pass $\Delta W\left[-m:\right]$, $\Delta G\left[-m:\right]$, the last $m$ elements in $\Delta W$ and $\Delta G$, which are from the $j_1^{th}, j_2^{th},\dots, j_m^{th}$ iterations where $j_1 < j_2< \dots < j_m$ depend on $t$, $\textbf{v} = \iw_{t} - \w_{t}$, and the history size $m$, to the L-BFGFS Algorithm (see Section \ref{sec: quasi_newton} in the Appendix) to get the approximation of $\bH(\w_{t})\textbf{v}$, i.e., $\B_{j_m}\textbf{v}$
+
+  %     Approximate $\nabla F\left(\iw_{t}\right) = \nabla F\left(\w_{t}\right) + \B_{j_m}\left(\iw_{t} - \w_{t}\right)$
+
+  %     Compute $\iw_{t+1}$ by using the "leave-$r$-out" gradient formula, based on the approximated $\nabla F(\iw_{t})$
+  % }
+  % }
+
+  \Return $\iw_{t}$
+  \caption{DeltaGrad}
+  \label{alg: update_algorithm}
+  \end{algorithm}
+

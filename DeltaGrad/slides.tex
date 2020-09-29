@@ -3,6 +3,12 @@
 \input{macros.tex}
 \usepackage{multicol, latexsym, amsmath, amssymb}
 \usepackage{appendixnumberbeamer} 
+\usepackage{xcolor}
+\usepackage{algpseudocode}
+% \usepackage{algorithm}
+% \usepackage{algorithmic}
+\usepackage{xr}
+\usepackage[linesnumbered,ruled,algo2e]{algorithm2e}
 
 \setbeamertemplate{navigation symbols}{}
 
@@ -136,9 +142,9 @@
   \frametitle{Etymology}
   \begin{itemize}
     \item After a small change to the data we need to redo the SGD computations
-    \item We can achieve this by understanding the small \textit{delta} of the Gradient Descent 
+    \item We can achieve this by understanding the \textit{delta} of the Gradient Descent 
     \[ 
-      \nabla F(\w) = \sum_{i=1}^{n}\nabla F_{i}(\w_t) \quad \& \quad \nabla F(\uw) =  \sum_{i=1}^{n} \nabla F_{i}\left(\uw_{t}\right)
+      n\nabla F(\w) = \sum_{i=1}^{n}\nabla F_{i}(\w_t) \quad \& \quad n\nabla F(\uw) =  \sum_{i=1}^{n} \nabla F_{i}\left(\uw_{t}\right)
     \]
     \item Hence, the approach is called \textit{DeltaGrad}
   \end{itemize}
@@ -156,6 +162,148 @@
     \item This requires a hessian $\bH_{t}$ at each step, which is expensive to maintain and evaluate
     \item Leverage classical L-BFGS algorithm to approximate $\bH_{t}$
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Review of L-BFGS}
+  \begin{itemize}
+    \item Traditional L-BFGS updates gradients using
+    \[\nabla F(\w_{t+1}) - \nabla F(\w_{t})  = \B_{t} \cdot (\w_{t+1}-\w_{t}) \]
+    Where, $\B_t$ is the approximation of the hessian
+  \end{itemize}
+  \vfill
+  \scalebox{0.8}{\begin{minipage}{0.55\textwidth}
+    Traditional L-BFGS
+          \[
+  \begin{array}{l}
+  \nabla F\left(\w_{t+1}\right)-\nabla F\left(\w_{t}\right) \approx \mathbf{B}_{t}\left(\w_{t+1}-\w_{t}\right) \\
+  \mathbf{B}_{t} \approx \mathbf{H}_{t} \\
+  =\int_{0}^{1} \mathbf{H}\left(\w_{t}+x\left(\w_{t+1}-\w_{t}\right)\right) d x \\
+  \s_{t}=\w_{t+1}-\w_{t} \\
+  \y_{t}=\nabla F\left(\w_{t+1}\right)-\nabla F\left(\w_{t}\right)
+  \end{array}
+    \]
+  \end{minipage}}
+  \hfill%
+  \scalebox{0.8}{
+  \begin{minipage}{0.55\textwidth}
+    L-BFGS for approximating $\nabla F(\uw)$
+          \[
+  \begin{array}{l}
+  \nabla F\left(\uw_{t}\right)-\nabla F\left(\w_{t}\right) \approx \mathbf{B}_{t}\left(\uw_{t}-\w_{t}\right) \\
+  \mathbf{B}_{t} \approx \mathbf{H}_{t} \\
+  =\int_{0}^{1} \mathbf{H}\left(\w_{t}+x\left(\uw_{t}-\w_{t}\right)\right) d x \\
+  \s_{t}=\uw_{t}-\w_{t} \\
+  \y_{t}=\nabla F\left(\uw_{t}\right)-\nabla F\left(\w_{t}\right)
+\end{array}
+  \]
+    \end{minipage}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Using L-BFGS}
+  \begin{itemize}
+    \item Maintain $m$ historical observations of $\textbf{Y} = (\y_{t},\y_{t-1},\dots,\y_{t-m})$ and $\textbf{S} = (\s_{t},\s_{t-1},\dots,\s_{t-m})$
+    \item Let $g$ be a function defined by L-BFGS, then we can approximate $\B_{t}\cdot\textbf{v}$ using 
+    \[
+        g(\textbf{Y},\textbf{S},\textbf{v}) 
+    \]
+    Where, $\textbf{v}$ is an arbitrary vector.
+    \item Therefore,  
+    \[ \B_{t}\cdot(\uw_{t}-\w_{t}) = g(\textbf{Y},\textbf{S},\uw_{t}-\w_{t}) \]
+    \item Hence we obtain the approximation as 
+    \[
+        \nabla F(\uw_{t}) \approx \nabla F(\w_{t}) + \B_{t} \cdot (\uw_{t}-\w_{t}) 
+    \]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Rewriting}
+  \begin{itemize}
+    \item Denoting $\iw$ as the approximate $\uw$ we have 
+    \[
+      \nabla F(\iw_{t}) \approx \nabla F(\w_{t}) + \B_{t} \cdot (\iw_{t}-\w_{t}).
+    \]
+    \item replacing in \eqref{eq: approx_w_t}
+    \[\iw_{t+1}  = \iw_{t} - \frac{\eta_{t}}{n-r} \left\{ n[\B_{t}(\iw_t - \w_t) + \nabla F(\w_t)] - \sum_{i\in R} \nabla F(\iw_t)\right\}\]
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Problem with Error Bound}
+  \includegraphics[page=43,clip,trim=0.5cm 1cm 0cm 1cm,width=\textwidth]{images/Slides.pdf}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Controlling the Errors}
+  \begin{itemize}
+    \item Do explicit evaluations for $j_{0}$ "burn-in" iterations and then periodically every $T_{0}$ iterations
+    \includegraphics[page=46,clip,trim=0.5cm 1cm 0cm 1cm,width=0.9\textwidth]{images/Slides.pdf}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Benefit of DeltaGrad}
+  \begin{itemize}
+    \item DeltaGrad can be extended to when $r$ samples are added rather than deleted
+    \item Change the $+$ to minus in the update formula to get 
+    \[
+      \iw_{t+1}  = \iw_{t} - \frac{\eta_{t}}{n\textcolor{red}{+}r} \left\{ n[\B_{t}(\iw_t - \w_t) + \nabla F(\w_t)] \textcolor{red}{+} \sum_{i\in R} \nabla F(\iw_t)\right\}
+    \]
+    \item Here $\sum_{i\in R} \nabla F(\iw_t)$ is the gradient of the added $r$ samples
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Algorithm}
+  % \includegraphics[width=0.4\textwidth]{images/Screenshot 2020-09-29 at 17.10.21.png}
+  
+\begin{algorithm}[H] 
+  \small
+  % \footnotesize
+  % \SetKwInOut{Input}{Input}
+  % \SetKwInOut{Output}{Output}
+  % \Input{The full training set $\left(\textbf{X}, \textbf{Y}\right)$, model parameters cached during the training phase over the full training samples $\{\w_{0}, \w_{1}, \dots, \w_{t}\}$ and corresponding gradients $\{\nabla F\left(\w_{0}\right), \nabla F\left(\w_{1}\right), \dots, \nabla F\left(\w_{t}\right)\}$, the indices of the removed training samples $R$, period $T_0$, total iteration number $T$, history size $m$, ``burn-in'' iteration number $j_0$, learning rate $\eta_t$}
+  % \Output{Updated model parameter $\iw_{t}$}
+  % Initialize $\iw_{0} \leftarrow \w_{0}$
+  
+  % Initialize an array $\Delta G = \left[\right]$
+  
+  % Initialize an array $\Delta W = \left[\right]$
+  
+  % \For{$t=0;t<T; t++$}{
+  
+  % \eIf{$[((t-j_0) \mod T_0) == 0]$ or $t \leq j_0$}
+  % {
+  %     compute $\nabla F\left(\iw_{t}\right)$ exactly
+      
+  %     compute $\nabla F\left(\iw_{t}\right) - \nabla F\left(\w_{t}\right)$ based on the cached gradient $\nabla F\left(\w_{t}\right)$
+      
+  %     set $\Delta G\left[k\right] = \nabla F\left(\iw_{t}\right) - \nabla F\left(\w_{t}\right)$
+      
+  %     set $\Delta W\left[k\right] = \iw_{t} - \w_{t}$, based on the cached parameters $\w_{t}$
+      
+  %     $k\leftarrow k+1$
+      
+  %     compute $\iw_{t+1}$ by using exact GD update (equation \eqref{eq: update_rule_naive})
+  % }
+  % {
+  %     Pass $\Delta W\left[-m:\right]$, $\Delta G\left[-m:\right]$, the last $m$ elements in $\Delta W$ and $\Delta G$, which are from the $j_1^{th}, j_2^{th},\dots, j_m^{th}$ iterations where $j_1 < j_2< \dots < j_m$ depend on $t$, $\textbf{v} = \iw_{t} - \w_{t}$, and the history size $m$, to the L-BFGFS Algorithm (see Section \ref{sec: quasi_newton} in the Appendix) to get the approximation of $\bH(\w_{t})\textbf{v}$, i.e., $\B_{j_m}\textbf{v}$
+      
+  %     Approximate $\nabla F\left(\iw_{t}\right) = \nabla F\left(\w_{t}\right) + \B_{j_m}\left(\iw_{t} - \w_{t}\right)$
+      
+  %     Compute $\iw_{t+1}$ by using the "leave-$r$-out" gradient formula, based on the approximated $\nabla F(\iw_{t})$ 
+  % }
+  % }
+  
+  \Return $\iw_{t}$
+  \caption{DeltaGrad}
+  \label{alg: update_algorithm}
+  \end{algorithm}
+
 \end{frame}
 \section{Theoretical Results}
 
