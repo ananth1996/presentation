@@ -1,0 +1,177 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\input{macros.tex}
+\usepackage{multicol, latexsym, amsmath, amssymb}
+\usepackage{appendixnumberbeamer} 
+
+\setbeamertemplate{navigation symbols}{}
+
+
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+\AtBeginSubsection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+    \usebeamerfont{title}\insertsubsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+
+
+\usepackage{subcaption}
+
+\title[DeltaGrad]{Weekly Presentation\\DeltaGrad: Rapid retraining of machine learning models}
+
+\author[Wu et al.~]{Yinjun Wu \and Edgar Dobriban \and Susan B Davidson}
+\date{\today}
+
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Overview}
+    \tableofcontents
+\end{frame}
+
+
+\section{Motivation}
+\begin{frame}
+    \frametitle{Retaining Problem}
+    Regular Pipeline:
+    \begin{enumerate}
+      \item Train a ML model from data using a learning algorithm
+      \item Small change in training data occurs (deletions or additions)
+      \item Retrain ML model from scratch
+    \end{enumerate}
+
+    \begin{itemize}
+      \item<2-> Computationally expensive process
+      \item<3-> Throws away useful computations from initial training
+    \end{itemize}
+    \begin{block}<4->{Research Question}
+      Can we retrain models in an efficient manner?
+    \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Potential Applications}
+  \begin{itemize}
+    \item<1-> \textbf{GDPR}: Deletion of private information from public datasets
+    \item<2-> \textbf{Continuous Model Updating}: Handle additions, deletions and changes of training samples
+    \item<3-> \textbf{Data Valuation}: \textit{Leave One Out} tests to find important training samples 
+    \item<4-> \textbf{Bias Reduction}: Speeds up jackknife resampling that requires retrained model parameters 
+  \end{itemize}
+  
+
+\end{frame}
+\section{Related Work}
+
+\begin{frame}
+  \frametitle{Prior Work}
+  \begin{itemize}
+    \item Prior work for specialized problems and ML models, usually for deletion
+    \begin{itemize}
+      \item Provenane Based deletions for linear and logistic regression \cite{wuPrIUProvenanceBasedApproach2020}
+      \item Newton step and noise for \textit{certified data removal} \cite{guoCertifiedDataRemoval2020}
+      \item K-means clustering \cite{ginartMakingAIForget2019}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\section{DeltaGrad}
+\begin{frame}
+  \frametitle{Gradient Descent}
+  \begin{itemize}
+    \item Objective function  
+    \[
+        F(\w) = \frac{1}{n}\sum_{i=1}^{n}F_{i}(\w)  
+    \]
+    \item Stochastic Gradient Descent update rule, $\mathcal{B}_{t}$ is randomly sampled mini-batch of size $B$
+    \[
+      \w_{t+1} \leftarrow \w_{t}-\frac{\eta_{t}}{B} \sum_{i \in \mathcal{B}_{t}} \nabla F_{i}\left(\w_{t}\right) 
+    \]
+    \item Full-batch gradient descent (GD) is on entire data 
+    \[
+      \w_{t+1} \leftarrow \w_{t}-\frac{\eta_{t}}{n} \sum_{i=1}^{n} \nabla F_{i}\left(\w_{t}\right) 
+    \]
+  \end{itemize} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Removal of data}
+  \begin{itemize}
+    \item After training,  $R = \{i_1,i_2,\dots,i_r\}$ is removed, where $r \ll n$
+    \item Naive retraining is applying GD over remaining samples, $\w^{U}$ is resulting parameters
+    \begin{align}\label{eq: update_rule_naive} 
+      & \uw_{t+1} \leftarrow \uw_{t} - \frac{\eta_t}{n-r}\sum_{\substack{i \not\in R}} \nabla F_i\left(\uw_{t}\right) 
+    \end{align}
+    \item The explicit gradient computation $\sum_{\substack{i \not\in R}} \nabla F_i\left(\uw_{t}\right)$ is expensive
+    \item Instead rewrite \eqref{eq: update_rule_naive} as follows 
+    \begin{align}\label{eq: approx_w_t}
+      \begin{split}
+      \uw_{t+1} 
+               = \uw_{t} - \frac{\eta_t}{n-r}\left[\sum_{i=1}^{n} \nabla F_{i}\left(\uw_{t}\right) - \sum_{\substack{i \in R}} \nabla F_i\left(\uw_{t}\right)\right].
+      \end{split}
+      \end{align}
+      \item $\sum_{\substack{i \in R}} \nabla F_i\left(\uw_{t}\right)$ is cheaper to compute
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Etymology}
+  \begin{itemize}
+    \item After a small change to the data we need to redo the SGD computations
+    \item We can achieve this by understanding the small \textit{delta} of the Gradient Descent 
+    \[ 
+      \nabla F(\w) = \sum_{i=1}^{n}\nabla F_{i}(\w_t) \quad \& \quad \nabla F(\uw) =  \sum_{i=1}^{n} \nabla F_{i}\left(\uw_{t}\right)
+    \]
+    \item Hence, the approach is called \textit{DeltaGrad}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Aprroximating $\nabla F(\uw)$}
+  \begin{itemize}
+    \item $\w_{0}$, $\dots,\w_{t}$ and $\nabla F\left(\w_{0}\right)$, $\dots, \nabla F\left(\w_{t}\right)$ are cached from training on initial dataset
+    \item By Cauchy mean-value theorem\footnote<2->{Seems to be a consequence of Fundamental theory of Calculus and mean-value theorem}
+    \[
+      \nabla F(\uw_{t}) - \nabla F(\w_{t}) = \bH_{t} \cdot (\uw_{t} - \w_{t}) 
+    \]
+    Where $\bH_{t} = \int_{0}^{1}\bH(\w_{t}+x(\uw_{t}-\w_{t}))dx$ is the integrated hessian
+    \item This requires a hessian $\bH_{t}$ at each step, which is expensive to maintain and evaluate
+    \item Leverage classical L-BFGS algorithm to approximate $\bH_{t}$
+  \end{itemize}
+\end{frame}
+\section{Theoretical Results}
+
+\section{Experimental Results}
+
+\bibliography{UpdateMl}
+\bibliographystyle{alpha}
+
+\appendix
+\section{Large Deletions}
+\begin{frame}
+  \frametitle{Large Deletions}
+
+
+\end{frame}
+
+
+
+\end{document}  
