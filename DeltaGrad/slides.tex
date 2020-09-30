@@ -236,7 +236,7 @@
 
 \begin{frame}
   \frametitle{Problem with Error Bound}
-  \includegraphics[page=43,clip,trim=0.5cm 1cm 0cm 1cm,width=\textwidth]{images/Slides.pdf}
+  \includegraphics<2->[page=43,clip,trim=0.5cm 1cm 0cm 1cm,width=\textwidth]{images/Slides.pdf}
 \end{frame}
 
 \begin{frame}
@@ -350,7 +350,27 @@
 
 \begin{frame}
   \frametitle{Results}
+  \label{results}
   \input{images/results.tex}
+  \hyperlink{batch-performance}{\beamergotobutton{Batch Performance}}
+  \hyperlink{Online-Performance}{\beamergotobutton{Online Performance}}
+  \hyperlink{large-deletions}{\beamergotobutton{Large Deletions}}
+  \hyperlink{resnet-results}{\beamergotobutton{ResNet512 Results}}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Our Research Directions}
+  \begin{itemize}
+    \item {\bf What can we forget?} \\
+    Selectively cache $\w_{t}$ and $\nabla F(\w_{t})$ during original training, and still uphold the update approximation guarantee
+    \item {\bf How to perform consecutive updates?}\\
+    Are there issues with cumulative approximations? Compare online machine learning with deletions to DeltaGrad.
+    \item {\bf When should one retrain?}
+    After how many additions/deletions does $\w_{t}$ and $\uw_{t}$ diverge beyond approximation guarantees? Can a complete retraining benefit from prior updates performed?
+  \end{itemize}
+  
+  
 \end{frame}
 
 \begin{frame}[allowframebreaks]
@@ -360,10 +380,11 @@
 \end{frame}
 
 \appendix
-
 \section{Additional Results}
+\label{additional}
 \begin{frame}
   \frametitle{Batch Performance}
+  \label{batch-performance}
   \begin{center}
     \includegraphics[width=0.7\textwidth]{images/Batch results.png}
   \end{center}
@@ -371,6 +392,7 @@
 
 \begin{frame}
   \frametitle{Online Performance}
+  \label{Online-Performance}
   \begin{center}
     \includegraphics[width=\textwidth]{images/Online Results.png}
   \end{center}
@@ -378,12 +400,14 @@
 
 \begin{frame}
   \frametitle{MNIST Deletions upto 20\%}
+  \label{large-deletions}
   \begin{center}
     \includegraphics[width=\textwidth]{images/large deletions.png}
   \end{center}
 \end{frame}
 \begin{frame}
   \frametitle{ResNet512 Results}
+  \label{resnet-results}
   \begin{center}
     \includegraphics[width=\textwidth]{images/resnet results.png}
   \end{center}
