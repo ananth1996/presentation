@@ -352,70 +352,52 @@
   \frametitle{Results}
   \input{images/results.tex}
 \end{frame}
-\bibliography{UpdateMl}
-\bibliographystyle{alpha}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{References}
+  \bibliography{UpdateMl}
+  \bibliographystyle{alpha}
+\end{frame}
 
 \appendix
-\section{Large Deletions}
+
+\section{Additional Results}
 \begin{frame}
-  \frametitle{Large Deletions}
-
-
+  \frametitle{Batch Performance}
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{images/Batch results.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Online Additions/Deletions}
-  
-%   \begin{table}[t]
-%     \centering
-%     \small
-%     \caption{Prediction accuracy of \Basel\ and \Increm\ with batch addition/deletion. \MNIST$^n$ refers to \MNIST\ with a neural net.}
-%     \begin{tabular}[!h]{|>{\centering\arraybackslash}p{1cm}|>{\centering\arraybackslash}p{1cm}|>{\centering\arraybackslash}p{2.4cm}|>{\centering\arraybackslash}p{2.4cm}|} \hline
-%     %dataset
-%     % \multirow{2}{*}{\makecell{Dataset}} & \multicolumn{2}{c|}{\makecell{\MNIST}} & \multicolumn{2}{c|}{\covtype}\\ \hhline{~----}
-%     \multicolumn{2}{|c|}{Dataset} & \Basel (\%) & \Increm (\%) \\ \hline
-%     %  & \PrIU&\Increm & \PrIU& \Increm \\ \hline
-%     \multirow{4}{*}{\makecell{Add\\(0.005\%)}}& \MNIST & $87.530 \pm 0.0025$ & 
-%     $87.530 \pm 0.0025$ \\ \hhline{~---} %
-%     & \MNIST$^n$ & $92.340\pm 0.002$ & $92.340\pm 0.002$ \\ \hhline{~---} 
-%     & \covtype & $62.991 \pm 0.0027$& $62.991 \pm 0.0027$\\ \hhline{~---}
-%     & \higgs & $55.372 \pm 0.0002$ & $55.372 \pm 0.0002 $ \\\hhline{~---}
-%     & \rcv & $92.222 \pm 0.00004$ & $92.222 \pm 0.00004$ \\  \hline
-%     \multirow{4}{*}{\makecell{Add\\(1\%)}}& \MNIST & $87.540 \pm 0.0011$ & 
-%     $87.542 \pm 0.0011$ \\ \hhline{~---} %
-%     & \MNIST$^n$ & $92.397\pm 0.001$ & $92.397\pm 0.001$ \\ \hhline{~---} 
-%     & \covtype &$63.022 \pm 0.0008$ & $63.022 \pm 0.0008$\\ \hhline{~---}
-%     & \higgs &$55.381\pm 0.0007$& $55.380 \pm 0.0007$\\ \hhline{~---}
-%     & \rcv & $92.233 \pm 0.00010$ & $92.233 \pm 0.00010$\\  \hline
-%     \multirow{4}{*}{\makecell{Delete \\ (0.005\%)}} & \MNIST &$86.272 \pm 0.0035 $& $86.272 \pm 0.0035 $\\ \hhline{~---}
-%     & \MNIST$^n$ & $92.203\pm 0.004$ & $92.203\pm 0.004$ \\ \hhline{~---}
-%     & \covtype& $62.966 \pm 0.0017 $ & $62.966 \pm 0.0017$ \\ \hhline{~---}
-%     & \higgs &$52.950 \pm 0.0001 $& $52.950 \pm 0.0001 $\\\hhline{~---}
-%     & \rcv & $92.241 \pm 0.00004$ & $92.241 \pm 0.00004$ \\ \hline
-%     \multirow{4}{*}{\makecell{Delete\\ (1\%)}}& \MNIST &$86.082 \pm 0.0046$ & $86.074 \pm 0.0048$\\ \hhline{~---}
-%     & \MNIST$^n$ & $92.373\pm 0.003$ & $92.370\pm 0.003$ \\ \hhline{~---}
-%     & \covtype & $62.943 \pm 0.0007 $ & $62.943 \pm 0.0007$ \\ \hhline{~---}
-%     & \higgs &$52.975 \pm 0.0002 $ & $52.975 \pm 0.0002$\\\hhline{~---}
-%     & \rcv & $92.203 \pm 0.00007$ & $92.203 \pm 0.00007$ \\ \hline
-%     \end{tabular}
-%     \label{Table: Test_acc_comparison_batch_del_add}
-%     \end{table}  
-
+  \frametitle{Online Performance}
+  \begin{center}
+    \includegraphics[width=\textwidth]{images/Online Results.png}
+  \end{center}
 \end{frame}
+
+\begin{frame}
+  \frametitle{MNIST Deletions upto 20\%}
+  \begin{center}
+    \includegraphics[width=\textwidth]{images/large deletions.png}
+  \end{center}
+\end{frame}
+\begin{frame}
+  \frametitle{ResNet512 Results}
+  \begin{center}
+    \includegraphics[width=\textwidth]{images/resnet results.png}
+  \end{center}
+\end{frame}
+
+\section{Proof Architecture}
 \begin{frame}
   \label{architecture}
-  \frametitle{Architecture of Proof}
-
-
-\begin{center}
-\scalebox{0.59}{
-  \input{images/architexture.tex}
-}
-\end{center}
-
-
-  
-
+  \frametitle{Reursive Architecture of Proof}
+  \begin{center}
+  \scalebox{0.59}{
+    \input{images/architexture.tex}
+  }
+  \end{center}  
 \end{frame}
 
 
