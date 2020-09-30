@@ -4,9 +4,12 @@
 \usepackage{multicol, latexsym, amsmath, amssymb}
 \usepackage{appendixnumberbeamer} 
 \usepackage{xcolor}
-% \usepackage{algpseudocode}
-% \usepackage{algorithm}
-% \usepackage{algorithmic}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{calc}    %coordinate calculation
 \usepackage{xr}
 \usepackage[linesnumbered,ruled]{algorithm2e}
 
@@ -309,8 +312,46 @@
 \end{frame}
 \section{Theoretical Results}
 
-\section{Experimental Results}
+\begin{frame}
+  \frametitle{Results for GD}
+  \begin{block}{Theorem (Bound between true and incrementally updated iterates)}
+    Assuming $F(\w)$ is strongly convex, for large enough iterations $t$, the result $\iw_{t}$ of \textit{DeltaGrad} approximates the correct iteration values $\uw_{t}$ at the rate of 
+    $$
+    \|\uw_{t}-\iw_{t}\| = o\left( \frac{r}{n} \right)
+    $$
+  So $\|\uw_{t}-\iw_{t}\|$ is of a lower order than $r/n$.
+  $r/n$ is the "baseline error rate" of the original weights $\w_{t}$, i.e., $\|\w_{t}-\iw_{t}\| = o(\frac{r}{n})$ 
+  \end{block}
+  \hyperlink{architecture}{\beamergotobutton{architecture of proof}}
+\end{frame}
 
+\begin{frame}
+  \frametitle{Results for SGD}
+  \begin{block}{Theorem(Bound between true and incrementally updated iterates in SGD)}
+  Assuming $F(\w)$ is strongly convex, for large enough iterations $t$ and mini-batch size $B$, the result $\iw_{t}$ of \textit{DeltaGrad} approximates the correct iteration values $\uw_{t}$ at the rate of
+  $$
+  \|\uw_{t}-\iw_{t}\| = o\left( \frac{r}{n} +\frac{1}{B^{\frac{1}{4}}}\right)
+  $$
+  with high probability
+  \end{block}
+  
+
+\end{frame}
+\section{Experimental Results}
+\begin{frame}
+  \frametitle{Setup}
+  \begin{itemize}
+    \item {\bf Datasets}: MNIST, RCV1, HIGGS
+    \item {\bf Model}: Logistic regression with L2 regularization
+    \item {\bf Baseline}: Naive retraining (BaseL)
+    \item {\bf Hyperparameters}: $j_0 = \{10,10,300\}$ and $T_0 = \{5,10,3\}$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Results}
+  \input{images/results.tex}
+\end{frame}
 \bibliography{UpdateMl}
 \bibliographystyle{alpha}
 
@@ -322,6 +363,60 @@
 
 \end{frame}
 
+\begin{frame}
+  \frametitle{Online Additions/Deletions}
+  
+%   \begin{table}[t]
+%     \centering
+%     \small
+%     \caption{Prediction accuracy of \Basel\ and \Increm\ with batch addition/deletion. \MNIST$^n$ refers to \MNIST\ with a neural net.}
+%     \begin{tabular}[!h]{|>{\centering\arraybackslash}p{1cm}|>{\centering\arraybackslash}p{1cm}|>{\centering\arraybackslash}p{2.4cm}|>{\centering\arraybackslash}p{2.4cm}|} \hline
+%     %dataset
+%     % \multirow{2}{*}{\makecell{Dataset}} & \multicolumn{2}{c|}{\makecell{\MNIST}} & \multicolumn{2}{c|}{\covtype}\\ \hhline{~----}
+%     \multicolumn{2}{|c|}{Dataset} & \Basel (\%) & \Increm (\%) \\ \hline
+%     %  & \PrIU&\Increm & \PrIU& \Increm \\ \hline
+%     \multirow{4}{*}{\makecell{Add\\(0.005\%)}}& \MNIST & $87.530 \pm 0.0025$ & 
+%     $87.530 \pm 0.0025$ \\ \hhline{~---} %
+%     & \MNIST$^n$ & $92.340\pm 0.002$ & $92.340\pm 0.002$ \\ \hhline{~---} 
+%     & \covtype & $62.991 \pm 0.0027$& $62.991 \pm 0.0027$\\ \hhline{~---}
+%     & \higgs & $55.372 \pm 0.0002$ & $55.372 \pm 0.0002 $ \\\hhline{~---}
+%     & \rcv & $92.222 \pm 0.00004$ & $92.222 \pm 0.00004$ \\  \hline
+%     \multirow{4}{*}{\makecell{Add\\(1\%)}}& \MNIST & $87.540 \pm 0.0011$ & 
+%     $87.542 \pm 0.0011$ \\ \hhline{~---} %
+%     & \MNIST$^n$ & $92.397\pm 0.001$ & $92.397\pm 0.001$ \\ \hhline{~---} 
+%     & \covtype &$63.022 \pm 0.0008$ & $63.022 \pm 0.0008$\\ \hhline{~---}
+%     & \higgs &$55.381\pm 0.0007$& $55.380 \pm 0.0007$\\ \hhline{~---}
+%     & \rcv & $92.233 \pm 0.00010$ & $92.233 \pm 0.00010$\\  \hline
+%     \multirow{4}{*}{\makecell{Delete \\ (0.005\%)}} & \MNIST &$86.272 \pm 0.0035 $& $86.272 \pm 0.0035 $\\ \hhline{~---}
+%     & \MNIST$^n$ & $92.203\pm 0.004$ & $92.203\pm 0.004$ \\ \hhline{~---}
+%     & \covtype& $62.966 \pm 0.0017 $ & $62.966 \pm 0.0017$ \\ \hhline{~---}
+%     & \higgs &$52.950 \pm 0.0001 $& $52.950 \pm 0.0001 $\\\hhline{~---}
+%     & \rcv & $92.241 \pm 0.00004$ & $92.241 \pm 0.00004$ \\ \hline
+%     \multirow{4}{*}{\makecell{Delete\\ (1\%)}}& \MNIST &$86.082 \pm 0.0046$ & $86.074 \pm 0.0048$\\ \hhline{~---}
+%     & \MNIST$^n$ & $92.373\pm 0.003$ & $92.370\pm 0.003$ \\ \hhline{~---}
+%     & \covtype & $62.943 \pm 0.0007 $ & $62.943 \pm 0.0007$ \\ \hhline{~---}
+%     & \higgs &$52.975 \pm 0.0002 $ & $52.975 \pm 0.0002$\\\hhline{~---}
+%     & \rcv & $92.203 \pm 0.00007$ & $92.203 \pm 0.00007$ \\ \hline
+%     \end{tabular}
+%     \label{Table: Test_acc_comparison_batch_del_add}
+%     \end{table}  
+
+\end{frame}
+\begin{frame}
+  \label{architecture}
+  \frametitle{Architecture of Proof}
+
+
+\begin{center}
+\scalebox{0.59}{
+  \input{images/architexture.tex}
+}
+\end{center}
+
+
+  
+
+\end{frame}
 
 
 \end{document}  

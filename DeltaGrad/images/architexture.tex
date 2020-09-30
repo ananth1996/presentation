@@ -1,0 +1,70 @@
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{iterations} = [rectangle, draw, dashed, text width=3em, text centered, minimum height=2em, font=\footnotesize]
+\tikzstyle{iterations2} = [rectangle, draw, dashed, text width=18em, text centered, minimum height=3em, font=\footnotesize]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5.5em, text centered, rounded corners, minimum height=3em, font=\footnotesize]
+\tikzstyle{empty} = [rectangle, draw, text width=5em, text centered, minimum height=3em, font=\footnotesize]
+\tikzstyle{line} = [draw]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+% \tikzstyle{line} = [draw, -latex']
+% \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+%     minimum] height=2em]
+\begin{tikzpicture}[node distance = 1.7cm, auto]
+    % Place nodes
+    \node [block] (wu_diff0) {$\|\uw_{t} - \w_t\|$};
+    \node [iterations, left of=wu_diff0, xshift=-0.5cm] (iter_0) {$t \leq j_0$};
+    \node [iterations2, below of=iter_0,xshift=1cm, yshift=-1cm] (iter_1) {$j_0 < t \leq j_0 + T_0$ \\ $\{j_1,j_2,\dots,j_m\}$\\$= \{j_0-m+1,j_0-m+2,\dots,j_0-2,j_0-1,j_0\}$};
+    \node [iterations2, below of=iter_1, yshift=-1cm] (iter_2) {$j_0 + T_0 < t \leq j_0 + 2T_0$\\ $\{j_1,j_2,\dots,j_m\}$\\$= \{j_0-m+2,\dots,j_0-2,j_0-1, j_0,j_0 +T_0\}$};
+    \node [block, right of=wu_diff0, xshift=2.5cm] (w_diff0) {$\|\iw_t - \w_t\|$};
+    \node [block, below of=w_diff0, yshift=-1cm] (w_diff1) {$\|\iw_t - \w_t\|$};
+    \node [block, right of=w_diff1, xshift=2.5cm] (h_diff0) {$\|\bH_{t-1} - \B_{j_m}\|$};
+    % \node [block, below of=h_diff0, xshift=3cm] (wu_diff1) {$\|\iw_t -\uw_t\|$};
+    \node [block, below of=h_diff0, yshift=-1cm] (h_diff1) {$\|\bH_{t-1} - \B_{j_m}\|$};
+    \node [block, below of=w_diff1, yshift=-1cm] (w_diff2) {$\|\iw_t - \w_t\|$};
+    % \node [block, below of=h_diff1, xshift=3cm] (wu_diff2) {$\|\iw_t -\uw_t\|$};
+    \node[text width=2cm, below of=h_diff1, yshift=-1cm](dot_text) {$\dots \dots$};
+    \node[text width=2cm, below of=w_diff2, yshift=-1cm](dot_text2) {$\dots \dots$};
+    \node [block, below of=h_diff1, yshift=-3cm] (h_diff2) {$\|\bH_{t-1} - \B_{j_m}\|$};
+    \node [block, below of=w_diff2, yshift=-3cm] (w_diff3) {$\|\iw_t - \w_t\|$};
+    \node [iterations2, below of=iter_2, yshift=-3cm] (iter_3) {$j_0 + (x+m-1)T_0 < t \leq j_0 + (x+m)T_0$\\ $\{j_1,j_2,\dots,j_m\}$\\$= \{j_0+xT_0,j_0+(x+1)T_0,\dots,j_0 +(x+m-1)T_0\}$};
+    \node[text width=2cm, below of=w_diff3,yshift=-1cm](dot_text3) {$\dots \dots$};
+    \node[text width=2cm, below of=h_diff2,yshift=-1cm](dot_text4) {$\dots \dots$};
+    % \node [block, below of=h_diff1] (h_diff2) {$\|\bH_t - \B_{j_m}\|$};
+    % \node [block, left of=init] (system) {system};
+    % \node [block, below of=init] (identify) {identify candidate models};
+    % \node [block, below of=identify] (evaluate) {evaluate candidate models};
+    % \node [block, left of=evaluate, node distance=3cm] (update) {update model};
+    % \node [decision, below of=evaluate] (decide) {is best candidate better?};
+    % \node [block, below of=decide, node distance=3cm] (stop) {stop};
+    % Draw edges
+    \draw [arrow] (wu_diff0) --node{Theorem 4} (w_diff0);
+    \draw [arrow] (w_diff0) --node[sloped, anchor=center, above]{Corollary 1} (h_diff0);
+    \draw [-{Latex[right]}] (h_diff0) --node[anchor=center, above]{Theorem 5} (w_diff1);
+    \draw [-{Latex[right]}] (w_diff1) --node[anchor=center, below]{Corollary 1} (h_diff0);
+    % \draw [arrow] (h_diff0) --node[sloped, anchor=center, above]{Theorem \ref{main10}} (wu_diff1);
+    \draw [arrow] (w_diff1) --node[sloped, anchor=center, above]{Corollary 1} (h_diff1);
+    \draw [-{Latex[right]}] (h_diff1) --node[sloped, anchor=center, above]{Theorem 5} (w_diff2);
+    \draw [-{Latex[right]}] (w_diff2) --node[anchor=center, below]{Corollary 1} (h_diff1);
+    % \draw [arrow] (h_diff1) --node[sloped, anchor=center, above]{Theorem \ref{main10}} (wu_diff2);
+    \draw [arrow] (w_diff2) --node[sloped, anchor=center, above]{Corollary 1} (dot_text);
+    \draw [arrow] (dot_text2) --node[sloped, anchor=center, above]{Corollary 1} (h_diff2);
+    \draw [arrow] (w_diff3) --node[sloped, anchor=center, above]{Corollary 1} (dot_text4);
+    \draw [-{Latex[right]}] (h_diff2) --node[sloped, anchor=center, above]{Theorem 5} (w_diff3);
+    \draw [-{Latex[right]}] (w_diff3) --node[anchor=center, below]{Corollary 1} (h_diff2);
+    \draw[dashed] ($ (wu_diff0) - (3,1.5) $) -- ($ (w_diff0) - (-5,1.5) $);
+    \draw[dashed] ($ (w_diff1) - (7,1.5) $) -- ($ (h_diff0) - (-1,1.5) $);
+    \draw[dashed] ($ (w_diff2) - (7,1.5) $) -- ($ (h_diff1) - (-1,1.5) $);
+    \draw[dashed] ($ (w_diff2) - (7,3.5) $) -- ($ (h_diff1) - (-1,3.5) $);
+    \draw[dashed] ($ (w_diff3) - (7,1.5) $) -- ($ (h_diff2) - (-1,1.5) $);
+    % \path [line] (init) -- (identify);
+    % \path [line] (identify) -- (evaluate);
+    % \path [line] (evaluate) -- (decide);
+    % \path [line] (decide) -| node [near start] {yes} (update);
+    % \path [line] (update) |- (identify);
+    % \path [line] (decide) -- node {no}(stop);
+    % \path [line,dashed] (expert) -- (init);
+    % \path [line,dashed] (system) -- (init);
+    % \path [line,dashed] (system) |- (evaluate);
+\end{tikzpicture}
