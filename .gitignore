@@ -11,3 +11,5 @@
 *.xmpi
 *.nav
 *.snm
+*/.DS_Store
+.DS_Store
