@@ -44,7 +44,7 @@
 
 \title[DeltaGrad]{Weekly Presentation\\DeltaGrad: Rapid retraining of machine learning models}
 
-\author[Wu et al.~]{Yinjun Wu \and Edgar Dobriban \and Susan B Davidson}
+\author[Wu et al.~]{Yinjun Wu \and Edgar Dobriban \and Susan B Davidson\\ Presented by : Ananth Mahadevan}
 \date{\today}
 
 \begin{document}
@@ -61,18 +61,18 @@
 \section{Motivation}
 \begin{frame}
     \frametitle{Retaining Problem}
-    Regular Pipeline:
+    Regular Machine Learning Pipeline:
     \begin{enumerate}
       \item Train a ML model from data using a learning algorithm
       \item Small change in training data occurs (deletions or additions)
       \item Retrain ML model from scratch
     \end{enumerate}
-
+    \uncover<2->{Limitations:}
     \begin{itemize}
-      \item<2-> Computationally expensive process
-      \item<3-> Throws away useful computations from initial training
+      \item<3-> Computationally expensive process
+      \item<4-> Throws away useful computations from initial training
     \end{itemize}
-    \begin{block}<4->{Research Question}
+    \begin{block}<5->{Research Question}
       Can we retrain models in an efficient manner?
     \end{block}
 \end{frame}
@@ -106,15 +106,16 @@
 \begin{frame}
   \frametitle{Gradient Descent}
   \begin{itemize}
-    \item Objective function  
+    \item<1-> Objective function, 
     \[
-        F(\w) = \frac{1}{n}\sum_{i=1}^{n}F_{i}(\w)  
+        F(\w) = \frac{1}{n}\sum_{i=1}^{n}F_{i}(\w),
     \]
-    \item Stochastic Gradient Descent update rule, $\mathcal{B}_{t}$ is randomly sampled mini-batch of size $B$
+    where $F_{i}(\w)$ is loss for $i$-th sample.
+    \item<2-> Stochastic Gradient Descent update rule, $\mathcal{B}_{t}$ is randomly sampled mini-batch of size $B$
     \[
       \w_{t+1} \leftarrow \w_{t}-\frac{\eta_{t}}{B} \sum_{i \in \mathcal{B}_{t}} \nabla F_{i}\left(\w_{t}\right) 
     \]
-    \item Full-batch gradient descent (GD) is on entire data 
+    \item<3-> Full-batch gradient descent (GD) is on entire data 
     \[
       \w_{t+1} \leftarrow \w_{t}-\frac{\eta_{t}}{n} \sum_{i=1}^{n} \nabla F_{i}\left(\w_{t}\right) 
     \]
@@ -124,20 +125,20 @@
 \begin{frame}
   \frametitle{Removal of data}
   \begin{itemize}
-    \item After training,  $R = \{i_1,i_2,\dots,i_r\}$ is removed, where $r \ll n$
-    \item Naive retraining is applying GD over remaining samples, $\w^{U}$ is resulting parameters
+    \item<1-> After training,  $R = \{i_1,i_2,\dots,i_r\}$ samples are removed, where $r \ll n$
+    \item<2-> Naive retraining is applying GD over remaining samples, $\w^{U}$ is the resulting model parameter
     \begin{align}\label{eq: update_rule_naive} 
       & \uw_{t+1} \leftarrow \uw_{t} - \frac{\eta_t}{n-r}\sum_{\substack{i \not\in R}} \nabla F_i\left(\uw_{t}\right) 
     \end{align}
-    \item The explicit gradient computation $\sum_{\substack{i \not\in R}} \nabla F_i\left(\uw_{t}\right)$ is expensive
-    \item Instead rewrite \eqref{eq: update_rule_naive} as follows 
+    \item<3-> The explicit gradient computation $\sum_{\substack{i \not\in R}} \nabla F_i\left(\uw_{t}\right)$ is expensive
+    \item<4-> Instead rewrite \eqref{eq: update_rule_naive} as the ``\textit{leave-r-out}'' formula
     \begin{align}\label{eq: approx_w_t}
       \begin{split}
       \uw_{t+1} 
                = \uw_{t} - \frac{\eta_t}{n-r}\left[\sum_{i=1}^{n} \nabla F_{i}\left(\uw_{t}\right) - \sum_{\substack{i \in R}} \nabla F_i\left(\uw_{t}\right)\right].
       \end{split}
       \end{align}
-      \item $\sum_{\substack{i \in R}} \nabla F_i\left(\uw_{t}\right)$ is cheaper to compute
+      \item<5-> $\sum_{\substack{i \in R}} \nabla F_i\left(\uw_{t}\right)$ is cheaper to compute
   \end{itemize}
 \end{frame}
 
@@ -156,14 +157,14 @@
 \begin{frame}
   \frametitle{Aprroximating $\nabla F(\uw)$}
   \begin{itemize}
-    \item $\w_{0}$, $\dots,\w_{t}$ and $\nabla F\left(\w_{0}\right)$, $\dots, \nabla F\left(\w_{t}\right)$ are cached from training on initial dataset
-    \item By Cauchy mean-value theorem\footnote<2->{Seems to be a consequence of Fundamental theory of Calculus and mean-value theorem}
+    \item<1-> $\w_{0}$, $\dots,\w_{t}$ and $\nabla F\left(\w_{0}\right)$, $\dots, \nabla F\left(\w_{t}\right)$ are cached from training on initial dataset
+    \item<2-> By Cauchy mean-value theorem\footnote<3->{Actually a consequence of Fundamental theory of Calculus and mean-value theorem}
     \[
       \nabla F(\uw_{t}) - \nabla F(\w_{t}) = \bH_{t} \cdot (\uw_{t} - \w_{t}) 
     \]
     Where $\bH_{t} = \int_{0}^{1}\bH(\w_{t}+x(\uw_{t}-\w_{t}))dx$ is the integrated hessian
-    \item This requires a hessian $\bH_{t}$ at each step, which is expensive to maintain and evaluate
-    \item Leverage classical L-BFGS algorithm to approximate $\bH_{t}$
+    \item<4-> This requires a hessian $\bH_{t}$ at each step, which is expensive to maintain and evaluate
+    \item<5-> Leverage classical L-BFGS algorithm to approximate $\bH_{t}$
   \end{itemize}
 \end{frame}
 
@@ -175,7 +176,7 @@
     Where, $\B_t$ is the approximation of the hessian
   \end{itemize}
   \vfill
-  \scalebox{0.8}{\begin{minipage}{0.55\textwidth}
+  \uncover<2->{\scalebox{0.8}{\begin{minipage}{0.55\textwidth}
     Traditional L-BFGS
           \[
   \begin{array}{l}
@@ -186,7 +187,10 @@
   \y_{t}=\nabla F\left(\w_{t+1}\right)-\nabla F\left(\w_{t}\right)
   \end{array}
     \]
-  \end{minipage}}
+  \end{minipage}
+  }
+  }
+  \uncover<3->{
   \hfill%
   \scalebox{0.8}{
   \begin{minipage}{0.55\textwidth}
@@ -200,7 +204,9 @@
   \y_{t}=\nabla F\left(\uw_{t}\right)-\nabla F\left(\w_{t}\right)
 \end{array}
   \]
-    \end{minipage}}
+    \end{minipage}
+    }
+  }
 \end{frame}
 
 \begin{frame}
@@ -229,7 +235,11 @@
       \nabla F(\iw_{t}) \approx \nabla F(\w_{t}) + \B_{t} \cdot (\iw_{t}-\w_{t}).
     \]
     \item replacing in \eqref{eq: approx_w_t}
-    \[\iw_{t+1}  = \iw_{t} - \frac{\eta_{t}}{n-r} \left\{ n[\B_{t}(\iw_t - \w_t) + \nabla F(\w_t)] - \sum_{i\in R} \nabla F(\iw_t)\right\}\]
+    \begin{align*}
+      \iw_{t+1} 
+      &= \iw_{t} - \frac{\eta_t}{n-r}\left[\sum_{i=1}^{n} \nabla F_{i}\left(\iw_{t}\right) - \sum_{\substack{i \in R}} \nabla F_i\left(\iw_{t}\right)\right] \\
+      &= \iw_{t} - \frac{\eta_{t}}{n-r} \left\{ n[\B_{t}(\iw_t - \w_t) + \nabla F(\w_t)] - \sum_{i\in R} \nabla F(\iw_t)\right\}
+    \end{align*}
   \end{itemize}
 \end{frame}
 
@@ -359,6 +369,7 @@
 \end{frame}
 
 
+\section{Future Work}
 \begin{frame}
   \frametitle{Our Research Directions}
   \begin{itemize}
