@@ -1,0 +1,88 @@
+\documentclass[pdf]{beamer}
+\usetheme{Berlin}
+\usepackage{multicol, latexsym, amsmath, amssymb}
+\usepackage{smartdiagram}
+\usepackage{subcaption}
+
+\setbeamertemplate{navigation symbols}{}
+\input{macros.tex}
+
+\title{Updating ML Models}
+
+\author[Ananth Mahadevan]{Ananth Mahadevan}
+\date{\today}
+
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Overview}
+    \tableofcontents
+\end{frame}
+
+\section{Motivation}
+
+\section{Problem Overview}
+
+\section{Approaches}
+\begin{frame}
+  \frametitle{}
+  \myNset[6]
+  \smartart
+\end{frame}
+
+\begin{frame}
+  \frametitle{Common Terminology}
+  \begin{itemize}
+    \item Fixed training Dataset $\dataset$
+    \item Learning Algorithm $\alg$ (can be randomized)
+    \item Datapoints to be remove $\removed$, where $|\removed|=r$, remaining dataset $\datasetprime=\dataset - \removed$
+    \item Naive approach is retraining from scratch, i.e, $\alg(\datasetprime)$
+    \item Mechanism $\mech$ which offers an efficient way to update the model
+  \end{itemize}
+\end{frame}
+
+\subsection{Differential Privacy}
+\begin{frame}
+  \myNset[1]
+  \smartart
+\end{frame}
+
+\begin{frame}
+  \frametitle{Certified Data Removal \cite{guoCertifiedDataRemoval2020}}
+  \begin{itemize}
+    \item 
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Optimization}
+\begin{frame}
+  \frametitle{}
+  \begin{itemize}
+    \item Hello
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Database Based}
+
+\subsection{Information Theory}
+
+\subsection{Novel Pipelines}
+
+\section{Next Directions}
+
+
+
+\begin{frame}[allowframebreaks]
+  \frametitle{References}
+  \bibliography{UpdateMl}
+  \bibliographystyle{apalike}
+\end{frame}
+
+
+
+\end{document}  

@@ -1,0 +1,258 @@
+
+@article{basuInfluenceFunctionsDeep2020,
+  title = {Influence {{Functions}} in {{Deep Learning Are Fragile}}},
+  author = {Basu, Samyadeep and Pope, Philip and Feizi, Soheil},
+  year = {2020},
+  month = jun,
+  abstract = {Influence functions approximate the effect of training samples in test-time predictions and have a wide variety of applications in machine learning interpretability and uncertainty estimation. A commonly-used (first-order) influence function can be implemented efficiently as a post-hoc method requiring access only to the gradients and Hessian of the model. For linear models, influence functions are well-defined due to the convexity of the underlying loss function and are generally accurate even across difficult settings where model changes are fairly large such as estimating group influences. Influence functions, however, are not well-understood in the context of deep learning with non-convex loss functions. In this paper, we provide a comprehensive and large-scale empirical study of successes and failures of influence functions in neural network models trained on datasets such as Iris, MNIST, CIFAR-10 and ImageNet. Through our extensive experiments, we show that the network architecture, its depth and width, as well as the extent of model parameterization and regularization techniques have strong effects in the accuracy of influence functions. In particular, we find that (i) influence estimates are fairly accurate for shallow networks, while for deeper networks the estimates are often erroneous; (ii) for certain network architectures and datasets, training with weight-decay regularization is important to get high-quality influence estimates; and (iii) the accuracy of influence estimates can vary significantly depending on the examined test points. These results suggest that in general influence functions in deep learning are fragile and call for developing improved influence estimation methods to mitigate these issues in non-convex setups.},
+  archivePrefix = {arXiv},
+  eprint = {2006.14651},
+  eprinttype = {arxiv},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Influence Functions in Deep Learning Are Fragile/Basu et al_2020_Influence Functions in Deep Learning Are Fragile.pdf;/Users/mahadeva/Zotero/storage/K75Z8S3L/2006.html},
+  journal = {arXiv:2006.14651 [cs, stat]},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  primaryClass = {cs, stat}
+}
+
+@article{bourtouleMachineUnlearning2020,
+  title = {Machine {{Unlearning}}},
+  author = {Bourtoule, Lucas and Chandrasekaran, Varun and {Choquette-Choo}, Christopher A. and Jia, Hengrui and Travers, Adelin and Zhang, Baiwu and Lie, David and Papernot, Nicolas},
+  year = {2020},
+  month = jul,
+  abstract = {Once users have shared their data online, it is generally difficult for them to revoke access and ask for the data to be deleted. Machine learning (ML) exacerbates this problem because any model trained with said data may have memorized it, putting users at risk of a successful privacy attack exposing their information. Yet, having models unlearn is notoriously difficult. We introduce SISA training, a framework that expedites the unlearning process by strategically limiting the influence of a data point in the training procedure. While our framework is applicable to any learning algorithm, it is designed to achieve the largest improvements for stateful algorithms like stochastic gradient descent for deep neural networks. SISA training reduces the computational overhead associated with unlearning, even in the worst-case setting where unlearning requests are made uniformly across the training set. In some cases, the service provider may have a prior on the distribution of unlearning requests that will be issued by users. We may take this prior into account to partition and order data accordingly, and further decrease overhead from unlearning. Our evaluation spans several datasets from different domains, with corresponding motivations for unlearning. Under no distributional assumptions, for simple learning tasks, we observe that SISA training improves time to unlearn points from the Purchase dataset by 4.63x, and 2.45x for the SVHN dataset, over retraining from scratch. SISA training also provides a speed-up of 1.36x in retraining for complex learning tasks such as ImageNet classification; aided by transfer learning, this results in a small degradation in accuracy. Our work contributes to practical data governance in machine unlearning.},
+  archivePrefix = {arXiv},
+  eprint = {1912.03817},
+  eprinttype = {arxiv},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Machine Unlearning/Bourtoule et al_2020_Machine Unlearning.pdf;/Users/mahadeva/Zotero/storage/29G48DVQ/1912.html},
+  journal = {arXiv:1912.03817 [cs]},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Cryptography and Security,Computer Science - Machine Learning},
+  primaryClass = {cs}
+}
+
+@article{brophyDARTDataAddition2020,
+  title = {{{DART}}: {{Data Addition}} and {{Removal Trees}}},
+  shorttitle = {{{DART}}},
+  author = {Brophy, Jonathan and Lowd, Daniel},
+  year = {2020},
+  month = sep,
+  abstract = {How can we update data for a machine learning model after it has already trained on that data? In this paper, we introduce DART, a variant of random forests that supports adding and removing training data with minimal retraining. Data updates in DART are exact, meaning that adding or removing examples from a DART model yields exactly the same model as retraining from scratch on updated data. DART uses two techniques to make updates efficient. The first is to cache data statistics at each node and training data at each leaf, so that only the necessary subtrees are retrained. The second is to choose the split variable randomly at the upper levels of each tree, so that the choice is completely independent of the data and never needs to change. At the lower levels, split variables are chosen to greedily maximize a split criterion such as Gini index or mutual information. By adjusting the number of random-split levels, DART can trade off between more accurate predictions and more efficient updates. In experiments on ten real-world datasets and one synthetic dataset, we find that DART is orders of magnitude faster than retraining from scratch while sacrificing very little in terms of predictive performance.},
+  archivePrefix = {arXiv},
+  eprint = {2009.05567},
+  eprinttype = {arxiv},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/DART/Brophy_Lowd_2020_DART.pdf},
+  journal = {arXiv:2009.05567 [cs, stat]},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  primaryClass = {cs, stat}
+}
+
+@inproceedings{caoMakingSystemsForget2015,
+  title = {Towards {{Making Systems Forget}} with {{Machine Unlearning}}},
+  booktitle = {2015 {{IEEE Symposium}} on {{Security}} and {{Privacy}}},
+  author = {Cao, Yinzhi and Yang, Junfeng},
+  year = {2015},
+  month = may,
+  pages = {463--480},
+  publisher = {{IEEE}},
+  address = {{San Jose, CA}},
+  doi = {10.1109/SP.2015.35},
+  abstract = {Today's systems produce a rapidly exploding amount of data, and the data further derives more data, forming a complex data propagation network that we call the data's lineage. There are many reasons that users want systems to forget certain data including its lineage. From a privacy perspective, users who become concerned with new privacy risks of a system often want the system to forget their data and lineage. From a security perspective, if an attacker pollutes an anomaly detector by injecting manually crafted data into the training data set, the detector must forget the injected data to regain security. From a usability perspective, a user can remove noise and incorrect entries so that a recommendation engine gives useful recommendations. Therefore, we envision forgetting systems, capable of forgetting certain data and their lineages, completely and quickly.},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Towards Making Systems Forget with Machine Unlearning/Cao_Yang_2015_Towards Making Systems Forget with Machine Unlearning.pdf},
+  isbn = {978-1-4673-6949-7},
+  language = {en}
+}
+
+@incollection{ginartMakingAIForget2019,
+  title = {Making {{AI Forget You}}: {{Data Deletion}} in {{Machine Learning}}},
+  shorttitle = {Making {{AI Forget You}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}} 32},
+  author = {Ginart, Antonio and Guan, Melody and Valiant, Gregory and Zou, James Y},
+  editor = {Wallach, H. and Larochelle, H. and Beygelzimer, A. and d{\textbackslash}textquotesingle {Alch{\'e}-Buc}, F. and Fox, E. and Garnett, R.},
+  year = {2019},
+  pages = {3518--3531},
+  publisher = {{Curran Associates, Inc.}},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Making AI Forget You/Ginart et al_2019_Making AI Forget You.pdf;/Users/mahadeva/Zotero/storage/QQ32KP9R/Ginart et al. - 2019 - Making AI Forget You Data Deletion in Machine Lea.html}
+}
+
+@article{golatkarEternalSunshineSpotless2020,
+  title = {Eternal {{Sunshine}} of the {{Spotless Net}}: {{Selective Forgetting}} in {{Deep Networks}}},
+  shorttitle = {Eternal {{Sunshine}} of the {{Spotless Net}}},
+  author = {Golatkar, Aditya and Achille, Alessandro and Soatto, Stefano},
+  year = {2020},
+  month = mar,
+  abstract = {We explore the problem of selectively forgetting a particular subset of the data used for training a deep neural network. While the effects of the data to be forgotten can be hidden from the output of the network, insights may still be gleaned by probing deep into its weights. We propose a method for "scrubbing'" the weights clean of information about a particular set of training data. The method does not require retraining from scratch, nor access to the data originally used for training. Instead, the weights are modified so that any probing function of the weights is indistinguishable from the same function applied to the weights of a network trained without the data to be forgotten. This condition is a generalized and weaker form of Differential Privacy. Exploiting ideas related to the stability of stochastic gradient descent, we introduce an upper-bound on the amount of information remaining in the weights, which can be estimated efficiently even for deep neural networks.},
+  archivePrefix = {arXiv},
+  eprint = {1911.04933},
+  eprinttype = {arxiv},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Eternal Sunshine of the Spotless Net/Golatkar et al_2020_Eternal Sunshine of the Spotless Net.pdf;/Users/mahadeva/Zotero/storage/29DUQGXT/1911.html},
+  journal = {arXiv:1911.04933 [cs, stat]},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  primaryClass = {cs, stat}
+}
+
+@article{guoCertifiedDataRemoval2020,
+  title = {Certified {{Data Removal}} from {{Machine Learning Models}}},
+  author = {Guo, Chuan and Goldstein, Tom and Hannun, Awni and {van der Maaten}, Laurens},
+  year = {2020},
+  month = aug,
+  abstract = {Good data stewardship requires removal of data at the request of the data's owner. This raises the question if and how a trained machine-learning model, which implicitly stores information about its training data, should be affected by such a removal request. Is it possible to "remove" data from a machine-learning model? We study this problem by defining certified removal: a very strong theoretical guarantee that a model from which data is removed cannot be distinguished from a model that never observed the data to begin with. We develop a certified-removal mechanism for linear classifiers and empirically study learning settings in which this mechanism is practical.},
+  archivePrefix = {arXiv},
+  eprint = {1911.03030},
+  eprinttype = {arxiv},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Certified Data Removal from Machine Learning Models/Guo et al_2020_Certified Data Removal from Machine Learning Models_annotated.pdf;/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Certified Data Removal from Machine Learning Models/Guo et al_2020_Certified Data Removal from Machine Learning Models.pdf},
+  journal = {arXiv:1911.03030 [cs, stat]},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  primaryClass = {cs, stat}
+}
+
+@article{guptaProcessingAnalyticalWorkloads2015,
+  title = {Processing {{Analytical Workloads Incrementally}}},
+  author = {Gupta, Priyank and Koudas, Nick and Shang, Europa and Johnson, Ryan and Zuzarte, Calisto},
+  year = {2015},
+  month = sep,
+  abstract = {Analysis of large data collections using popular machine learning and statistical algorithms has been a topic of increasing research interest. A typical analysis workload consists of applying an algorithm to build a model on a data collection and subsequently refining it based on the results. In this paper we introduce model materialization and incremental model reuse as first class citizens in the execution of analysis workloads. We materialize built models instead of discarding them in a way that can be reused in subsequent computations. At the same time we consider manipulating an existing model (adding or deleting data from it) in order to build a new one. We discuss our approach in the context of popular machine learning models. We specify the details of how to incrementally maintain models as well as outline the suitable optimizations required to optimally use models and their incremental adjustments to build new ones. We detail our techniques for linear regression, naive bayes and logistic regression and present the suitable algorithms and optimizations to handle these models in our framework. We present the results of a detailed performance evaluation, using real and synthetic data sets. Our experiments analyze the various trade offs inherent in our approach and demonstrate vast performance benefits.},
+  archivePrefix = {arXiv},
+  eprint = {1509.05066},
+  eprinttype = {arxiv},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Processing Analytical Workloads Incrementally/Gupta et al_2015_Processing Analytical Workloads Incrementally.pdf;/Users/mahadeva/Zotero/storage/7ZR99A47/1509.html},
+  journal = {arXiv:1509.05066 [cs]},
+  keywords = {Computer Science - Databases},
+  primaryClass = {cs}
+}
+
+@article{hasaniEfficientConstructionApproximate2018,
+  title = {Efficient Construction of Approximate Ad-Hoc {{ML}} Models through Materialization and Reuse},
+  author = {Hasani, Sona and Thirumuruganathan, Saravanan and Asudeh, Abolfazl and Koudas, Nick and Das, Gautam},
+  year = {2018},
+  month = jul,
+  volume = {11},
+  pages = {1468--1481},
+  issn = {2150-8097},
+  doi = {10.14778/3236187.3269462},
+  abstract = {Machine learning has become an essential toolkit for complex analytic processing. Data is typically stored in large data warehouses with multiple dimension hierarchies. Often, data used for building an ML model are aligned on OLAP hierarchies such as location or time. In this paper, we investigate the feasibility of efficiently constructing approximate ML models for new queries from previously constructed ML models by leveraging the concepts of model materialization and reuse. For example, is it possible to construct an approximate ML model for data from the year 2017 if one already has ML models for each of its quarters? We propose algorithms that can support a wide variety of ML models such as generalized linear models for classification along with K-Means and Gaussian Mixture models for clustering. We propose a cost based optimization framework that identifies appropriate ML models to combine at query time and conduct extensive experiments on real-world and synthetic datasets. Our results indicate that our framework can support analytic queries on ML models, with superior performance, achieving dramatic speedups of several orders in magnitude on very large datasets.},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Efficient construction of approximate ad-hoc ML models through materialization/Hasani et al_2018_Efficient construction of approximate ad-hoc ML models through materialization.pdf},
+  journal = {Proceedings of the VLDB Endowment},
+  number = {11}
+}
+
+@article{izzoApproximateDataDeletion2020,
+  title = {Approximate {{Data Deletion}} from {{Machine Learning Models}}: {{Algorithms}} and {{Evaluations}}},
+  shorttitle = {Approximate {{Data Deletion}} from {{Machine Learning Models}}},
+  author = {Izzo, Zachary and Smart, Mary Anne and Chaudhuri, Kamalika and Zou, James},
+  year = {2020},
+  month = feb,
+  abstract = {Deleting data from a trained machine learning (ML) model is a critical task in many applications. For example, we may want to remove the influence of training points that might be out of date or outliers. Regulations such as EU's General Data Protection Regulation also stipulate that individuals can request to have their data deleted. The naive approach to data deletion is to retrain the ML model on the remaining data, but this is too time consuming. Moreover there is no known efficient algorithm that exactly deletes data from most ML models. In this work, we evaluate several approaches for approximate data deletion from trained models. For the case of linear regression, we propose a new method with linear dependence on the feature dimension \$d\$, a significant gain over all existing methods which all have superlinear time dependence on the dimension. We also provide a new test for evaluating data deletion from linear models.},
+  archivePrefix = {arXiv},
+  eprint = {2002.10077},
+  eprinttype = {arxiv},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Approximate Data Deletion from Machine Learning Models/Izzo et al_2020_Approximate Data Deletion from Machine Learning Models.pdf;/Users/mahadeva/Zotero/storage/SJUA9WLA/2002.html},
+  journal = {arXiv:2002.10077 [cs, stat]},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  primaryClass = {cs, stat}
+}
+
+@article{kohUnderstandingBlackboxPredictions2017,
+  title = {Understanding {{Black}}-Box {{Predictions}} via {{Influence Functions}}},
+  author = {Koh, Pang Wei and Liang, Percy},
+  year = {2017},
+  month = jul,
+  abstract = {How can we explain the predictions of a black-box model? In this paper, we use influence functions -- a classic technique from robust statistics -- to trace a model's prediction through the learning algorithm and back to its training data, thereby identifying training points most responsible for a given prediction. To scale up influence functions to modern machine learning settings, we develop a simple, efficient implementation that requires only oracle access to gradients and Hessian-vector products. We show that even on non-convex and non-differentiable models where the theory breaks down, approximations to influence functions can still provide valuable information. On linear models and convolutional neural networks, we demonstrate that influence functions are useful for multiple purposes: understanding model behavior, debugging models, detecting dataset errors, and even creating visually-indistinguishable training-set attacks.},
+  archivePrefix = {arXiv},
+  eprint = {1703.04730},
+  eprinttype = {arxiv},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Understanding Black-box Predictions via Influence Functions/Koh_Liang_2017_Understanding Black-box Predictions via Influence Functions.pdf;/Users/mahadeva/Zotero/storage/ZXYRC5H6/1703.html},
+  journal = {arXiv:1703.04730 [cs, stat]},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Statistics - Machine Learning},
+  primaryClass = {cs, stat}
+}
+
+@incollection{liConvergenceAnalysisTwolayer2017a,
+  title = {Convergence {{Analysis}} of {{Two}}-Layer {{Neural Networks}} with {{ReLU Activation}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}} 30},
+  author = {Li, Yuanzhi and Yuan, Yang},
+  editor = {Guyon, I. and Luxburg, U. V. and Bengio, S. and Wallach, H. and Fergus, R. and Vishwanathan, S. and Garnett, R.},
+  year = {2017},
+  pages = {597--607},
+  publisher = {{Curran Associates, Inc.}},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Convergence Analysis of Two-layer Neural Networks with ReLU Activation/Li_Yuan_2017_Convergence Analysis of Two-layer Neural Networks with ReLU Activation.pdf;/Users/mahadeva/Zotero/storage/CF2TVLRY/6662-convergence-analysis-of-two-layer-neural-networks-with-relu-activation.html}
+}
+
+@incollection{liVisualizingLossLandscape2018,
+  title = {Visualizing the {{Loss Landscape}} of {{Neural Nets}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}} 31},
+  author = {Li, Hao and Xu, Zheng and Taylor, Gavin and Studer, Christoph and Goldstein, Tom},
+  editor = {Bengio, S. and Wallach, H. and Larochelle, H. and Grauman, K. and {Cesa-Bianchi}, N. and Garnett, R.},
+  year = {2018},
+  pages = {6389--6399},
+  publisher = {{Curran Associates, Inc.}},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Visualizing the Loss Landscape of Neural Nets/Li et al_2018_Visualizing the Loss Landscape of Neural Nets.pdf;/Users/mahadeva/Zotero/storage/YZY4A4DQ/7875-visualizing-the-loss-landscape-of-neural-nets.html}
+}
+
+@article{schelterAmnesiaMachineLearning,
+  title = {``{{Amnesia}}'' \textendash{} {{Towards Machine Learning Models That Can Forget User Data Very Fast}}},
+  author = {Schelter, Sebastian},
+  pages = {4},
+  abstract = {Software systems that learn from user data with machine learning (ML) techniques have become ubiquitous over the last years. Recent law requires companies and institutions that process personal data to delete user data upon request (enacting the ``right to be forgotten''). However, it is not sufficient to merely delete the user data from databases. ML models that have been learnt from the stored data can be considered a lossy compressed version of the data, and therefore it can be argued that the user data must also be removed from them. Typically, this requires an inefficient and costly retraining of the affected ML models from scratch, as well as access to the original training data.},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/“Amnesia” – Towards Machine Learning Models That Can Forget User Data Very Fast/Schelter_“Amnesia” – Towards Machine Learning Models That Can Forget User Data Very Fast.pdf},
+  language = {en}
+}
+
+@article{sivanIncrementalSensitivityAnalysis,
+  title = {Incremental {{Sensitivity Analysis}} for {{Kernelized Models}}},
+  author = {Sivan, Hadar and Gabel, Moshe and Schuster, Assaf},
+  pages = {16},
+  abstract = {Despite their superior accuracy to simpler linear models, kernelized models can be prohibitively expensive in applications where the training set changes frequently, since training them is computationally intensive. We provide bounds for the changes in a kernelized model when its training set has changed, as well as bounds on the prediction of the new hypothetical model on new data. Our bounds support any kernelized model with L2 regularization and convex, differentiable loss. The bounds can be computed incrementally as the data changes, much faster than re-computing the model. We apply our bounds to three applications: active learning, leave-one-out cross-validation, and online learning in the presence of concept drifts. We demonstrate empirically that the bounds are tight, and that the proposed algorithms can reduce costly model re-computations by up to 10 times, without harming accuracy.},
+  file = {/Users/mahadeva/Zotero/storage/LFC5C2MC/Sivan et al. - Incremental Sensitivity Analysis for Kernelized Mo.pdf},
+  language = {en}
+}
+
+@inproceedings{tsaiIncrementalDecrementalTraining2014,
+  title = {Incremental and Decremental Training for Linear Classification},
+  booktitle = {Proceedings of the 20th {{ACM SIGKDD}} International Conference on {{Knowledge}} Discovery and Data Mining},
+  author = {Tsai, Cheng-Hao and Lin, Chieh-Yen and Lin, Chih-Jen},
+  year = {2014},
+  month = aug,
+  pages = {343--352},
+  publisher = {{Association for Computing Machinery}},
+  address = {{New York, New York, USA}},
+  doi = {10.1145/2623330.2623661},
+  abstract = {In classification, if a small number of instances is added or removed, incremental and decremental techniques can be applied to quickly update the model. However, the design of incremental and decremental algorithms involves many considerations. In this paper, we focus on linear classifiers including logistic regression and linear SVM because of their simplicity over kernel or other methods. By applying a warm start strategy, we investigate issues such as using primal or dual formulation, choosing optimization methods, and creating practical implementations. Through theoretical analysis and practical experiments, we conclude that a warm start setting on a high-order optimization method for primal formulations is more suitable than others for incremental and decremental learning of linear classification.},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/Incremental and decremental training for linear classification/Tsai et al_2014_Incremental and decremental training for linear classification.pdf},
+  isbn = {978-1-4503-2956-9},
+  keywords = {decremental learning,incremental learning,linear classification,warm start},
+  series = {{{KDD}} '14}
+}
+
+@article{wuDeltaGradRapidRetraining2020,
+  title = {{{DeltaGrad}}: {{Rapid}} Retraining of Machine Learning Models},
+  shorttitle = {{{DeltaGrad}}},
+  author = {Wu, Yinjun and Dobriban, Edgar and Davidson, Susan B.},
+  year = {2020},
+  month = jun,
+  abstract = {Machine learning models are not static and may need to be retrained on slightly changed datasets, for instance, with the addition or deletion of a set of data points. This has many applications, including privacy, robustness, bias reduction, and uncertainty quantifcation. However, it is expensive to retrain models from scratch. To address this problem, we propose the DeltaGrad algorithm for rapid retraining machine learning models based on information cached during the training phase. We provide both theoretical and empirical support for the effectiveness of DeltaGrad, and show that it compares favorably to the state of the art.},
+  archivePrefix = {arXiv},
+  eprint = {2006.14755},
+  eprinttype = {arxiv},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/DeltaGrad/Slides.pdf;/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/DeltaGrad/Wu et al_2020_DeltaGrad_annotated.pdf;/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/DeltaGrad/Wu et al_2020_DeltaGrad.pdf;/Users/mahadeva/Zotero/storage/RXXIBZYK/2006.html},
+  journal = {arXiv:2006.14755 [cs, stat]},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  primaryClass = {cs, stat}
+}
+
+@inproceedings{wuPrIUProvenanceBasedApproach2020,
+  title = {{{PrIU}}: {{A Provenance}}-{{Based Approach}} for {{Incrementally Updating Regression Models}}},
+  shorttitle = {{{PrIU}}},
+  booktitle = {Proceedings of the 2020 {{ACM SIGMOD International Conference}} on {{Management}} of {{Data}}},
+  author = {Wu, Yinjun and Tannen, Val and Davidson, Susan B.},
+  year = {2020},
+  month = jun,
+  pages = {447--462},
+  publisher = {{ACM}},
+  address = {{Portland OR USA}},
+  doi = {10.1145/3318464.3380571},
+  abstract = {The ubiquitous use of machine learning algorithms brings new challenges to traditional database problems such as incremental view update. Much effort is being put in better understanding and debugging machine learning models, as well as in identifying and repairing errors in training datasets. Our focus is on how to assist these activities when they have to retrain the machine learning model after removing problematic training samples in cleaning or selecting different subsets of training data for interpretability. This paper presents an efficient provenance-based approach, PrIU, and its optimized version, PrIU-opt, for incrementally updating model parameters without sacrificing prediction accuracy. We prove the correctness and convergence of the incrementally updated model parameters, and validate it experimentally. Experimental results show that up to two orders of magnitude speed-ups can be achieved by PrIU-opt compared to simply retraining the model from scratch, yet obtaining highly similar models.},
+  file = {/Users/mahadeva/OneDrive - University of Helsinki/ZoteroAttachments/UpdateML/PrIU/Wu et al_2020_PrIU.pdf},
+  isbn = {978-1-4503-6735-6},
+  language = {en}
+}
+
+

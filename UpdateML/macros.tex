@@ -1,0 +1,62 @@
+
+\newcommand{\smartart}{   
+    \begin{center}
+    \scalebox{0.68}{   
+        \smartdiagram[constellation diagram:counterclockwise]{
+        Updating ML Models,Differential\\Privacy, Optimization, Database\\Based, Information\\Theory, Novel\\Pipelines
+        }   
+    }
+    \end{center}
+}
+  
+\newcommand\myNset[1][6]{\ifnum#1=1 \smartdiagramset{set color list={red!60,blue!60,blue!60,blue!60,blue!60},
+  uniform connection color=true,
+  distance planet-satellite=4.1cm,
+  satellite text width=2.5cm,
+  planet text width=2.7cm, 
+  /tikz/connection planet satellite/.append style={->}
+  }
+  \else\ifnum#1=2 \smartdiagramset{set color list={blue!60,red!60,blue!60,blue!60,blue!60},
+  uniform connection color=true,
+  distance planet-satellite=4.1cm,
+  satellite text width=2.5cm,
+  planet text width=2.75cm, 
+  /tikz/connection planet satellite/.append style={->}
+  }
+  \else\ifnum#1=3 \smartdiagramset{set color list={blue!60,blue!60,red!60,blue!60,blue!60},
+  uniform connection color=true,
+  distance planet-satellite=4.1cm,
+  satellite text width=2.5cm,
+  planet text width=2.75cm, 
+  /tikz/connection planet satellite/.append style={->}
+  }
+  \else\ifnum#1=4 \smartdiagramset{set color list={blue!60,blue!60,blue!60,red!60,blue!60},
+  uniform connection color=true,
+  distance planet-satellite=4.1cm,
+  satellite text width=2.5cm,
+  planet text width=2.75cm, 
+  /tikz/connection planet satellite/.append style={->}
+  }
+  \else\ifnum#1=5 \smartdiagramset{set color list={blue!60,blue!60,blue!60,blue!60,red!60},
+  uniform connection color=true,
+  distance planet-satellite=4.1cm,
+  satellite text width=2.5cm,
+  planet text width=2.75cm, 
+  /tikz/connection planet satellite/.append style={->}
+  }
+  \else\ifnum#1=6 \smartdiagramset{set color list={blue!60,blue!60,blue!60,blue!60,blue!60},
+  uniform connection color=true,
+  distance planet-satellite=4.1cm,
+  satellite text width=2.5cm,
+  planet text width=2.75cm, 
+  /tikz/connection planet satellite/.append style={->}
+  }
+  
+  \fi\fi\fi\fi\fi\fi}
+
+
+\newcommand{\dataset}{\mathcal{D}}
+\newcommand{\datasetprime}{\mathcal{D}^{\prime}}
+\newcommand{\removed}{\mathcal{D_{R}}}
+\newcommand{\alg}{A}
+\newcommand{\mech}{M}
