@@ -99,6 +99,25 @@
 
 \end{frame}
 
+\begin{frame}
+  \frametitle{Benefits and Drawbacks}
+  \begin{block}{Benefits}
+    \begin{itemize}
+      \item Provides formal guarantee of statistical indistinguishability
+      \item Works well with Differentially Private trained networks
+      \item Uses influence functions to approximate data removal
+    \end{itemize}    
+  \end{block}
+  \begin{alertblock}{Limitations}
+    \begin{itemize}
+      \item Requires inverting a Hessian matrix
+      \item Non-convex loss functions not supported 
+      \item Adding noise during training hurts model performance
+      \item Very strict notion of removal
+    \end{itemize}
+    
+  \end{alertblock}
+\end{frame}
 \subsection{Optimization}
 \begin{frame}
   \myNset[2]
@@ -110,30 +129,71 @@
     DeltaGrad \cite{wuDeltaGradRapidRetraining2020}
     }
   \begin{itemize}
-    \item 
+    \item $\mech$ targets the Gradient Descent (GD) algorithm
+    \item Naive retraining $\alg(\datasetprime)$ recomputed gradients over all remaining points
+    \[
+        \wu_{t+1} \leftarrow \wu_{t} - \frac{\eta_{t}}{n-r}\sum_{i\in \datasetprime}\nabla \risk_{i}(\wu_{t})
+    \]
+    \item Instead rewrite it as a \textit{leave-r-out} formula
+    \[
+      \wi_{t+1} = \wi_{t} - \frac{\eta_{t}}{n-r}\left[\sum_{i\in \dataset}\nabla \risk_{i}(\wi_{t}) -\sum_{i\in \removed} \nabla \risk_{i}(\wi_{t})\right]
+    \]
+    \item Much cheaper to compute $r$ gradients, when $r \ll n$
   \end{itemize}
+
 \end{frame}
 
-
-\subsection{Database Based}
 \begin{frame}
-  \myNset[3]
-  \smartart
-\end{frame}
-
-
-\begin{frame}
-  \frametitle{
-    PrIU \cite{wuPrIUProvenanceBasedApproach2020}
-    }
+  \frametitle{Approximating $\sum_{i\in \dataset}\nabla \risk_{i}(\wi_{t})$}
   \begin{itemize}
-    \item 
+    \item Need to use historical $\nabla \risk(\w_{t})$ to approximate $\nabla\risk(\wi_{t})$
+    \item Taylor expansion around $\wi_{t}$ gives the following
+    \[
+       \nabla \risk(\wi_{t}) = \nabla \risk(\w_{t}) + \h_{t}\cdot(\wi_{t}-\w_{t}) 
+    \]
+    Where $\h_{t} = \int_{0}^{1}\h(\w_{t}+x(\wi_{t}-\w))dx$
+    \item Maintaining a Hessian matrix is expensive, so leverage the L-BFGS algorithm to compute a Hessian-vector product
+    \item This leads to issues in error bounds of the approximation
   \end{itemize}
+    
+\end{frame}
+
+\begin{frame}
+  \frametitle{Problem with Error Bound}
+  \includegraphics[page=43,clip,trim=0.5cm 1cm 0cm 1cm,width=\textwidth]{images/Slides.pdf}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Controlling the Errors}
+  \begin{itemize}
+    \item Do explicit evaluations for $j_{0}$ "burn-in" iterations and then periodically every $T_{0}$ iterations
+    \includegraphics[page=46,clip,trim=0.5cm 1cm 0cm 1cm,width=0.8\textwidth]{images/Slides.pdf}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Benefits and Limitations}
+  \begin{block}{Benefits}
+    \begin{itemize}
+      \item Handles both additions nad deletions of datapoints
+      \item Can be applied to any ML model trained using Stochastic Gradient Descent
+      \item Approximation guarantees and empirical results on 
+    \end{itemize}
+  \end{block}
+  \begin{alertblock}{Limitaitons}
+    \begin{itemize}
+      \item Needs to cache all weights $\w_{t}$ and gradients $\nabla \risk(\w_{t})$ during training
+      \item Requires tuning of $T_{0}$ and $j_{0}$ based on dataset
+      \item For SGD, only works with large batch sizes ($>10000$), which hurts model performance 
+    \end{itemize}
+  \end{alertblock}
+  
+
 \end{frame}
 
 \subsection{Information Theory}
 \begin{frame}
-  \myNset[4]
+  \myNset[3]
   \smartart
 \end{frame}
 
@@ -148,7 +208,7 @@
 
 \subsection{Novel Pipelines}
 \begin{frame}
-  \myNset[5]
+  \myNset[4]
   \smartart
 \end{frame}
 
