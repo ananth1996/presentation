@@ -327,7 +327,6 @@
     \includegraphics[width=0.9\textwidth]{images/SISA.pdf}
   \end{center}
 \end{frame}
-\section{Next Directions}
 
 \begin{frame}
   \frametitle{Benefits and Drawbacks}
@@ -345,6 +344,17 @@
       \item Distribution aware sharding might lead to biased models 
     \end{itemize}      
   \end{alertblock}
+\end{frame}
+
+\section{Next Directions}
+\begin{frame}
+  \frametitle{Ideas}
+  \begin{itemize}
+    \item Analytical and empirical comparison of various approaches
+    \item Investigate \textit{influence functions} for deep networks \cite{kohUnderstandingBlackboxPredictions2017,basuInfluenceFunctionsDeep2020}
+    \item Research SGD convergence and non-convex loss properties \cite{liConvergenceAnalysisTwolayer2017a,liVisualizingLossLandscape2018}
+    \item Implement SGD as Adaptive Statistical Query (ASQ) learning \cite{caoMakingSystemsForget2015} and perform unlearning
+  \end{itemize}
 
   
 
