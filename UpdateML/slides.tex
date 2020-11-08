@@ -202,8 +202,78 @@
     Eternal Sunshine of the Spotless Net \cite{golatkarEternalSunshineSpotless2020}
     }
   \begin{itemize}
-    \item 
+    \item $P(\w | \dataset)$ distribution of algorithm $\alg$
+    \item $\mech$ is called \emph{scrubbing function} applied to $\w$
+    \item $P(M(\w)|\dataset)$ is distribution of possible weights after scrubbing
+    \item Motivation: disallow attacker to use \textit{read-out function} $f(\w)$ to gain information about $\removed$
+    \item Therefore, optimal scrubbing function must have 
+    \[
+      \KL(P(f(\mech(\w))|\dataset)~\|~P(f(S_{0}(\w))|\datasetprime))=0
+    \]
+    Where $S_{0}$ is a \textit{certificate} of forgetting
+    \item To be agnostic of $f(\cdot)$, minimize
+    \[
+      \KL(P(\mech(\w)|\dataset)~\|~P(S_{0}(\w)|\datasetprime)) 
+    \]
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Forgetting Lagrangian}
+  \begin{itemize}
+    \item A trivial noise scrubbing is $M(\w)=S_{0}(\w) = w+\sigma n$, where $n \sim \mathcal{N}(0,I)$
+    \item As $\sigma \rightarrow \infty$, $\KL(p\|q)\rightarrow 0$, which invalidates the model 
+    \item Define the \emph{Forgetting Lagrangian}:
+    \[
+      \mathcal{L} = \mathbb{E}_{\mech(\w)}[\risk_{\datasetprime}(\w)] + \lambda\KL(P(\mech(\w)|\dataset)~\|~P(S_{0}(\w)|\datasetprime)) 
+    \]
+    \item Use quadratic approximation and noise to scrub weights
+    \item $\mech(\w) = h(\w)+n$ and $S_{0}=w + n^{\prime}$ where $h(\w)$ is deterministic and $n,n^{\prime} \sim \mathcal{N}(,\Sigma)$
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Scrubbing Example }
+  \begin{center}
+  \includegraphics[width=0.9\textwidth]{images/scrubbing.pdf}
+  \end{center}
+
+\end{frame}
+\begin{frame}
+  \frametitle{Robust Quadratic Scrubbing}
+  \begin{itemize}
+    \item Noisy Newton update, as $t\rightarrow\infty$ is defined as 
+    \[
+      \mech_{t}(\w) = \w - \h^{-1}\nabla\risk_{\datasetprime}(\w) + (\lambda\sigma^{2}_{h})^{1/4}\h^{-1/4}
+    \]
+    Where $\h = \nabla^{2}(\risk_{\datasetprime}(\w))$, $\sigma_{h}$ represents error in approximating SGD with a continuous gradient flow and $\lambda$ hyperparameter
+    \item For Deep Neural Networks, Hessian matrix is expensive to compute and store
+    \item Simplified scrubbing to only adding noise 
+    \[
+      \mech(\w) = \w + (\lambda\sigma^{2}_{h})^{1/4}F^{-1/4}
+    \]
+    \item $F$ is the Fisher Information Matrix, computed using the Levenberg- Marquardt semi-positive-definite approximation of $\nabla^{2}\risk_{\dataset}(\w)$
+  \end{itemize}
+  
+\end{frame}
+\begin{frame}
+  \frametitle{Benefits and Limitations}
+  \begin{block}{Benefits}
+    \begin{itemize}
+      \item Works for Deep Neural Networks
+      \item Allows to remove a entire class, multiple classes, or a subset of a class of the training dataset
+      \item Process is optimal if quadratic assumptions hold true
+    \end{itemize}
+  \end{block}
+
+  \begin{alertblock}{Limitations}
+    \begin{itemize}
+      \item Space and time complexity of approach unknown
+      \item Considers worst case of attacker using any read-out function $f(\cdot)$
+      \item Results based on stability of SGD after pre-training networks
+    \end{itemize}
+  \end{alertblock}
 \end{frame}
 
 \subsection{Novel Pipelines}
