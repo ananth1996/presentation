@@ -23,9 +23,30 @@
 \end{frame}
 
 \section{Motivation}
+\begin{frame}
+  \frametitle{Potential Applications}
+  \begin{itemize}
+    \item<1-> \textbf{GDPR}: Deletion of private information from public datasets
+    \item<2-> \textbf{Continuous Model Updating}: Handle additions, deletions and changes of training samples
+    \item<3-> \textbf{Data Valuation}: \textit{Leave One Out} tests to find important training samples 
+    \item<4-> \textbf{Bias Reduction}: Jackknife resampling that requires retrained model parameters 
+  \end{itemize}
+
+\end{frame}
 
 \section{Problem Overview}
 
+\begin{frame}
+  \frametitle{Challenges \cite{bourtouleMachineUnlearning2020}}
+  \begin{enumerate}
+    \item Limited understanding of impact of each data point on the model
+    \item Stochasticity in training 
+    \item Incremental training 
+    \item Stochasticity in learning 
+  \end{enumerate}
+  
+
+\end{frame}
 \section{Approaches}
 \begin{frame}
   \frametitle{}
@@ -287,14 +308,47 @@
   \frametitle{
     Machine Unlearning: SISA \cite{bourtouleMachineUnlearning2020}
     }
+  SISA Framework 
   \begin{itemize}
-    \item 
+    \item {\bf Sharded}:\\
+    Dataset is divided into $S$ disjoint shards, $\cap_{k \in [S]}\dataset_{k}=\emptyset$ and $\cup_{k\in[S]}\dataset_{k}=\dataset$
+    \item {\bf Isolated}:\\
+    ML models are trained on each data shard $\dataset_{k}$ in isolation to other data shards
+    \item {\bf Sliced}:\\
+    Further, each shard $\dataset_{k}$ is sliced into $R$ disjoint slices. Incrementally present shards during training
+    \item {\bf Aggregated}:\\
+    During inference aggregate predictions from individual models 
   \end{itemize}
 \end{frame}
 
+\begin{frame}
+  \frametitle{SISA Framework}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{images/SISA.pdf}
+  \end{center}
+\end{frame}
 \section{Next Directions}
 
+\begin{frame}
+  \frametitle{Benefits and Drawbacks}
+  \begin{block}{Benefits}
+    \begin{itemize}
+      \item Service providers have \textit{plausible removal} of data
+      \item Practical approach reduces the overhead of unlearning
+      \item Can utilize distributional of remove requests for sharding
+    \end{itemize}
+  \end{block}
+  \begin{alertblock}{Drawbacks}
+    \begin{itemize}
+      \item Training of isolated shards might lead to weak learners for especially complex tasks
+      \item Sharding and slicing increase the overall space complexity of the approach
+      \item Distribution aware sharding might lead to biased models 
+    \end{itemize}      
+  \end{alertblock}
 
+  
+
+\end{frame}
 
 \begin{frame}[allowframebreaks]
   \frametitle{References}
