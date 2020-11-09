@@ -57,9 +57,9 @@
 \begin{frame}
   \frametitle{Common Terminology}
   \begin{itemize}
-    \item Fixed training Dataset $\dataset$
-    \item Learning Algorithm $\alg$ (can be randomized)
-    \item Datapoints to be remove $\removed$, where $|\removed|=r$, remaining dataset $\datasetprime=\dataset - \removed$
+    \item Training Dataset $\dataset$
+    \item Learning Algorithm $\alg$
+    \item Data points to be removed $\removed$, where $|\removed|=r$, remaining dataset $\datasetprime=\dataset - \removed$
     \item Naive approach is retraining from scratch, i.e, $\alg(\datasetprime)$
     \item Mechanism $\mech$ which offers an efficient way to update the model
   \end{itemize}
@@ -79,7 +79,7 @@
     \[
       e^{-\epsilon} \le \frac{P(M(\alg(\dataset),\removed)\in \subhypothesis)}{P(A(\datasetprime)\in \subhypothesis)} \le e^{\epsilon}
     \]
-    \item Insufficiency of Parametric indistinguishability
+    \item Insufficiency of Parametric Indistinguishability
     \begin{itemize}
       \item Approximate removal processes leaves a gradient residual 
       \item Residuals can reveal the prior presence of that training sample
@@ -95,7 +95,7 @@
     \item To remove a single point $\removed = \{(\x_{n},y_{n})\}$ 
     \item Newton Update Step: $\wminus=\mech(\wopt,(\x_{n},y_{n})) = \wopt - H^{-1}_{\wopt}\nabla$
     \item Where $H_{\wopt} = \nabla^{2}\risk(\wopt,\datasetprime)$ and $\nabla = \lambda\wopt + \nabla\loss((\wopt)^{T}\x_{n},y_{n})$
-    \item $H ^{-1}_{\wopt}\nabla$ is from \textit{influence function} literature 
+    \item $H ^{-1}_{\wopt}\nabla$ is from \textit{influence function} literature \cite{kohUnderstandingBlackboxPredictions2017}
   \end{itemize}
 
 \end{frame}
@@ -108,8 +108,8 @@
 \begin{frame}
   \frametitle{Certifing Removal}
   \begin{itemize}
-    \item $\wminus$ is approximate close to minimizer of $\risk(\w;\datasetprime)$
-    \item $\nabla\risk(\wminus;\datasetprime)$ is gradient residual and if non-zero, reveals Information
+    \item $\wminus$ is approximately close to the minimizer of $\risk(\w;\datasetprime)$
+    \item $\nabla\risk(\wminus;\datasetprime)$ is gradient residual and if non-zero, reveals information
     \item Even a small $\|\nabla\risk(\wminus;\datasetprime)\|_{2}$ doesn't guarantee certifiable removal 
     \item Therefore, perturb loss at training time 
     \[
@@ -151,7 +151,7 @@
     }
   \begin{itemize}
     \item $\mech$ targets the Gradient Descent (GD) algorithm
-    \item Naive retraining $\alg(\datasetprime)$ recomputed gradients over all remaining points
+    \item Naive retraining $\alg(\datasetprime)$ recomputes gradients over all remaining points
     \[
         \wu_{t+1} \leftarrow \wu_{t} - \frac{\eta_{t}}{n-r}\sum_{i\in \datasetprime}\nabla \risk_{i}(\wu_{t})
     \]
@@ -196,9 +196,9 @@
   \frametitle{Benefits and Limitations}
   \begin{block}{Benefits}
     \begin{itemize}
-      \item Handles both additions nad deletions of datapoints
+      \item Handles both additions and deletions of datapoints
       \item Can be applied to any ML model trained using Stochastic Gradient Descent
-      \item Approximation guarantees and empirical results on 
+      \item Approximation guarantees and empirical results
     \end{itemize}
   \end{block}
   \begin{alertblock}{Limitaitons}
@@ -223,8 +223,8 @@
     Eternal Sunshine of the Spotless Net \cite{golatkarEternalSunshineSpotless2020}
     }
   \begin{itemize}
-    \item $P(\w | \dataset)$ distribution of algorithm $\alg$
-    \item $\mech$ is called \emph{scrubbing function} applied to $\w$
+    \item $P(\w | \dataset)$ is distribution of algorithm $\alg$
+    \item $\mech$ is called the \emph{scrubbing function} and is applied to $\w$
     \item $P(M(\w)|\dataset)$ is distribution of possible weights after scrubbing
     \item Motivation: disallow attacker to use \textit{read-out function} $f(\w)$ to gain information about $\removed$
     \item Therefore, optimal scrubbing function must have 
