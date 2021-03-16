@@ -13,3 +13,5 @@
 *.snm
 */.DS_Store
 .DS_Store
+
+Variational-Unlearning/paper
