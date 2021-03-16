@@ -1,0 +1,63 @@
+\begin{figure}
+    \centering
+\tikzstyle{textblock} = [rectangle, text width=4em, text centered, line width=1pt]
+\tikzstyle{block} = [rectangle, draw, fill=uablue25, 
+    text width=4em, text centered, rounded corners, minimum height=2em, line width=1pt ]
+\tikzstyle{line} = [line width=1pt, -triangle 45]
+\tikzstyle{alert} = [text=uared100, fill=uared25, draw=uared100]
+\tikzstyle{normal} = [text=uablue100, fill=uablue25, draw=uablue100]
+\tikzstyle{dim} = [text=uablue25, fill=uablue5, draw=uablue25]
+\tikzstyle{hide} = [draw=None]
+
+\begin{tikzpicture}[node distance=1.5cm, auto]
+    % Place nodes
+    \node [textblock] (original) {Original Model};
+    \node [textblock] (target) [right of=original, node distance=4cm] {Target Model};
+
+    \node [textblock] (unlearn) [right of=target, node distance=4cm] {Unlearned Model};
+
+    \node [block,onslide=<2->{dim},temporal=<2-3>{}{alert}{dim},temporal=<5-8>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (posterior) [below of=original, node distance=2cm] {$\ex(\param|\data)$};
+
+    \node [block,onslide=<2->{dim},temporal=<3-5>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (retrain) [below of=target, node distance=2cm] {$\ex(\param|\remain)$};
+
+    \node [block,onslide=<2->{dim},temporal=<4-5>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (qu) [below of=unlearn, node distance=2cm] {$\un(\param|\remain)$};
+
+    \node [block,onslide=<2->{dim},temporal=<2>{}{alert}{dim},temporal=<6-8>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (posapp) [below of=posterior, node distance=2cm] {$\posapp(\param|\data)$};
+
+    \onslide<-6>{
+    \node [block,onslide=<2->{dim},temporal=<6>{}{alert}{dim}] (tarapp) [below of=retrain, node distance=2cm] {$\exapp(\param|\remain)$};
+
+    \node [block,onslide=<2->{dim},temporal=<6>{}{alert}{dim}] (unapp) [below of=qu, node distance=2cm] {$\unapp(\param|\remain)$};
+    }
+    
+    \onslide<7->{
+        \node [block,onslide=<2->{dim},temporal=<7>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (tarappadj) [below of=retrain, node distance=1cm] {$\exapp_{\text{adj}}(\param|\remain)$};
+
+        \node [block,onslide=<2->{dim},temporal=<8>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (tarapp2) [below of=retrain, node distance=3cm] {$\exapp(\param|\remain)$};
+
+        \node [block,onslide=<2->{dim},temporal=<7>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (unappadj) [below of=qu, node distance=1cm] {$\unapp(\param|\remain)$};
+    
+        \node [block,onslide=<2->{dim},temporal=<8>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (rkl) [below of=unappadj, node distance=2cm] {$\rklapp(\param|\remain)$};
+    }
+    
+    % % Draw edges
+    \draw [line,onslide=<2->{dim},temporal=<2>{}{alert}{dim},temporal=<6-8>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (posapp.north) -> (posterior.south) node [midway, left] (TextNode) {$\mathcal{L}$};
+    \draw [line,onslide=<2->{dim},temporal=<4>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (qu.west) -> (retrain.east) node [midway,above] (eubo) {$\mathcal{U}$};
+
+    \onslide<-6>{
+    \draw [line,onslide=<2->{dim},temporal=<6>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (unapp.west) -> (tarapp.east) node [midway,above] (euboapp) {$\tilde{\mathcal{U}}$}; 
+    \draw [line,onslide=<2->{dim},temporal=<6>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (tarapp.west) -> (posapp.east) node [midway, above] {Bayes' Rule};
+    }
+    \onslide<7->{
+        \draw [line,onslide=<2->{dim},temporal=<7>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (unappadj.west) -> (tarappadj.east) node [midway,below] (euboapp) {$\tilde{\mathcal{U}_{\text{adj}}}$};     
+    
+        \draw [line,onslide=<2->{dim},temporal=<8>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (rkl.west) -> (tarapp2.east) node [midway,below] (rKL) {rKL};
+
+        \draw [line,onslide=<2->{dim},temporal=<7>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (tarappadj.west) -> (posapp.east);
+
+        \draw [line,onslide=<2->{dim},temporal=<8>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (tarapp2.west) -> (posapp.east) node [midway, above right=0.cm,temporal=<7>{}{color=uared100}] {Bayes' Rule};
+    }
+    \draw [line,onslide=<2->{dim},temporal=<3>{}{alert}{dim},temporal=<9>{}{normal}{dim}] (retrain.west) -> (posterior.east) node [midway, above] {Bayes' Rule};
+
+\end{tikzpicture}
+\end{figure}
