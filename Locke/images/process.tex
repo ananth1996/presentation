@@ -1,0 +1,34 @@
+
+\begin{figure}
+    \centering
+    \tikzstyle{textblock} = [rectangle, text width=4em, text centered, line width=1pt]
+\tikzstyle{block} = [rectangle, draw, fill=uablue25, 
+    text width=5em, text centered, rounded corners, minimum height=2em, line width=1pt ]
+\tikzstyle{line} = [line width=1pt, -triangle 45]
+\tikzstyle{alert} = [text=uared100, fill=uared25, draw=uared100]
+\tikzstyle{normal} = [text=uablue100, fill=uablue25, draw=uablue100]
+\tikzstyle{dim} = [text=uablue25, fill=uablue5, draw=uablue25]
+\tikzstyle{hide} = [draw=None]
+\begin{tikzpicture}[node distance=1.5cm, auto]
+    % Place nodes
+    \node [block,onslide=<2->{dim}] (quote) {Find Locke Quotes};
+    \node [block,onslide=<2->{dim},above right=2.5mm of quote] (blast)  {Get BLAST hits};
+    \node [block,onslide=<2->{dim},below right=2.5mm of quote] (sem)  {Get Semantic Search hits};
+    \node [block,onslide=<2->{dim}, right=2.5cm of quote] (sort) {Sort and Filter};
+    
+    \node [block,onslide=<2->{dim}, above right=1cm of sort] (uniqblast) {Unique BLAST hits};
+    \node [block,onslide=<2->{dim}, below right=1cm of sort] (uniqsem) {Unique Semantic hits};
+    \node [block,onslide=<2->{dim}, right=1cm of sort] (intersection) {Intersection hits};
+    
+    \draw[line,onslide=<2->{dim}] (quote.north) -- (blast.west);
+    \draw[line,onslide=<2->{dim}] (quote.south) -- (sem.west);
+    
+    \draw[line,onslide=<2->{dim}] (blast.east) -- (sort.north);
+    \draw[line,onslide=<2->{dim}] (sem.east) -- (sort.south);
+
+    \draw[line,onslide=<2->{dim}] (sort.east) -- (uniqblast.south west);
+    \draw[line,onslide=<2->{dim}] (sort.east) -- (intersection.west);
+    \draw[line,onslide=<2->{dim}] (sort.east) -- (uniqsem.north west);
+
+\end{tikzpicture}
+\end{figure}

@@ -1,0 +1,63 @@
+
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\usepackage{bm}
+\usepackage{tikz}
+\usepackage{xspace}
+\usetikzlibrary{positioning,arrows}
+\usepackage{xcolor}
+
+\newcommand{\param}{\boldsymbol{\theta}}
+\newcommand{\ex}{p}
+\newcommand{\exapp}{\tilde{p}}
+\newcommand{\posapp}{q}
+\newcommand{\un}{q_u}
+\newcommand{\unapp}{\tilde{q}_u}
+\newcommand{\rklapp}{\tilde{q}_v}
+\newcommand{\data}{\mathcal{D}}
+\newcommand{\erase}{\mathcal{D}_e}
+\newcommand{\remain}{\mathcal{D}_r}
+
+\definecolor{uablue}{RGB}{0,61,100}
+\colorlet{uablue100}{uablue}
+\colorlet{uablue75} {uablue!75!white}
+\colorlet{uablue50} {uablue!50!white}
+\colorlet{uablue25} {uablue!25!white}
+\colorlet{uablue10} {uablue!10!white}
+\colorlet{uablue5}  {uablue!5!white}
+
+\definecolor{uared}{RGB}{126,0,47}
+\colorlet{uared100}{uared}
+\colorlet{uared75} {uared!75!white}
+\colorlet{uared50} {uared!50!white}
+\colorlet{uared25} {uared!25!white}
+\colorlet{uared10} {uared!10!white}
+\colorlet{uared5}  {uared!5!white}
+
+\tikzset{onslide/.code args={<#1>#2}{%
+  \only<#1>{\pgfkeysalso{#2}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{alt/.code args={<#1>#2#3}{%
+  \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{temporal/.code args={<#1>#2#3#4}{%
+  \temporal<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}{\pgfkeysalso{#4}} % \pgfkeysalso doesn't change the path
+}}
+% positioning style from https://tex.stackexchange.com/questions/102250/how-to-position-one-node-relative-to-another-node-at-a-certain-angle-in-tikz-tak
+\tikzset{
+    position/.style args={#1:#2 from #3}{
+        at=(#3.#1), anchor=#1+180, shift=(#1:#2)
+    }
+}
+
+\newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\mcl}[1]{\mathcal{#1}}
+\newcommand{\mbb}[1]{\mathbb{#1}}
+
+\newcommand{\da}{\mcl{D}}
+\newcommand{\dc}{\mcl{D}_r}
+\newcommand{\dr}{\mcl{D}_e}
+
+\newcommand{\eubo}{\tilde{q}_u}
+\newcommand{\elbo}{\tilde{q}_v}
+
