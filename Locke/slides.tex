@@ -24,19 +24,94 @@
 % \end{frame}
 
 
-\section{}
+\section{Evaluation Pipeline}
 
-\begin{frame}<1>[label=overview]
-  \frametitle{Overview}
+\begin{frame}<1>[label=Pipeline]
+  \frametitle{Pipeline Overview}
   \input{images/process.tex}
 \end{frame}
 
 
-\subsection{VI and ELBO}
-\againframe<2>{overview}
+\againframe<2>{Pipeline}
+
+\section{Unique BLAST Hits}
+\begin{frame}
+  \frametitle{Unique BLAST Hits}
+
+  \begin{itemize}
+    \item Text reuse hits with lots of OCR noise
+  \end{itemize}
+  \begin{block}{Example John Locke Quote}
+    "the Animal and Vegetable Kingdoms, are so nearly join'd, that if you will take the lowest of one, and the highest of the other, there will scarce be perceived an"
+  \end{block}
+
+  \begin{block}<2->{BLAST Hit}
+    "he Ani-\textbackslash{}nm Ial\textasciitilde{}andr Vegetable- KingdomsS are \textbraceleft{}ol\textasciitilde{}4 news\textasciitilde{}l \textbackslash{}' " \textbackslash{}'d, that if\textbackslash{}nyoul will takie the\textbackslash{}' lowes .of: one, and the ofp\textasciitilde{}\textasciitilde{}p the other,\textbackslash{}nthere will \textasciitilde{}fearce be perceived an"
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{\href{https://gallica-kaiku.rahtiapp.fi/?eccoId=1702800107&offsetStart=357168&offsetEnd=357338}{Unique BLAST Hit Document}}
+  \begin{figure}[]
+    \centering
+    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{images/blast_hit.png}
+  \end{figure}
+\end{frame}
+
+\section{Unique Semantic Search Hits}
+
+\againframe<3>{Pipeline}
+
+\begin{frame}
+  \frametitle{Unique Semantic Search Hits}
+  \begin{itemize}
+    \item Finds paraphrases and meaning matches
+  \end{itemize}
+  \begin{block}{Semantic Search Hits}
+    "in the vegetable and animal tribes belong-\textless{}br /\textgreater{}ing to the earth, and have discovered that the lowest of\textless{}br /\textgreater{}the animal species and the highest of the vegetable approx-\textless{}br /\textgreater{}imate so near to each other, that the difference betweenk\textless{}br /\textgreater{}the two can scarcely be perceived; but this is the very\textless{}br /\textgreater{}summit of their researches; they are unable to trace the\textless{}br /\textgreater{}connection of things any further, and reft satisfied in ad-\textless{}br /\textgreater{}mitting that\textless{}br /\textgreater{}\textless{}br /\textgreater{}The chain continues, but its"
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\href{https://gallica-kaiku.rahtiapp.fi/?eccoId=1015500300&offsetStart=715621&offsetEnd=716054}{Semantic Search Hit Document}}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{images/semantic_hit.png}
+  \end{figure}
+
+\end{frame}
 
 
+\section{Annotation}
 
+\begin{frame}
+  \frametitle{Annotation Pipeline}
+  \input{images/annotation.tex}
+  \begin{itemize}
+    \item<only@2> Sample 20 quotes
+    \item<only@3> Sample 50 unique semantic Hits 
+    \only<3>{\begin{enumerate}
+      \item Top 5 hits
+      \item 5 random hits from each 10\% interval
+    \end{enumerate}}
+    \item<only@4> Annotate with one of four options
+    \only<4>{\begin{enumerate}
+      \item Paraphrase 
+      \item Meaning Match
+      \item No Match
+      \item Don't Know
+    \end{enumerate}
+    }
 
+  \end{itemize}
+\end{frame}
 
+\begin{frame}
+  \frametitle{Annotation Results for example Locke quote}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth,height=\textheight,keepaspectratio,clip,trim={0 8cm 0 0}]{images/quote_1_annotation_results.pdf}
+  \end{figure}
+\end{frame}
 \end{document}  

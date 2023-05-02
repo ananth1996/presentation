@@ -1,0 +1,22 @@
+
+\begin{figure}
+    \centering
+    \tikzstyle{textblock} = [rectangle, text width=4em, text centered, line width=1pt]
+\tikzstyle{block} = [rectangle, draw, fill=uablue25, 
+    text width=5em, text centered, rounded corners, minimum height=2em, line width=1pt ]
+\tikzstyle{line} = [line width=1pt, -triangle 45]
+\tikzstyle{alert} = [text=uared100, fill=uared25, draw=uared100]
+\tikzstyle{normal} = [text=uablue100, fill=uablue25, draw=uablue100]
+\tikzstyle{dim} = [text=uablue25, fill=uablue5, draw=uablue25]
+\tikzstyle{hide} = [draw=None]
+\begin{tikzpicture}[node distance=1.5cm, auto]
+    % Place nodes
+    \node [block,temporal=<2>{}{alert}{}] (quotes) {Sample Locke Quotes};
+    \node [block,temporal=<3>{}{alert}{},right=0.7cm of quotes] (uniqsem) {Sample Unique Semantic Hits};
+    \node [block,temporal=<4>{}{alert}{},right=0.7cm of uniqsem] (annotate) {Annotate};
+    \node [block,temporal=<5>{}{alert}{},right=0.7cm of annotate] (eval) {Evaluate};
+    \draw[line] (quote) edge (uniqsem) (uniqsem) edge (annotate) (annotate) edge (eval);
+
+
+\end{tikzpicture}
+\end{figure}

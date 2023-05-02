@@ -12,13 +12,13 @@
 \begin{tikzpicture}[node distance=1.5cm, auto]
     % Place nodes
     \node [block,onslide=<2->{dim}] (quote) {Find Locke Quotes};
-    \node [block,onslide=<2->{dim},above right=2.5mm of quote] (blast)  {Get BLAST hits};
-    \node [block,onslide=<2->{dim},below right=2.5mm of quote] (sem)  {Get Semantic Search hits};
+    \node [block,onslide=<2->{dim},above right=2.5mm of quote] (blast)  {Get BLAST Hits};
+    \node [block,onslide=<2->{dim},below right=2.5mm of quote] (sem)  {Get Semantic Search Hits};
     \node [block,onslide=<2->{dim}, right=2.5cm of quote] (sort) {Sort and Filter};
     
-    \node [block,onslide=<2->{dim}, above right=1cm of sort] (uniqblast) {Unique BLAST hits};
-    \node [block,onslide=<2->{dim}, below right=1cm of sort] (uniqsem) {Unique Semantic hits};
-    \node [block,onslide=<2->{dim}, right=1cm of sort] (intersection) {Intersection hits};
+    \node [block,onslide=<2->{dim},temporal=<2>{}{alert}{dim}, above right=1cm of sort] (uniqblast) {Unique BLAST Hits};
+    \node [block,onslide=<2->{dim}, right=1cm of sort] (intersection) {Intersection Hits};
+    \node [block,onslide=<2->{dim},temporal=<3>{}{alert}{dim}, below right=1cm of sort] (uniqsem) {Unique Semantic Hits};
     
     \draw[line,onslide=<2->{dim}] (quote.north) -- (blast.west);
     \draw[line,onslide=<2->{dim}] (quote.south) -- (sem.west);
