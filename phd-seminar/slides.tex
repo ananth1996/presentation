@@ -1,0 +1,125 @@
+\documentclass[pdf]{beamer}
+\usetheme{Copenhagen}
+\usepackage{pgfgantt}
+% Need to use LuaLatex to compile
+\usepackage{emoji}
+\usepackage{booktabs}
+\setemojifont{Apple Color Emoji}
+\setbeamercovered{transparent}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{footline}[text line]{%
+    \parbox{\linewidth}{\vspace*{-8pt}\hfill\hfill\insertframenumber\,/\,\inserttotalframenumber}}
+
+\title{``$2^{\text{nd}}$'' Year PhD Seminar Presentation}
+
+\author[Ananth Mahadevan]{Ananth Mahadevan}
+\date{\today}
+
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{PhD Progress Gantt Chart}
+    \begin{ganttchart}[
+        % hgrid,
+        % vgrid,
+        bar/.append style={fill=gray!50},
+        time slot format=isodate-yearmonth,
+        time slot unit=month,
+        x unit=1.5mm,
+        y unit chart=7mm,
+        % y unit=1mm,
+        progress label text={\pgfmathprintnumber[precision=0, verbatim]{#1}\%},
+        % progress=today,
+        today=2024-03,
+        bar height=.5,
+        group peaks width=1,
+        group peaks height=0.4,
+        rejected/.style={milestone/.append style={fill=red}},
+        published/.style={milestone/.append style={fill=green}},
+        review/.style={milestone/.append style={fill=yellow}},
+        % bar top shift=.5
+      ]{2020-01}{2024-12}
+    \gantttitlecalendar{year} \\
+      \ganttgroup[progress=today]{PhD}{2020-08}{2024-12}\\
+      \ganttbar{Paper1}{2021-01}{2021-06} % Unlearning 
+      \ganttmilestone[rejected]{}{2021-06} % VLDB-2022
+      \ganttmilestone[rejected]{}{2022-02} % ECML_PKDD
+      \ganttmilestone[published]{}{2022-04}\\ % MDPI-MAKE
+      \ganttbar{Paper2}{2022-01}{2022-02} % JANE
+      \ganttmilestone[rejected]{}{2022-03} % ANS extension 2022
+      \ganttmilestone[published]{}{2022-06}\\
+      \ganttbar{Paper3}{2020-08}{2022-05} % Sketching
+      \ganttmilestone[published]{}{2022-09}\\ % CIKM 2022
+      \ganttbar{Paper4}{2022-05}{2023-02} % Reception Reader
+      \ganttmilestone[published]{}{2023-04}\\ % JOHD 2023
+      \ganttbar{Paper5}{2022-11}{2023-04} % Mandeville
+      \ganttmilestone[published]{}{2023-12}\\ % JOHD 2023
+      \ganttbar{Paper6}{2022-04}{2022-12} % UpdateML
+      \ganttmilestone[rejected]{}{2023-03} % ICML 2023
+      \ganttmilestone[rejected]{}{2023-08} % EuroSys 2024
+      \ganttmilestone[review]{}{2024-02}\\ % KBS 2024
+      \ganttbar{Paper7}{2023-06}{2024-02} % TextReuse Pipeline
+      \ganttmilestone[published]{}{2024-04}\\ % KBS 2024
+
+    \end{ganttchart}    
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Papers}
+    \begin{table}
+        \centering
+        \begin{tabular}{cccc}
+            \toprule
+            Number & One Word Title & Venue & Include in Thesis? \\
+            \midrule
+            1 & Unlearning & MAKE 2022  & \emoji{check-mark-button}  \\
+            2 & JANE & Entropy 2022   &\emoji{check-mark-button} \\
+            3 & Sketching& CIKM 2022 & \emoji{man-shrugging-medium-skin-tone}\\
+            4 & ReceptionReader& JOHD 2023 &  \emoji{man-shrugging-medium-skin-tone} \\
+            5 & Mandeville & DES 2023 & \emoji{man-shrugging-medium-skin-tone}\\
+            6 & Retraining & KBS 2024 &  \emoji{check-mark-button} \\
+            7 & TextReuse & VLDB 2024 & \emoji{check-mark-button} \\
+
+            
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Why \emoji{man-shrugging-medium-skin-tone}?}
+    % \begin{block}{\centering Broad Research Interests}
+    %     \begin{center}
+    %         Scalable Pipelines for Machine Learning and Data Science
+    %     \end{center}
+    % \end{block}
+
+    Multiple Projects:
+    \begin{enumerate}
+        \item Maintaining ML models
+        \begin{itemize}
+            \item Paper 1: Unlearning 
+            \item Paper 6: Retraining
+        \end{itemize}
+        \item Analysing Historical Documents 
+        \begin{itemize}
+            \item Paper 4: ReceptionReader
+            \item Paper 5: Mandeville
+            \item Paper 6: TextReuse
+        \end{itemize}
+        \item Scaling and Evaluating Algorithms
+        \begin{itemize}
+            \item Paper 2: JANE
+            \item Paper 3: Sketching 
+            \item Paper 8?: Diverse Sampling 
+        \end{itemize}
+    \end{enumerate}
+
+\end{frame}
+\end{document}
