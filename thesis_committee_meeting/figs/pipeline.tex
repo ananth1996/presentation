@@ -1,0 +1,107 @@
+
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{calc,positioning,shapes.geometric,arrows.meta}
+
+% positioning style from https://tex.stackexchange.com/questions/102250/how-to-position-one-node-relative-to-another-node-at-a-certain-angle-in-tikz-tak
+\tikzset{
+    position/.style args={#1:#2 from #3}{
+            at=(#3.#1), anchor=#1+180, shift=(#1:#2)
+        }
+}
+
+\tikzset{
+    lines/.style={-{Latex[scale=1.5]},very thick},
+    boxes/.style={very thick,
+            draw=black,
+            rounded corners,
+            inner sep=0.5cm,
+            align=center,
+            rectangle,
+        },
+    decision/.style={very thick,
+            draw,
+            diamond,
+            aspect=2,
+            align=center,
+            inner sep=0.1cm,
+        },
+        label/.style={very thick,
+            circle,
+            draw=black,
+            inner sep = 0.1cm
+        },
+    learning/.style={draw=blue!80!black},
+    unlearning/.style={draw=red!80!black}
+}
+\node[align=center] (origin) at (0,0) {};
+\node[align=center,
+    below=2cm of origin, ] (traindata) {Training\\ data \\ \D := \Dtrain} ;
+\node [boxes,
+    right=0.5cm of origin,
+    learning, ] (training) {Training\\Stage};
+\node [
+    label,
+    above=0.1cm of training,
+    learning,
+] (step1) {1};
+\node [
+    boxes,
+    right=2cm of training,
+    learning,
+] (inference) {Inference\\Stage};
+\node [
+    label,
+    above=0.1cm of inference,
+    learning
+] (step2) {2};
+% decision diamond
+\node [
+    decision,
+    right=1.5cm of inference,
+    unlearning,
+] (deletion) {Deletion?};
+\node [
+    right=1.5cm of deletion,
+    boxes,
+    unlearning,
+] (unlearning) {Unlearning\\Stage};
+\node [
+    above=0.1cm of unlearning,
+    label,
+    unlearning
+] (step3) {3};
+% decision diamond
+\node [
+    decision,
+    below=2cm of unlearning,
+    unlearning
+] (employ) {Employ\\Model?};
+
+% lines
+\draw[lines,learning] (traindata) ++(-0.5cm,1cm) |- (training); %node[midway,above=0.05cm] {\D:=\Dtrain};
+\draw[lines,learning] (training) -- (inference) node[midway,above] {\wEmployed:=\worig};
+\draw[lines,unlearning] (inference) -- (deletion);
+\draw[lines,unlearning]  (deletion) -- node[pos=0.5,left=0.05cm] {No} ++(0,-1.5cm) -| ($(inference.south west)!.8!(inference.south east)$) ;
+\draw[lines,unlearning] (deletion) -- (unlearning) node[pos=0.5,above=0.05] {Yes} node[pos=0.5,below=0.05cm] {\Dm};
+\draw[lines,unlearning] (unlearning) -- (employ) node[midway,left=0.05cm] {\wunlearned};
+\draw[draw=none] (unlearning) -- (employ) node[midway,right=0.05cm] (rightnode)  {\D:=\Dprime};
+\draw[lines,unlearning]  (employ.west) -| ($(inference.south west)!.2!(inference.south east)$) node[pos=0.01,above=0.05cm] {Yes} ++(0,0cm)  node[pos=0.7,left] {\wEmployed:=\wunlearned};
+\draw[lines,unlearning]  (employ.south) -| (training.south) node[pos=0.01,below] {No} node[pos=0.25,below]{Retrain using \D};
+
+\coordinate (middle) at (current bounding box.center);
+
+% \draw[draw=none] (current bounding box.west) ++(-0.5cm,0cm) -- ++(-2cm,0) node[midway,above=0.5cm,blue] {Learning};
+
+% \draw[draw=none] (current bounding box.east) ++(0.5cm,0) -- ++(2cm,0) node[midway,above=0.5cm,red] {Unlearning};
+
+
+\matrix [draw,very thick,below left,nodes={align=center},font=\small,anchor=west](m) at (current bounding box.east) {
+  \node {\w:}; &\node {Employed model}; \\
+  \node {\worig:}; &\node {(Re)Trained model}; \\
+  \node {\wunlearned:}; &\node {Updated model}; \\
+  \node {\D:}; &\node {Current data}; \\
+  \node {\Dm:}; &\node {Deleted Data}; \\
+  \node[lines,learning,inner sep=0,minimum width=10mm] at ++(10mm,0) {}; &\node {Learning}; \\
+  \node[lines,unlearning,inner sep=0,minimum width=10mm] at ++(10mm,0) {}; &\node {Unlearning}; \\
+};
+\node[anchor=south] at (m.north) {Legend};

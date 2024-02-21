@@ -1,0 +1,94 @@
+% Allow local line spacing changes
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage[export]{adjustbox}
+\usepackage{pifont}
+\usepackage{bbding}
+\usepackage[nobeards,saturated]{tikzpeople}
+\usetikzlibrary{positioning,arrows,shapes.misc,shapes.geometric,decorations.markings}
+\definecolor{antiquewhite}{rgb}{0.98, 0.92, 0.84}
+\definecolor{beige}{rgb}{0.96, 0.96, 0.86}
+\definecolor{blond}{rgb}{0.98, 0.94, 0.75}
+\tikzset{blackbox/.style={shirt=black,hair=black}}
+\tikzset{whitebox/.style={shirt=blond,hair=blond}}
+\tikzset{graybox/.style={shirt=gray,hair=gray}}
+\newcommand{\adv}{\ensuremath{\mathcal{A}}\xspace}
+
+
+% algorithms
+\newcommand{\opt}{\textsc{OPT}\xspace}
+\newcommand{\wmsketch}{\textsc{WM-Sketch}\xspace}
+\newcommand{\wmsketches}{\textsc{WM-Sketch}es\xspace}
+\newcommand{\learner}{\textsc{Learner}\xspace}
+\newcommand{\adversary}{\textsc{Adversary}\xspace}
+\newcommand{\countsketch}{count sketch\xspace}
+% datasets
+% \newcommand{\mnist}{\textsc{MNIST}\xspace}
+
+% Global SGD-related
+\newcommand{\featureset}{\ensuremath{\mathcal{X}}\xspace}
+\newcommand{\featuresetbound}{\ensuremath{\gamma}\xspace}
+\newcommand{\nfeats}{\ensuremath{d}\xspace}
+\newcommand{\labelset}{\ensuremath{\mathcal{Y}}\xspace}
+\newcommand{\history}{\ensuremath{\mathcal{H}}\xspace}
+% \newcommand{\x}{\ensuremath{\mathbf{x}}\xspace}
+\newcommand{\xt}[1]{\ensuremath{\mathbf{x}^{#1}}\xspace}
+\newcommand{\y}{\ensuremath{y}\xspace}
+\newcommand{\yt}[1]{\ensuremath{y^{#1}}\xspace}
+\newcommand{\modelerror}{\ensuremath{\epsilon}\xspace}
+\newcommand{\lr}{\ensuremath{\eta^{t}}\xspace}
+\newcommand{\querybudget}{\ensuremath{T}\xspace}
+\newcommand{\plainloss}[1]{\ensuremath{l\round{#1}}\xspace}
+\newcommand{\loss}[1]{\ensuremath{l\round{#1}}\xspace}
+\newcommand{\projsgd}{\ensuremath{\texttt{Proj}}\xspace}
+\newcommand{\predict}[1]{\ensuremath{\text{sign}\round{\product{#1}}}\xspace}
+
+% uncompressed classifier
+% \newcommand{\w}{\ensuremath{\textbf{w}}\xspace}
+\newcommand{\wt}[1]{\ensuremath{\w^{#1}}\xspace}
+\newcommand{\wstar}{\wt{*}\xspace}
+\newcommand{\woptgap}[1]{\w{#1} - \wstar}
+\newcommand{\hypspace}{\ensuremath{\mathcal{W}}\xspace}
+\newcommand{\hypspacebound}{\ensuremath{D}\xspace}
+\newcommand{\yhatuc}{\ensuremath{\hat{\y}}\xspace}
+\newcommand{\ythatuc}[1]{\ensuremath{\hat{\y}^{#1}}\xspace}
+
+% sketched classifier
+\newcommand{\z}{\ensuremath{\textbf{z}}\xspace}
+\newcommand{\zt}[1]{\ensuremath{\z^{#1}}\xspace}
+\newcommand{\zstar}{\zt{*}\xspace}
+\newcommand{\zoptgap}[1]{\z{#1} - \zstar}
+\newcommand{\hypspacec}{\ensuremath{\mathcal{Z}}\xspace}
+\newcommand{\JLmat}{\ensuremath{R}\xspace}
+\newcommand{\yhatc}{\ensuremath{\hat{\y}_{\textsc{WM}}}\xspace}
+\newcommand{\ythatwr}[1]{\ensuremath{\hat{\y}^{#1}_{\text{WR}}}\xspace}
+\newcommand{\ythatfp}[1]{\ensuremath{\hat{\y}^{#1}_{\text{FP}}}\xspace}
+\newcommand{\sketchsize}{\ensuremath{k}\xspace}
+\newcommand{\sketchdepth}{\ensuremath{s}\xspace}
+\newcommand{\hfh}{\ensuremath{h}\xspace}
+\newcommand{\hfsigma}{\ensuremath{\sigma}\xspace}
+\newcommand{\west}{\ensuremath{\hat{\w}_{\textsc{WM}}}\xspace}
+\newcommand{\westt}[1]{\ensuremath{\hat{\w}^{#1}_{\textsc{WM}}}\xspace}
+\newcommand{\globalscale}{\ensuremath{\alpha}\xspace}
+
+% attack model
+\newcommand{\mislead}{\textsc{l}\xspace}
+\newcommand{\misclassify}{\textsc{c}\xspace}
+\newcommand{\whitebox}{\textsc{wb}\xspace}
+\newcommand{\greybox}{\textsc{gb}\xspace}
+\newcommand{\blackbox}{\textsc{bb}\xspace}
+\newcommand{\direct}{\textsc{d}\xspace}
+\newcommand{\transfers}{\textsc{st}\xspace}
+\newcommand{\transferl}{\textsc{lt}\xspace}
+\newcommand{\WBD}{\whitebox-\direct}
+\newcommand{\GBTS}{\greybox-\transfers}
+\newcommand{\BBTL}{\blackbox-\transferl}
+\newcommand{\perturb}{\ensuremath{\delta}\xspace}
+\newcommand{\xtilde}[1]{\ensuremath{\tilde{\mathbf{x}}^{#1}}\xspace}
+
+\definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
+\newcommand*{\tick}{\textcolor{forestgreen}{\textnormal{\Checkmark}}}
+\newcommand*{\cross}{\textcolor{red}{\textnormal{\XSolidBold}}}
+
+\newcommand{\cmark}{\textcolor{green!80!black}{\ding{51}}}
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}}

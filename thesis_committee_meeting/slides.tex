@@ -1,0 +1,480 @@
+\documentclass[pdf]{beamer}
+\usetheme{Copenhagen}
+\usepackage{multicol, latexsym, amsmath, amssymb}
+\usepackage{smartdiagram}
+\usepackage{subcaption}
+\usepackage{natbib}
+\usepackage{tikz}
+\usepackage{xspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage[nobeards,saturated]{tikzpeople}
+\input{unlearning_macros.tex}
+\input{sketch_macros.tex}
+\input{qdm_macros.tex}
+
+\setbeamercovered{transparent}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{footline}[text line]{%
+    \parbox{\linewidth}{\vspace*{-8pt}\hfill\hfill\insertframenumber\,/\,\inserttotalframenumber}}
+% \setbeamertemplate{navigation symbols}{}
+% \input{macros.tex}
+
+\title{Thesis Committee Meeting}
+
+\author[Ananth Mahadevan]{Ananth Mahadevan}
+\date{\today}
+
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Overview}
+    \tableofcontents
+\end{frame}
+
+\section{Research}
+
+\subsection{Published Articles}
+\begin{frame}<1>[label=published]
+    \frametitle{Published Articles}
+    \begin{enumerate}[<+->]
+        \item Certifiable Unlearning for logistic regression: An experimental study, MAKE 2022 \cite{mahadevan2022certifiable}
+        \item Scalably Using Node Attributes and Graph Structure for Node Classification, Entropy 2022 \cite{merchant2022JANE}
+        \item Robustness of Sketched Linear Classifiers to Adversarial Attacks, CIKM 2022 \cite{10.1145/3511808.3557687}
+        \item Reception Reader: Exploring Text Reuse in Early Modern British Publications, JOHD 2023 \cite{Rosson-2023}
+    \end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Machine Unlearning }
+    \scalebox{0.5}{
+    \begin{tikzpicture}
+        \input{figs/pipeline.tex}
+      \end{tikzpicture}
+    }
+
+    \begin{block}{Unlearning}
+        Task of updating a ML model after partial deletion of training data
+    \end{block}
+    Qualities of an approximate unlearning method:
+  \begin{itemize}
+    \item \textbf{Certifiability}: How similar are \wunlearned and \worig?
+    \item \textbf{Effectiveness}: How well does \wunlearned perform?
+    \item \textbf{Efficiency}: How much time to produce \wunlearned?
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experimental Setup}
+    \begin{center}
+        \begin{tabular}{cc}
+          \toprule
+          Item & Values  \\
+          \midrule
+          Parameters & Noise (\noiseParamter) \& Efficiency (\efficiencyParameter)  \\
+          Metrics & \accDis, \accErr \& Speedup(\texttimes) \\
+          Methods & \textcolor{blue!80!black}{\infl}, \textcolor{orange!90!black}{\fisher} \& \textcolor{green!60!black}{\deltagrad}\\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+      \begin{center}
+        \begin{tabular}{cc}
+          \toprule
+          Metric & Quality \\
+          \midrule
+          \accDis\inc & Certifiability\dec\\
+          \accErr\inc & Effectiveness\dec\\
+          \bottomrule
+        \end{tabular}
+    \end{center}
+        \begin{center}
+            \begin{tabular}{cc}
+              \toprule
+              Parameter & Effect\\
+              \midrule
+              $\efficiencyParameter\inc$ & $\text{Efficiency}\inc\text{ Certifiability}\dec\text{ Effectiveness}\dec$\\
+              $\noiseParamter\inc$ & $\text{Certifiability}\inc\text{ Effectiveness}\dec$\\ 
+              \bottomrule
+            \end{tabular}
+        \end{center}
+                
+
+\end{frame}
+
+% \begin{frame}
+%     \frametitle{Results}
+%     \begin{columns}
+%         \begin{column}{0.5\textwidth}
+%             \begin{center}
+%                 {\small Varying $\tau$}\\
+%                 \includegraphics[width=0.6\linewidth,trim={0 1cm 39cm 0},clip]{figs/Certifiability_Efficiency_Trade_Off_Grid_large_sigma_1.pdf}\\
+%                 (a) Certifiability
+%                 \includegraphics[width=0.6\linewidth,trim={0 1cm 39cm 0},clip]{figs/Effectiveness_Efficiency_Trade_Off_Grid_large_sigma_1.pdf}\\
+%                 (b) Effectiveness  
+%                 \end{center}        
+%         \end{column}
+%         \begin{column}{0.5\textwidth}
+%             \begin{center}
+%                 {\small Varying $\sigma$}\\
+%                 \includegraphics[width=0.08\linewidth,clip,trim={0 1cm 52cm 1.52cm }]{./figs/Unlearning_Tradeoff_Grid.pdf}
+%                 \includegraphics[width=0.5\linewidth,clip,trim={1.5cm 1cm 44cm 0 }]{./figs/Unlearning_Tradeoff_Grid.pdf}
+%                 \includegraphics[width=0.13\linewidth,clip,trim={51.3cm 0.8cm 0 0 }]{./figs/Unlearning_Tradeoff_Grid.pdf}\\
+%                 {\small Noise Paramter \noiseParamter}
+%             \end{center}
+%         \end{column}
+%     \end{columns}
+        
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Employ or Retrain}
+%     \begin{itemize}
+%         \item Multiple unlearning stages decrease certifiability
+%         \item Retraining restarts pipeline \& resets certifiability
+%         \item How to estimate certifiability?
+%         \item When to trigger retraining? 
+%       \end{itemize}
+%       \begin{center}
+%         \includegraphics[width=\linewidth,clip,trim={ 2.5mm 0 2mm 0}]{./figs/MNIST_binary_targeted_informed_threshold_1_acc_dis_noise_1.pdf}
+%       \end{center}
+  
+
+% \end{frame}
+\againframe<2>{published}
+
+
+\begin{frame}
+    \frametitle{Scaling Node Classification \cite{merchant2022JANE}}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{figs/JANE.pdf}
+    \end{figure}
+    \begin{itemize}
+        \item Improves running time of node classification method JANE \cite{merchant2022JANEorig}
+        \item Developed mini-batching training algorithm to improve GPU utilization
+        \item Scaled experiments to graphs with more than a million nodes
+    \end{itemize}
+
+\end{frame}
+    
+\againframe<3>{published}
+
+\begin{frame}
+    \frametitle{Robustness of Sketched Linear Classifiers \cite{mahadevan2022certifiable}}
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+           \begin{itemize}
+            \item \w: Linear Classifier
+            \item \z: \wmsketch Classifier \cite{tai2018sketch}
+            \item \adv: Adversary
+            \item \perturb: FGSM perturbation
+           \end{itemize}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \begin{center}
+                \scalebox{0.85}{
+                \begin{tikzpicture}
+                    \input{figs/adversarial-attack.tex}
+                    \input{figs/sketched-classifier.tex}
+                  \end{tikzpicture}
+                }
+             \end{center}
+        \end{column}
+        \end{columns}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Robustness of Sketched Linear Classifiers \cite{mahadevan2022certifiable}}
+    \adv crafts a perturbation based on its Knowledge and Observability of the target.
+    \begin{itemize}
+      \item \textcolor{blue!80}{Knowledge}: Is the target a \wmsketch?
+      \item \textcolor{blue!80}{Observability}: Does \adv have access to count sketch \JLmat?
+    \end{itemize}
+    \begin{center}
+    \begin{tabular}{c|c|c}
+      \toprule
+      \adv      & Knowledge & Observability \\
+      \midrule
+      White-Box & \cmark    & \cmark        \\
+      Grey-Box  & \cmark    & \xmark        \\
+      Black-Box & \xmark    & \xmark        \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \begin{block}{Research Question}
+    How does the performance of a given \textnormal{\wmsketch} worsen in the presence of these adversaries?
+  \end{block}
+
+\end{frame}
+
+\againframe<4>{published}
+
+\begin{frame}
+    \frametitle{Reception Reader Interface}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=\textwidth]{figs/Reception Reader.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Historical Text Reuse}
+
+    \begin{itemize}
+        \item 250k scanned English documents from 18th century
+        \item Fuzzy string matching using BLAST to find reuses
+        \item De-fragmenting and clustering of reuse pairs
+        \item Front-end for navigation
+    \end{itemize}
+
+\end{frame}
+
+
+\subsection{Works in Progress}
+\begin{frame}<1>[label=progress]
+    \frametitle{In Progress}
+    \begin{enumerate}[<+->]
+        \item Cost-Aware Retraining for Machine Learning
+        \begin{itemize}[<.->]
+            \item Rejections from ICML 2023 and EuroSys 2023
+            \item Submitted pre-print to Arxiv \cite{mahadevan2023costeffective}
+            \item Re-submitted to Knowledge-Based Systems Journal
+        \end{itemize}
+        \item Data Science Pipeline for Historical Text Reuse
+        \begin{itemize}[<.->]
+            \item Manuscript under preparation
+            \item Planned submission to VLDB 2024 Scalable Data Science track
+        \end{itemize}
+        \item Scalable Constraint-Based Diversity Sampling
+        \begin{itemize}[<.->]
+            \item Improved running time of Fair Max-Min Diversification \citep{wang2023fmmd}
+            \item Plan to develop approximate distributed sampling algorithm and code library
+        \end{itemize}
+    \end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Cost-Aware Retraining for ML}
+    \begin{figure}[h]
+        \centering
+        {\includegraphics[width=0.8\textwidth,clip,trim={0 2.5mm 0 5.5mm}]{figs/proof_of_concept.pdf}}
+        \caption{Example scenario. (a) Initial data and model $\model_0$. (b) Queries are far from misclassification. (d) Queries are closer to misclassifications. (c) and (e): Cost matrix and \oracle retraining strategies with retraining cost fixed to $\retraincost=1$ for (b) and (d) respectively.}
+        \label{fig:scenario-1-extended}
+    \end{figure}
+    
+
+\end{frame}
+
+
+\againframe<2>{progress}
+
+\begin{frame}
+    \frametitle{Dagster ETL pipeline}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{figs/dagster.png}
+        
+    \end{figure}
+    
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experiments}
+    \begin{itemize}
+        \item Benchmarking query performance on
+        \begin{enumerate}
+            \item Spark
+            \item MariaDB Aria
+            \item MariaDB Columnstore
+        \end{enumerate}
+        \item Evaluating different metrics
+        \begin{enumerate}
+            \item Query Latency
+            \item Storage size
+            \item Cost in CSC BU    
+        \end{enumerate}
+        \item Different levels of normalisation 
+    \end{itemize}
+    
+
+\end{frame}
+
+
+\againframe<3>{progress}
+
+\begin{frame}
+    \frametitle{Scaling up Fair-MMD}
+    Completed
+    \begin{itemize}
+        \item Reimplementation of FMMD-S algorithm from \cite{wang2023fmmd}
+        \item Parallelizes sections of code and efficient memory management
+        \item $100\times$ speedup on largest experiment from \cite{wang2023fmmd}
+        \item Scaled up to 4M points dataset and 3000 samples with edge-case constraints
+    \end{itemize}
+    Next Steps
+    \begin{itemize}
+        \item Distributed algorithm with gurantees
+        \item Approximate distance measures
+        \item Heuristic based ILP solver
+    \end{itemize}
+\end{frame}
+
+\section{Studies}
+
+\subsection{Discipline Specific Credits}
+\begin{frame}
+    \frametitle{Discipline Specific Credits}
+
+    \begin{block}{Completed Credits}
+        $29/30$ credits completed excluding PhD Seminar (3-5 credits)
+    \end{block}
+    Completed Courses:
+    \begin{itemize}
+        \item Network Analysis 5cr
+        \item Security and Privacy in ML 5cr
+        \item Advanced Latex Course 5cr
+        \item Probabilistic Graphical Models 5cr
+        \item Advanced Course in Machine Learning 5cr 
+        \item Transaction Management and Query Optimization 5cr
+        \item Research Ethics 2 cr
+    \end{itemize}
+\end{frame}
+
+\subsection{Transferrable Skills}
+
+\begin{frame}
+    \frametitle{Transferrable Skills}
+    Completed Courses 3cr:
+    \begin{itemize}
+        \item Scientific Writing 2cr 
+        \item Principles of Peer Review 1cr
+    \end{itemize}
+    Planned Credits 7cr:
+    \begin{itemize}
+        \item Conference Presentation 2cr   
+        \item Poster Presentation and Data Visualization 2cr
+        \item International Conference participation 2cr
+        \item Grant Writing 1cr
+    \end{itemize}
+
+\end{frame}
+
+\section{Activities}
+
+\subsection{Conferences, Workshops and Events}
+\begin{frame}
+    \frametitle{Conferences}
+    \begin{itemize}
+        \item VLDB 2022: Participation
+        \item CIKM 2022: Presentation (virtual)
+        \item MLSys 2023: Participation
+        \item AI Day 2022: Poster Presentation
+        \item Meaning of Meaning Workshop 2023: Presentation
+    \end{itemize}
+
+    
+\end{frame}
+
+\subsection{Teaching and Supervision}
+\begin{frame}
+    \frametitle{Teaching and Supervision}
+
+    \begin{itemize}
+        \item  TA: Netowork Analysis 2023
+        \item Master Thesis Instruction: Anniina R Sainio (Completed)
+        \item Master Thesis Instruction: Andreas Maniatas (Ongoing)
+    \end{itemize}
+\end{frame}
+
+\section{Future Plans}
+
+
+\begin{frame}
+    \frametitle{Plans for 2023-2024}
+    \begin{enumerate}
+        \item Research
+        \begin{itemize}
+            \item Present - Nov 2023: Submit ``Data Science Pipeline for Historical Text Reuse'' to VLDB
+            \item Jan - Mar 2024: Complete scalable sampling project
+        \end{itemize}
+        \item Studies
+        \begin{itemize}
+            \item Complete remaining transferrable course credits
+            \item Finalize all credits with Pirio
+        \end{itemize}
+        \item Thesis
+        \begin{itemize}
+            \item Mar 2024 - May 2024: Thesis Writing
+            \item June 2024: Pre-examination
+        \end{itemize}
+    \end{enumerate}
+    
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{References}
+    \bibliographystyle{plain}
+    \bibliography{references}
+  \end{frame}
+
+
+\begin{frame}
+    \frametitle{Thesis inclusion of works}
+    Minimum Works in Thesis
+    \begin{enumerate}
+        \item Certifiable Unlearning 
+        \item Robustness of Sketched models
+        \item Cost-Aware Retraining
+        \item ETL pipeline for historical text reuse data
+    \end{enumerate}
+    Additional works 
+    \begin{enumerate}
+        \item Scaling up JANE 
+        \item Scalable Diversity Sampling
+        \item Reception Reader Interface
+        \item Humanities Text Reuse use-case
+    \end{enumerate}
+    
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Structure of Thesis}
+    Tentative Organization of Works:
+    \begin{enumerate}
+        \item Maintaining ML models
+        \begin{itemize}
+            \item Certifiable Unlearning \cite{mahadevan2022certifiable}
+            \item Cost-Aware Retraining \cite{mahadevan2023costeffective}
+            \item Robustness of Sketched models \cite{10.1145/3511808.3557687}
+        \end{itemize} 
+        \item Scalable ML Pipelines
+        \begin{itemize}
+            \item JANE for node-classification \cite{merchant2022JANE}
+            \item Scalable Diversity Sampling 
+            \item Scalable Historical Text Reuse
+            \begin{itemize}
+                % \item Text Reuse dataset paper
+                \item ETL pipeline paper 
+                \item Reception Reader interface \cite{Rosson-2023}
+                \item Humanities use-case paper
+            \end{itemize}
+        \end{itemize}
+    \end{enumerate}
+    
+
+\end{frame}
+\end{document}  

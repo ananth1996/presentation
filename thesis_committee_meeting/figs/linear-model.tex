@@ -1,0 +1,16 @@
+\tikzset{pic/.style={inner sep=0mm,outer sep=0mm}}
+
+\begin{scope}
+    \input{figs/data.tex}
+    \draw[very thick] (-0.5,-4) -- (3.5,2) node[left] {\w};
+    
+    \node[pic] (orig3) at (-0.5,-1) {\includegraphics[width=0.1\textwidth]{figs/orig_3.pdf}};
+    
+    \node[pic] (orig7) at (1.2,-3) {\includegraphics[width=0.1\textwidth]{figs/orig_7.pdf}};
+    
+    \draw[-,thick] (n1-20.north west) -- (orig3.north west);
+    \draw[-,thick] (n1-20.south east) -- (orig3.south east);
+    
+    \draw[-,thick] (n2-02.120) -- (orig7.north west);
+    \draw[-,thick] (n2-02.300) -- (orig7.south east);
+\end{scope}

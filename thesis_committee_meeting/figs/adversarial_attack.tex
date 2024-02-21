@@ -1,0 +1,15 @@
+\begin{scope}
+    \input{figs/data.tex}
+    \input{figs/linear-model.tex}
+    \node[class2,outer sep=0.2mm,draw=red,very thick] (adv) at (2.5,-0.5) {};
+    \node[devil,blackbox,minimum size=20mm] at (-1,0.5) {\adv};
+    \draw[
+        -,dashed,thick,green!50!black,
+        decoration={markings,mark=at position 0.5 with {\arrow{latex}}},
+        postaction={decorate}
+        ] 
+        (n1-20) -- (adv) node[pos=0.5,above] {$\perturb > 0$};
+    \node[pic] (white-box3) at (3.5,0.5) {\includegraphics[width=0.1\textwidth]{fig/3_3.pdf}};
+    \draw[-,thick] (adv.140) -- (white-box3.north west);
+    \draw[-,thick] (adv.270) -- (white-box3.south east);
+\end{scope}

@@ -1,0 +1,112 @@
+
+% \newcommand*{\ml}{ML}
+
+\newcommand*{\decision}{\ensuremath{\mathcal{R}}\xspace}
+% \newcommand*{\QDM}{\ensuremath{\text{\sc QDM}}\xspace}
+\newcommand*{\QDMq}{\ensuremath{\psi}\xspace}
+\newcommand*{\QDM}{\ensuremath{\Psi}\xspace}
+% \newcommand*{\QDMdiff}{\ensuremath{\QDM_{\text{diff}}}\xspace}
+\newcommand*{\QDMdiff}{\ensuremath{\overline{\Psi}}\xspace}
+\newcommand*{\simfn}{\ensuremath{\text{sim}}\xspace}
+% \newcommand*{\loss}{\ensuremath{\ell}\xspace}
+\newcommand*{\tprime}{\ensuremath{t^{\prime}}\xspace}
+\newcommand*{\feat}{\ensuremath{d}\xspace}
+\newcommand*{\q}{\ensuremath{q}\xspace}
+% \newcommand*{\x}{\ensuremath{x}\xspace}
+% \newcommand*{\y}{\ensuremath{y}\xspace}
+\newcommand*{\X}{\ensuremath{\mathbf{X}}\xspace}
+\newcommand*{\Y}{\ensuremath{\mathbf{y}}\xspace}
+\newcommand*{\Yset}{\ensuremath{\mathcal{Y}}\xspace}
+\newcommand*{\Xset}{\ensuremath{\mathcal{X}}\xspace}
+\newcommand*{\ttime}{\ensuremath{t}\xspace}
+\newcommand*{\data}{\ensuremath{D}\xspace}
+\newcommand*{\model}{\ensuremath{M}\xspace}
+\newcommand*{\query}{\ensuremath{Q}\xspace}
+\newcommand*{\Dtprime}{\ensuremath{\data_{\tprime}}\xspace}
+\newcommand*{\Mtprime}{\ensuremath{\model_{\tprime}}\xspace}
+\newcommand*{\Qtprime}{\ensuremath{\query_{\tprime}}\xspace}
+\newcommand*{\Dt}{\ensuremath{\data_{t}}\xspace}
+\newcommand*{\Mt}{\ensuremath{\model_{t}}\xspace}
+\newcommand*{\Qt}{\ensuremath{\query_{t}}\xspace}
+\newcommand*{\dataBatch}{\ensuremath{B_\data}\xspace}
+\newcommand*{\queryBatch}{\ensuremath{B_\query}\xspace}
+% \newcommand*{\T}{\ensuremath{T}\xspace}
+\newcommand*{\offline}{\text{offline}\xspace}
+\newcommand*{\online}{\text{online}\xspace}
+\newcommand*{\Toffline}{\ensuremath{\T_{\offline}}\xspace}
+\newcommand*{\Tonline}{\ensuremath{\T_{\online}}\xspace}
+\newcommand*{\Tstart}{\ensuremath{\T_{\text{start}}}\xspace}
+\newcommand*{\Tend}{\ensuremath{\T_{\text{end}}}\xspace}
+\newcommand*{\Cost}{\ensuremath{C}\xspace}
+\newcommand*{\totalcost}{\ensuremath{c}\xspace}
+\newcommand*{\cost}[1]{\ensuremath{\text{cost}\round{#1}}\xspace}
+\newcommand*{\dpcost}[2][]{%
+    \ifx\\#1\\%
+        \ensuremath{v\round{#2}}\xspace%
+        \else%
+        \ensuremath{v^{#1}\round{#2}}\xspace%
+    \fi%
+}
+\newcommand*{\prev}{\ensuremath{p}\xspace}
+\newcommand*{\dptable}{\ensuremath{V}\xspace}
+\newcommand*{\costmatrix}{\Cost}
+\newcommand*{\costentry}[1]{\ensuremath{c_{#1}}\xspace}
+\newcommand*{\strategy}{\ensuremath{S}\xspace}
+\newcommand*{\partialstrategy}{\ensuremath{\bar{\strategy}}\xspace}
+\newcommand*{\partialstrategyopt}{\ensuremath{\round{\partialstrategy}^{*}}\xspace}
+
+\newcommand*{\oracleretrains}{\ensuremath{O}\xspace}
+\newcommand*{\retraincost}{\ensuremath{\kappa}\xspace}
+
+\newcommand*{\retrain}{\texttt{Retrain}\xspace}
+\newcommand*{\keep}{\texttt{Keep}\xspace}
+
+
+%algorithms
+
+\newcommand*{\oracle}{\textsc{Oracle}\xspace}
+\newcommand*{\neverretrain}{\textsc{NR}\xspace}
+\newcommand*{\algo}{\textsc{Cara}\xspace}
+\newcommand*{\cara}{\algo}
+\newcommand*{\algoparams}{\ensuremath{\theta}\xspace}
+\newcommand*{\algoparamsopt}{\ensuremath{\algoparams^{*}}\xspace}
+
+\newcommand*{\markov}{\textsc{Markov}\xspace}
+\newcommand*{\algoMarkov}{\textsc{\algo-M}\xspace}
+\newcommand*{\algoThresh}{\textsc{\algo-T}\xspace}
+% \newcommand*{\thresh}{\ensuremath{\tau}\xspace}
+\newcommand*{\threshopt}{\ensuremath{\thresh^{*}}\xspace}
+\newcommand*{\cumthresh}{\ensuremath{\tau_\text{cum}}\xspace}
+\newcommand*{\cumthreshopt}{\ensuremath{\cumthresh^{*}}\xspace}
+
+\newcommand*{\algoCummThresh}{\textsc{\algo-CT}\xspace}
+\newcommand*{\algoPeriod}{\textsc{\algo-P}\xspace}
+\newcommand*{\period}{\ensuremath{\phi}\xspace}
+\newcommand*{\periodopt}{\ensuremath{\period^{*}}\xspace}
+\newcommand*{\offset}{\ensuremath{a}\xspace}
+\newcommand*{\offsetopt}{\ensuremath{\offset^{*}}\xspace}
+
+
+%baselines
+\newcommand*{\adwin}{\textsc{ADWIN}\xspace}
+\newcommand*{\ddm}{\textsc{DDM}\xspace}
+
+%metrics 
+\newcommand*{\scpe}{\texttt{SCPE}\xspace}
+%datasets
+\newcommand*{\covcon}{\textsc{CovCon}\xspace}
+\newcommand*{\covconData}{\textsc{\covcon-D}\xspace}
+\newcommand*{\covconStatic}{\textsc{\covcon-S}\xspace}
+\newcommand*{\Circle}{\textsc{Circle}\xspace}
+\newcommand*{\Circles}{\Circle}
+\newcommand*{\circles}{\Circle}
+\newcommand*{\circlesData}{\textsc{\Circle-D}\xspace}
+\newcommand*{\circlesStatic}{\textsc{\Circle-S}\xspace}
+\newcommand*{\gauss}{\textsc{Gauss}\xspace}
+\newcommand*{\gaussData}{\textsc{\gauss-D}\xspace}
+\newcommand*{\gaussStatic}{\textsc{\gauss-S}\xspace}
+\newcommand*{\elec}{\textsc{Electricity}\xspace}
+\newcommand*{\covertype}{\textsc{Covertype}\xspace}
+% \newcommand*{\covtype}{\textsc{Covtype}\xspace}
+\newcommand*{\airlines}{\textsc{Airlines}\xspace}
+\newcommand*{\fixedretraincost}{\ensuremath{46}}

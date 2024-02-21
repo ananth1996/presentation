@@ -1,0 +1,60 @@
+% positioning style from https://tex.stackexchange.com/questions/102250/how-to-position-one-node-relative-to-another-node-at-a-certain-angle-in-tikz-tak
+\tikzset{
+        position/.style args={#1:#2 from #3}{
+            at=(#3.#1), anchor=#1+180, shift=(#1:#2)
+        }
+    }
+
+% database shape from from https://tex.stackexchange.com/questions/442991/database-shape-in-tikz
+\tikzset{class1/.style={rectangle,thick,draw, inner sep=1mm, outer sep=0mm,fill=red}}
+\tikzset{class2/.style={circle,draw,thick,inner sep=1mm, outer sep=0mm,fill=blue!60}}
+
+
+\begin{scope}
+
+    % helpers, comment them out in the final 
+    % \draw[help lines] (-1,-4) grid (4,2);
+    % \node[draw,circle] (origin) at (0,0) {};
+
+    % https://tex.stackexchange.com/questions/245657/how-can-i-randomly-perturb-the-position-of-a-grid-of-nodes
+    % \pgfmathsetseed{3} 
+    % \foreach \i in {0,2,...,4}
+    % \foreach \j in {0,2,...,4}
+    %     {   
+    %         draw grid
+    %         \node [class1,fill=none] (g1-\i\j) at (\i/2,\j/2) {};
+    %         perturb grid points
+    %         \node [class1,fill=red!40] (n1-\i\j) at (\i/2 + 0.5*rand,\j/2 + 0.5*rand) {};
+    %         \node [class1,fill=white,opacity=0.1] (n1-\i\j) at (\i/2,\j/2 ) {};
+    %         }
+    \node [class1] (n1-00) at (-0.3,0.2) {};
+    \node [class1] (n1-02) at (0.34,0.8) {};
+    \node [class1] (n1-04) at (-0.6,1.7) {};
+    \node [class1] (n1-20) at (0.7,0) {};
+    \node [class1] (n1-22) at (1.7,1.25) {};
+    \node [class1] (n1-24) at (0.65,1.6) {};
+    \node [class1] (n1-40) at (1.2,0.7) {};
+    \node [class1] (n1-42) at (2.2,0.6) {};
+    \node [class1] (n1-44) at (1.25,2) {};
+    
+    % \foreach \i in {0,2,...,4}
+    % \foreach \j in {0,2,...,4}
+    % {           
+    %     %draw grid  
+    %     % \node [class1,fill=none] (g2-\i\j) at (\i/2+2.5,\j/2-3) {};
+    %     % perturb grid points
+    %     % \node [class2] (n2-\i\j) at (2.5+\i/2 + 0.25*rand,\j/2 + 0.25*rand - 3) {};
+    %     \node [class2,fill=white,opacity=0.1] (n2-\i\j) at (2.5+\i/2,\j/2 - 3) {};
+    %     }
+    \node [class2] (n2-00) at (2.5,-3) {};
+    \node [class2] (n2-02) at (2.5+0.34,0.8-3) {};
+    \node [class2] (n2-04) at (2.5+-0.6,1.7-3) {};
+    \node [class2] (n2-20) at (2.5+1,-0.5-3) {};
+    \node [class2] (n2-22) at (2.5+1.7,1.25-3) {};
+    \node [class2] (n2-24) at (2.5+0.65,1.6-3) {};
+    \node [class2] (n2-40) at (2.5+1.4,0.4-3) {};
+    \node [class2] (n2-42) at (2.5+2.2,0.6-3) {};
+    \node [class2] (n2-44) at (2.5+1.25,2-3) {};
+    % \node[rectangle,draw=none,minimum size=30mm] at (-2,-0.5) {};
+    % \draw[white] (-1,-2) -- (5,0) node[draw=none,above right] {};
+\end{scope}
