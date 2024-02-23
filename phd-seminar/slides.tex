@@ -4,6 +4,11 @@
 % Need to use LuaLatex to compile
 \usepackage{emoji}
 \usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{fontawesome}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usetikzlibrary{angles,calc,intersections,quotes,arrows.meta,positioning}
 \setemojifont{Apple Color Emoji}
 \setbeamercovered{transparent}
 \beamertemplatenavigationsymbolsempty
@@ -34,7 +39,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{PhD Progress Gantt Chart}
+    \frametitle{PhD Progress}
     \begin{ganttchart}[
         % hgrid,
         % vgrid,
@@ -58,26 +63,26 @@
       ]{2020-01}{2024-12}
     \gantttitlecalendar{year} \\
       \ganttgroup[progress=today]{PhD}{2020-08}{2024-12}\\
-      \ganttbar{Paper1}{2021-01}{2021-06} % Unlearning 
+      \ganttbar{Paper I}{2021-01}{2021-06} % Unlearning 
       \ganttmilestone[rejected]{}{2021-07} % VLDB-2022
       \ganttmilestone[rejected]{}{2022-02} % ECML_PKDD
       \ganttmilestone[published]{}{2022-04}\\ % MDPI-MAKE
-      \ganttbar{Paper2}{2022-01}{2022-02} % JANE
+      \ganttbar{Paper II}{2022-01}{2022-02} % JANE
       \ganttmilestone[rejected]{}{2022-03} % ANS extension 2022
       \ganttmilestone[published]{}{2022-06}\\
-      \ganttbar{Paper3}{2020-08}{2020-09} % Sketching
+      \ganttbar{Paper III}{2020-08}{2020-09} % Sketching
       \ganttbar{}{2021-06}{2021-09} % Sketching
       \ganttbar{}{2022-03}{2022-05} % Sketching
       \ganttmilestone[published]{}{2022-09}\\ % CIKM 2022
-      \ganttbar{Paper4}{2022-05}{2023-02} % Reception Reader
+      \ganttbar{Paper IV}{2022-05}{2023-02} % Reception Reader
       \ganttmilestone[published]{}{2023-04}\\ % JOHD 2023
-      \ganttbar{Paper5}{2022-11}{2023-04} % Mandeville
+      \ganttbar{Paper V}{2022-11}{2023-04} % Mandeville
       \ganttmilestone[published]{}{2023-12}\\ % JOHD 2023
-      \ganttbar{Paper6}{2021-11}{2022-12} % UpdateML
+      \ganttbar{Paper VI}{2021-11}{2022-12} % UpdateML
       \ganttmilestone[rejected]{}{2023-03} % ICML 2023
       \ganttmilestone[rejected]{}{2023-08} % EuroSys 2024
       \ganttmilestone[review]{}{2024-02}\\ % KBS 2024
-      \ganttbar{Paper7}{2023-06}{2024-02} % TextReuse Pipeline
+      \ganttbar{Paper VII}{2023-06}{2024-02} % TextReuse Pipeline
       \ganttmilestone[futurepublished]{}{2024-04}\\ % KBS 2024
 
     \end{ganttchart}    
@@ -93,13 +98,13 @@
             \toprule
             Number & One Word Title & Venue & Include in Thesis? \\
             \midrule
-            1 & Unlearning & MAKE 2022  & \emoji{check-mark-button}  \\
-            2 & JANE & Entropy 2022   &\emoji{check-mark-button} \\
-            3 & Sketching& CIKM 2022 & \emoji{man-shrugging-medium-skin-tone}\\
-            4 & ReceptionReader& JOHD 2023 &  \emoji{man-shrugging-medium-skin-tone} \\
-            5 & Mandeville & DES 2023 & \emoji{man-shrugging-medium-skin-tone}\\
-            6 & Retraining & KBS 2024 &  \emoji{check-mark-button} \\
-            7 & TextReuse & VLDB 2024 & \emoji{check-mark-button} \\
+            I & Unlearning & MAKE 2022  & \emoji{check-mark-button}  \\
+            II & JANE & Entropy 2022   &\emoji{check-mark-button} \\
+            III & Sketching& CIKM 2022 & \emoji{man-shrugging-medium-skin-tone}\\
+            IV & ReceptionReader& JOHD 2023 &  \emoji{man-shrugging-medium-skin-tone} \\
+            V & Mandeville & DES 2023 & \emoji{man-shrugging-medium-skin-tone}\\
+            VI & Retraining & KBS 2024 &  \emoji{check-mark-button} \\
+            VII & TextReuse & VLDB 2024 & \emoji{check-mark-button} \\
 
             
         \end{tabular}
@@ -119,22 +124,131 @@
     \begin{enumerate}
         \item Maintaining ML models
         \begin{itemize}
-            \item Paper 1: Unlearning 
-            \item Paper 6: Retraining
+            \item Paper I: Unlearning 
+            \item Paper VI: Retraining
         \end{itemize}
-        \item Analysing Historical Documents 
+        \item Analyzing Historical Documents 
         \begin{itemize}
-            \item Paper 4: ReceptionReader
-            \item Paper 5: Mandeville
-            \item Paper 7: TextReuse
+            \item Paper IV: ReceptionReader
+            \item Paper V: Mandeville
+            \item Paper VII: TextReuse
         \end{itemize}
         \item Scaling and Evaluating Algorithms
         \begin{itemize}
-            \item Paper 2: JANE
-            \item Paper 3: Sketching 
-            \item Paper 8?: Diverse Sampling 
+            \item Paper II: JANE
+            \item Paper III: Sketching 
+            \item Paper VIII    ?: Diverse Sampling 
         \end{itemize}
     \end{enumerate}
 
 \end{frame}
+
+
+\begin{frame}
+    \frametitle{Maintaining ML models}
+
+    \begin{block}{\centering Research Question}
+        \centering
+        How to update a trained ML model when the data changes?
+    \end{block}
+
+    \begin{enumerate}
+        \item Machine Unlearning 
+        \begin{itemize}
+            \item Training data is deleted/removed
+            \item Update model parameters to forget information
+        \end{itemize}
+        \item Cost-Aware Retraining
+        \begin{itemize}
+            \item Streams drift over time
+            \item Data and Queries are present
+            \item Retraining consumes resources
+            \item When is it worth retraining?
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Analyzing Historical Documents}
+    \includegraphics[width=\textwidth]{figs/Reception-Reader-Example.png}
+    
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Analyzing Historical Documents}
+
+
+        However, OCR texts are very noisy
+        \begin{block}{Document 1 string}
+            \footnotesize
+            \begin{verbatim}
+            to deny the Ma-
+            tifl:ate a Worflip, or take away a
+            hational Church, is as mere En-
+            Ihufiafin as the Notion which sets
+            uip Persecution    
+            \end{verbatim}
+        \end{block}    
+        \begin{block}{Document 2 string}
+            \footnotesize
+            \begin{verbatim}
+            , to deny the Ala-
+            inrate a ITorftip, or take awvay a National
+            'uircb, is as mere Entnztfiafm as the Notion
+            .bic fJets tup Persecution. W
+            \end{verbatim}
+        \end{block}    
+        How?
+        \begin{itemize}
+            \item Use BLAST to do fuzzy alignment
+        \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Pre-Processing Pipeline}
+    \scalebox{0.5}{
+    \input{figs/textreuse-pipeline.tex}
+    }
+    \begin{itemize}
+        \item Clean up BLAST hits for downstream tasks
+        \item Implemented in Apache Spark
+        \item Scales up to {\bf 6.31 billion} pairs of reuses
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Related Publications}
+
+    \begin{enumerate}
+        \item Paper IV: \citet{Rosson-2023}
+        \begin{itemize}
+            \item \emph{Reception reader: Exploring text reuse in early modern british publications}
+            \item Front-end user interface for browsing reuses
+        \end{itemize}
+        \item Paper V: \citet{des6}
+        \begin{itemize}
+            \item \emph{A Comparative text similarity analysis of the works of Bernard Mandeville}
+            \item Study using the data and interfaces from \cite{Rosson-2023}
+        \end{itemize}
+        \item Paper VI: \citet{mahadevan2024optimizing}
+        \begin{itemize}
+            \item \emph{Optimizing a Data Science System for Text Reuse Analysis}
+            \item Studies design choices for the optimal performance of the system
+        \end{itemize}
+    \end{enumerate}
+
+
+\end{frame}
+\begin{frame}
+    \frametitle{Scalability and Robustness}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{References}
+    \bibliographystyle{plainnat}
+    \bibliography{references.bib}
+  \end{frame}
+
 \end{document}
