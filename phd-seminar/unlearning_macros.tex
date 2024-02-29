@@ -1,0 +1,110 @@
+\usepackage{xspace}
+\newcommand*{\error}{\ensuremath{\accDis}\xspace}
+\newcommand*{\accuracy}{\ensuremath{\acctest}\xspace}
+
+% training 
+\newcommand*{\D}{\ensuremath{\mathcal{D}}\xspace}
+\newcommand*{\sample}{\ensuremath{\mathbf{x}}\xspace}
+\newcommand*{\dimensions}{\ensuremath{d}\xspace}
+\newcommand*{\labels}{\ensuremath{\mathbf{y}}\xspace}
+
+\newcommand*{\Dtrain}{\ensuremath{\D_{\text{init} }}\xspace}
+\newcommand*{\Dm}{\ensuremath{\mathcal{D}_{\nremovals}}\xspace}
+\newcommand*{\Dprime}{\ensuremath{\D\setminus\Dm}\xspace}
+\newcommand*{\Dtest}{\ensuremath{\mathcal{D}_{\text{test}}}\xspace}
+\newcommand*{\nremovals}{\ensuremath{m}\xspace}
+\newcommand*{\ntrain}{\ensuremath{n_{\text{init}}}\xspace}
+\newcommand*{\ntest}{\ensuremath{n}_{\text{test}}\xspace}
+\newcommand*{\obj}{\ensuremath{L}\xspace}
+
+%
+\newcommand*{\UM}{\ensuremath{u}\xspace}
+\newcommand*{\ml}{ML\xspace}
+\newcommand*{\sgd}{SGD\xspace}
+\newcommand*{\w}{\ensuremath{\mathbf{w}}\xspace}
+\newcommand*{\wopt}{\ensuremath{\w^{opt}}\xspace}
+\newcommand*{\worig}{\ensuremath{\mathbf{w}^{*}}\xspace}
+\newcommand*{\employed}{\ensuremath{e}\xspace}
+\newcommand*{\wEmployed}{\ensuremath{\w}\xspace}
+\newcommand*{\wunlearned}{\ensuremath{\w^\UM}\xspace}
+\newcommand*{\wprime}{\ensuremath{\mathbf{w}^{\prime}}\xspace}
+% 
+
+\newcommand*{\efficiencyParameter}{\ensuremath{\tau}\xspace}
+\newcommand*{\QoA}{\ensuremath{\efficiencyParameter}\xspace}
+\newcommand*{\noiseParamter}{\ensuremath{\sigma}\xspace}
+\newcommand*{\unlrbatchsize}{\ensuremath{\nremovals^{\prime}}\xspace}
+% Guo et al. 
+\newcommand*{\noisyobj}{\ensuremath{\obj_{\sigma}}\xspace}
+\newcommand*{\infl}{\textsc{Influence}\xspace}
+\newcommand*{\guo}{\textsc{guo}\xspace}
+
+% Golatkar et al.
+\newcommand*{\fisher}{\textsc{Fisher}\xspace}
+\newcommand*{\fMatrix}{\ensuremath{F}\xspace}
+\newcommand*{\gol}{\textsc{gol}\xspace}
+
+% Wu et al. 
+\newcommand*{\wu}{\textsc{wu}\xspace}
+\newcommand*{\deltagrad}{\textsc{DeltaGrad}\xspace}
+\newcommand*{\iw}{\ensuremath{\w}\xspace}
+\newcommand*{\dgapprox}{\textsc{DGApprox}\xspace}
+
+% Distribution Experiment
+\newcommand*{\classprob}{p_{\text{class}}\xspace}
+\newcommand*{\infoprob}{p_{\text{info}}\xspace}
+
+% Datasets
+
+\newcommand*{\bmnist}{\ensuremath{\text{\sc mnist}^{\text{b}}}\xspace}
+\newcommand*{\mnist}{\text{\sc mnist}\xspace}
+\newcommand*{\covtype}{\text{\sc covtype}\xspace}
+\newcommand*{\higgs}{\text{\sc higgs}\xspace}
+\newcommand*{\cifar}{\text{\sc cifar2}\xspace}
+\newcommand*{\eps}{\text{\sc epsilon}\xspace}
+\newcommand*{\T}{\top}
+\newcommand*{\x}{\mathbf{x}\space}
+\newcommand*{\noiseb}{\ensuremath{\mathbf{b}}\xspace}
+
+% metrics
+\newcommand{\smape}{\ensuremath{\text{\tt SMAPE}}\xspace}
+\newcommand{\sape}{\ensuremath{\text{\tt SAPE}}\xspace}
+\newcommand{\acctest}{\ensuremath{\text{\tt Acc}_{\text{test}}}\xspace}
+\newcommand{\accremoved}{\ensuremath{\text{\tt Acc}_{\text{del}}}\xspace}
+\newcommand*{\accErr}{\texttt{AccErr}\xspace}
+\newcommand*{\accDrop}{\accErr}
+\newcommand*{\relEff}{\accDrop}
+\newcommand*{\accDis}{\texttt{AccDis}\xspace}
+
+% sampling types 
+
+\newcommand{\unirand}{\text{{\tt uniform-random}}\xspace}
+\newcommand{\targrand}{\text{{\tt targeted-random}}\xspace}
+\newcommand{\uniinfo}{\text{{\tt uniform-informed}}\xspace}
+\newcommand{\targinfo}{\text{{\tt targeted-informed}}\xspace}
+
+% When to retrain
+\newcommand*{\winit}{\ensuremath{\worig_{\text{init}}}\xspace}
+\newcommand*{\accdropinit}{\ensuremath{\accDrop_{\text{init}}}\xspace}
+\newcommand*{\acctestinit}{\ensuremath{\acctest^{\text{init}}}\xspace}
+\newcommand*{\slope}{\ensuremath{c}\xspace}
+\newcommand*{\disPred}{\ensuremath{\overline{\error}}\xspace}
+\newcommand*{\estErr}{\ensuremath{EstErr}\xspace}
+\newcommand*{\estDis}{\ensuremath{EstDis}\xspace}
+\newcommand*{\thresh}{\ensuremath{\kappa}\xspace}
+
+%
+\newcommand*{\repo}{\url{https://version.helsinki.fi/mahadeva/unlearning-experiments}}
+
+\newcommand*{\good}{\ensuremath{\uparrow}}
+\newcommand*{\better}{\ensuremath{\uparrow\uparrow}}
+\newcommand*{\best}{\ensuremath{\uparrow\uparrow\uparrow}}
+\newcommand{\revision}[1]{\textcolor{blue}{{#1}}}
+
+\newcommand*{\inc}{\ensuremath{\textcolor{green!80!black}\uparrow}}
+\newcommand*{\dec}{\ensuremath{\textcolor{red!80!black}\downarrow}}
+
+
+
+
+

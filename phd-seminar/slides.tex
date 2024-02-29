@@ -8,17 +8,20 @@
 \usepackage{fontawesome}
 \usepackage{amsmath}
 \usepackage{natbib}
+\usepackage[most]{tcolorbox}
 \usetikzlibrary{angles,calc,intersections,quotes,arrows.meta,positioning}
 \setemojifont{Apple Color Emoji}
 \setbeamercovered{transparent}
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{footline}[text line]{%
-    \parbox{\linewidth}{\vspace*{-8pt}\hfill\hfill\insertframenumber\,/\,\inserttotalframenumber}}
+\parbox{\linewidth}{\vspace*{-8pt}\hfill\hfill\insertframenumber\,/\,\inserttotalframenumber}}
 
 \title{``$2^{\text{nd}}$'' Year PhD Seminar Presentation}
 
 \author[Ananth Mahadevan]{Ananth Mahadevan}
 \date{\today}
+\input{unlearning_macros.tex}
+\input{cara-macros.tex}
 
 \begin{document}
 \begin{frame}
@@ -157,6 +160,7 @@
         \begin{itemize}
             \item Training data is deleted/removed
             \item Update model parameters to forget information
+            \item \citet{mahadevan2022certifiable}
         \end{itemize}
         \item Cost-Aware Retraining
         \begin{itemize}
@@ -164,24 +168,164 @@
             \item Data and Queries are present
             \item Retraining consumes resources
             \item When is it worth retraining?
+            \item \citet{mahadevan2023costeffective}
         \end{itemize}
     \end{enumerate}
 \end{frame}
 
 
 \begin{frame}
-    \frametitle{Analyzing Historical Documents}
-    \includegraphics[width=\textwidth]{figs/Reception-Reader-Example.png}
-    
+    \frametitle{Machine Unlearning }
+    \scalebox{0.5}{
+    \begin{tikzpicture}
+        \input{figs/pipeline.tex}
+      \end{tikzpicture}
+    }
+
+    \begin{block}{Unlearning}
+        Task of updating a ML model after partial deletion of training data
+    \end{block}
+    Qualities of an approximate unlearning method:
+  \begin{itemize}
+    \item \textbf{Certifiability}: How similar are \wunlearned and \worig?
+    \item \textbf{Effectiveness}: How well does \wunlearned perform?
+    \item \textbf{Efficiency}: How much time to produce \wunlearned?
+  \end{itemize}
 
 \end{frame}
 
 \begin{frame}[fragile]
+    \frametitle{Cost-Aware Retraining Algorithms}
+    \begin{tcbraster}[raster columns=2, raster left skip=-0.9cm,raster right skip=-0.9cm,raster before skip=0mm]
+        \begin{tcolorbox}[nobeforeafter, title=Cost Matrix,,left=0mm,top=0mm,boxsep=0.5mm]
+            \begin{center}
+            \begin{equation*}
+                \small
+                C[t^\prime,t]
+            \end{equation*}
+            \begin{align*}
+                \small
+                = \begin{cases}
+                    \text{\footnotesize Staleness Cost} \quad& \text{\small if } t^\prime< t\\
+                    \text{\footnotesize Retraining Cost} \quad& \text{\small if } t^\prime=t\\
+                    \infty \quad&  \text{\small otherwise} 
+                \end{cases}
+            \end{align*}
+        \end{center}
+        \begin{center}
+            \includegraphics[width=.78\textwidth]{figs/cost_matrix.pdf}
+                    \end{center}
+        \end{tcolorbox}
+        \begin{tcolorbox}[nobeforeafter, title=Strategy,boxsep=0.5mm,left=0mm]
+            \setlength{\leftmargini}{0.4cm}
+            \begin{itemize}
+            \item Strategy is a set of decisions
+            \item Cost of decisions is strategy cost
+            \item Aim is to minimize strategy cost
+        \end{itemize}
+        $$S = \braces{\keep,\keep,\retrain,\retrain}$$
+        \begin{center}
+            \includegraphics[width=.78\textwidth]{figs/strategy.pdf}
+            \end{center}
+            \end{tcolorbox}
+    \end{tcbraster}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Retraining Cost \retraincost}
+    \begin{itemize}
+        \item Trade-off parameter between resources \& performance
+        \item Low \retraincost
+        \begin{itemize}
+          \item Performance is important
+          \item Frequent \retrain decisions to minimize staleness cost 
+        \end{itemize}
+        \item High \retraincost
+        \begin{itemize}
+          \item Resources are important
+          \item \retrain decisions when large enough drops in performance
+        \end{itemize}
+      \end{itemize}
+        \begin{minipage}{0.5\textwidth}
+          \begin{center}
+              {\footnotesize Low \retraincost}\\[1mm]
+              \includegraphics[width=\textwidth]{figs/low_retrain_cost.pdf}
+          \end{center}
+        \end{minipage}%
+        \begin{minipage}{0.5\textwidth}
+          \begin{center}
+              {\footnotesize High \retraincost}\\[1mm]
+              \includegraphics[width=\textwidth]{figs/high_retrain_cost.pdf}
+          \end{center}
+        \end{minipage}%
+    
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Staleness Cost}
+    \begin{itemize}
+        \item {\textcolor{green!50!black}{Query-aware}} performance cost of old model \Mtprime at batch \ttime
+        \item Scenario 1: Low staleness ~~~ Scenario 2: High staleness
+      \end{itemize}
+      \begin{minipage}{0.5\textwidth}
+          \begin{center}
+            %   {\footnotesize Scenario 1}\\[1mm]
+              \includegraphics[width=0.7\textwidth]{figs/far_queries_illustration.pdf}\\[1mm]
+              \includegraphics[width=0.7\textwidth]{figs/far_queries.pdf}
+            \end{center}
+          \end{minipage}%
+          \begin{minipage}{0.5\textwidth}
+            \begin{center}
+            %   {\footnotesize Scenario 2}\\[1mm]
+              \includegraphics[width=0.7\textwidth]{figs/near_queries_illustration.pdf}\\[1mm]
+              \includegraphics[width=0.7\textwidth]{figs/near_queries.pdf}
+          \end{center}
+        \end{minipage}%
+    
+
+\end{frame}
+\begin{frame}
     \frametitle{Analyzing Historical Documents}
+    Data:
+    \begin{itemize}
+        \item 250k books and 1M newspapers from the 17th and 18th century
+        \item Tons of heterogeneous metadata
+        \begin{itemize}
+            \item Collections of books and articles
+            \item Publisher details
+            \item Author information
+        \end{itemize}
+        \item Multi-modal data  
+        \begin{itemize}
+            \item Scanned page images
+            \item OCR text
+            \item XML style structured page layouts
+        \end{itemize}
+    \end{itemize}
+    Task:
+    \begin{itemize}
+        \item General exploration
+        \item Reception studies with Text Reuses   
+        \item Top quotes of authors
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Reception Studies with Text Reuse}
+    \includegraphics[width=\textwidth]{figs/Reception-Reader-Example.png}
+
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Identifying Text Reuse}
 
 
         However, OCR texts are very noisy
-        \begin{block}{Document 1 string}
+        \begin{block}{\centering Document 1 string}
             \footnotesize
             \begin{verbatim}
             to deny the Ma-
@@ -191,7 +335,7 @@
             uip Persecution    
             \end{verbatim}
         \end{block}    
-        \begin{block}{Document 2 string}
+        \begin{block}{\centering Document 2 string}
             \footnotesize
             \begin{verbatim}
             , to deny the Ala-
@@ -200,7 +344,7 @@
             .bic fJets tup Persecution. W
             \end{verbatim}
         \end{block}    
-        How?
+        How to identify text reuses?
         \begin{itemize}
             \item Use BLAST to do fuzzy alignment
         \end{itemize}
@@ -213,7 +357,8 @@
     }
     \begin{itemize}
         \item Clean up BLAST hits for downstream tasks
-        \item Implemented in Apache Spark
+        \item Implemented in Apache Spark 
+        \item Uses Dagster for asset management
         \item Scales up to {\bf 6.31 billion} pairs of reuses
     \end{itemize}
 \end{frame}
@@ -230,12 +375,13 @@
         \item Paper V: \citet{des6}
         \begin{itemize}
             \item \emph{A Comparative text similarity analysis of the works of Bernard Mandeville}
-            \item Study using the data and interfaces from \cite{Rosson-2023}
+            \item Study using the data and interfaces from Paper IV
         \end{itemize}
         \item Paper VI: \citet{mahadevan2024optimizing}
         \begin{itemize}
             \item \emph{Optimizing a Data Science System for Text Reuse Analysis}
-            \item Studies design choices for the optimal performance of the system
+            \item Studies design choices to optimize performance of the system
+            \item Plans to scale interface from Paper IV based on insights
         \end{itemize}
     \end{enumerate}
 
@@ -243,6 +389,30 @@
 \end{frame}
 \begin{frame}
     \frametitle{Scalability and Robustness}
+    \begin{itemize}
+        \item Paper II: \citet{merchant2022JANE}\\
+        Scaled up GNN alternative from \citet{merchant2022JANEorig} to run effectively on graphs with millions of nodes
+        \item Paper III: \citet{10.1145/3511808.3557687}\\
+        Explored the robustness of Sketched Linear Networks from \citet{tai2018sketch} to adversarial attacks
+        \item Paper VIII?: Scalable Diverse Sampling
+        \begin{itemize}
+            \item Original algorithm from \citet{wang2023fmmd}
+            \item Re-implemented for edge-case requirement in Historical Project
+            \item Nearly $200\times$ speed-up compared to original code
+            \item Plans to develop theory and code for distributed algorithm 
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Next Steps}
+    \begin{enumerate}
+        \item Complete a few more transferrable skill credits
+        \item Start Writing Thesis
+        \item Work on Paper VIII in tandem 
+    \end{enumerate}
+    
+
 \end{frame}
 
 \begin{frame}[allowframebreaks]
