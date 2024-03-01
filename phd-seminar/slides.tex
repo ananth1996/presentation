@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 \usepackage{natbib}
 \usepackage[most]{tcolorbox}
+\tcbuselibrary{skins}
 \usetikzlibrary{angles,calc,intersections,quotes,arrows.meta,positioning}
 \setemojifont{Apple Color Emoji}
 \setbeamercovered{transparent}
@@ -194,10 +195,48 @@
 
 \end{frame}
 
+\begin{frame}
+    \frametitle{Experimental Setup}
+    \begin{center}
+        \begin{tabular}{cc}
+          \toprule
+          Item & Values  \\
+          \midrule
+          Parameters & Noise (\noiseParamter) \& Efficiency (\efficiencyParameter)  \\
+          Metrics & \accDis, \accErr \& Speedup(\texttimes) \\
+          Methods & \textcolor{blue!80!black}{\infl}, \textcolor{orange!90!black}{\fisher} \& \textcolor{green!60!black}{\deltagrad}\\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+      \begin{center}
+        \begin{tabular}{cc}
+          \toprule
+          Metric & Quality \\
+          \midrule
+          \accDis\inc & Certifiability\dec\\
+          \accErr\inc & Effectiveness\dec\\
+          \bottomrule
+        \end{tabular}
+    \end{center}
+        \begin{center}
+            \begin{tabular}{cc}
+              \toprule
+              Parameter & Effect\\
+              \midrule
+              $\efficiencyParameter\inc$ & $\text{Efficiency}\inc\text{ Certifiability}\dec\text{ Effectiveness}\dec$\\
+              $\noiseParamter\inc$ & $\text{Certifiability}\inc\text{ Effectiveness}\dec$\\ 
+              \bottomrule
+            \end{tabular}
+        \end{center}
+\end{frame}
+
 \begin{frame}[fragile]
     \frametitle{Cost-Aware Retraining Algorithms}
+    \tcbset{
+          beamer alerted/.style={colframe=blue!50!gray},
+        }
     \begin{tcbraster}[raster columns=2, raster left skip=-0.9cm,raster right skip=-0.9cm,raster before skip=0mm]
-        \begin{tcolorbox}[nobeforeafter, title=Cost Matrix,,left=0mm,top=0mm,boxsep=0.5mm]
+        \begin{tcolorbox}[nobeforeafter, title=Cost Matrix,,left=0mm,top=0mm,boxsep=0.5mm,alert=<1>]
             \begin{center}
             \begin{equation*}
                 \small
@@ -216,10 +255,11 @@
             \includegraphics[width=.78\textwidth]{figs/cost_matrix.pdf}
                     \end{center}
         \end{tcolorbox}
-        \begin{tcolorbox}[nobeforeafter, title=Strategy,boxsep=0.5mm,left=0mm]
+        \begin{tcolorbox}[nobeforeafter, title=Strategy,boxsep=0.5mm,left=0mm,alert=<2>]
             \setlength{\leftmargini}{0.4cm}
             \begin{itemize}
             \item Strategy is a set of decisions
+            \item \retrain or \keep
             \item Cost of decisions is strategy cost
             \item Aim is to minimize strategy cost
         \end{itemize}
@@ -291,7 +331,7 @@
     \frametitle{Analyzing Historical Documents}
     Data:
     \begin{itemize}
-        \item 250k books and 1M newspapers from the 17th and 18th century
+        \item 250K books and 1M newspapers from the 17th and 18th century
         \item Tons of heterogeneous metadata
         \begin{itemize}
             \item Collections of books and articles
@@ -305,9 +345,9 @@
             \item XML style structured page layouts
         \end{itemize}
     \end{itemize}
-    Task:
+    Use cases:
     \begin{itemize}
-        \item General exploration
+        \item General data exploration
         \item Reception studies with Text Reuses   
         \item Top quotes of authors
     \end{itemize}
@@ -352,15 +392,30 @@
 
 \begin{frame}[fragile]
     \frametitle{Pre-Processing Pipeline}
-    \scalebox{0.5}{
-    \input{figs/textreuse-pipeline.tex}
-    }
+    \begin{figure}[htbp]
+        \centering
+        \scalebox{0.5}{
+        \input{figs/textreuse-pipeline.tex}
+        }
+        \caption{Illustration of the pre-processing pipeline for text reuses. The hits from BLAST (red) are first defragmented (blue) and then clustered (purple). Then in each cluster, the piece from the earliest document is identified as the source (yellow) and the rest are destinations (green). The directed edge between a source and destination piece is a reception edge.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{ETL Pipeline Implementation}
+    \only<1>{
     \begin{itemize}
-        \item Clean up BLAST hits for downstream tasks
-        \item Implemented in Apache Spark 
+        \item Starts with {\bf 6.31 billion} pairs of reuses from BLAST
+        \item ETL implemented in Apache Spark 
         \item Uses Dagster for asset management
-        \item Scales up to {\bf 6.31 billion} pairs of reuses
+        \item Loads processed data into MariaDB for downstream queries
+        \item Tables used for front-end user queries 
     \end{itemize}
+    }
+    \only<2>{
+    \includegraphics<2>[width=\textwidth]{figs/ERD.pdf}}
+    
+
 \end{frame}
 
 \begin{frame}
