@@ -12,7 +12,9 @@
 *.nav
 *.snm
 *.vrb
+*.dvi
 */.DS_Store
 .DS_Store
 
 Variational-Unlearning/paper
+_minted*/

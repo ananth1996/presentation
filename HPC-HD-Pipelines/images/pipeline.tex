@@ -1,0 +1,151 @@
+\newcommand\file[2]{%
+    \begin{scope}[xshift=#1cm,yshift=#2cm]
+      \draw[gray,thick] (0,0) -- (0,1.5) -- (0.7,1.5) -- (0.7,1.1) -- (1,1.1) -- (1,0) -- cycle;
+      \draw[gray,thick] (0.7,1.5) -- (1,1.1);
+      \foreach \y in {0.2,0.3,...,1.1}{
+         \draw[thick] (0.2,\y) -- (0.8,\y);
+         }
+      \foreach \y in {1.1,1.2,...,1.4}{
+         \draw[thick] (0.2,\y) -- (0.65,\y);
+         }
+        %  \draw[thick] (0.2,0.8) -- (0.6,0.8);
+        %  \draw[thick] (0.2,1) -- (0.6,1);
+    \end{scope}
+}
+
+% https://tex.stackexchange.com/questions/126161/how-can-i-draw-a-tikz-element-multiple-times-against-a-shaded-background
+% \pgfkeys{/tikz/.cd,
+%    at/.initial={(0,0)},
+%    at/.get=\coordpos,
+%    at/.store in=\coordpos,   
+%    my tree/.code={
+%     \draw[gray] \coordpos -- +(0,1.2) -- +(0.7,1.2) -- +(0.7,0.8) -- +(1,0.8) -- +(1,0) -- cycle;
+%     \draw[gray] +(0.7,1.2) -- +(1,0.8);
+%     \foreach \y in {0.2,0.4,0.6}{
+%         \draw (0.2,\y) -- (0.8,\y);
+%         \draw (0.2,0.8) -- (0.6,0.8);
+%         \draw (0.2,1) -- (0.6,1);
+%     }
+%    }
+% }
+\begin{tikzpicture}
+    \tikzset{
+      piece/.style 2 args={red,draw,thick,rectangle,anchor=south west,minimum width=#1,minimum height=#2},
+      defrag piece/.style 2 args={blue,draw,thick,rectangle,anchor=south west,minimum width=#1,minimum height=#2},
+      source piece/.style 2 args={orange,draw,very thick,rectangle,anchor=south west,minimum width=#1,minimum height=#2},
+      destination piece/.style 2 args={green!50!black,draw,very thick,rectangle,anchor=south west,minimum width=#1,minimum height=#2},
+      reuse/.style={red,-,very thick},
+      defrag reuse/.style={blue,-,very thick},
+      reception/.style={black,-{Latex[scale=1]},very thick},
+    %   cluster/.style={violet,-,very thick}
+    cluster/.style={violet,-,very thick,rounded corners=10pt,rectangle},
+    }
+    \begin{scope}[local bounding box=scope1]
+    % \draw [help lines] (0,-2) grid (4,4);
+    \file{0}{0}
+    \node at (0.5,1.65) {A};
+    \node[piece={0.8cm}{0.4cm}] at (0.1,0.1) (tr11) {};
+    \node[piece={0.54cm}{0.4cm}] at (0.1,1.1) (tr12) {};
+    \file{1.5}{1.5}
+    \node at (2,3.15) {B};
+    \node[piece={0.8cm}{0.4cm}] at (1.55,1.55) (tr21) {};
+    \node[piece={0.78cm}{0.5cm}] at (1.64,1.63) (tr22) {};
+    \file{3}{0}
+    \node at (3.5,1.65) {C};
+    \node[piece={0.54cm}{0.4cm}] at (3.1,0.95) (tr31) {};
+    \node[piece={0.8cm}{0.4cm}] at (3.1,0.1) (tr32) {};
+    \file{1.5}{-1.5}
+    \node at (2,0.15) {D};
+    \node[piece={0.8cm}{0.4cm}] at (1.55,-1.45) (tr41) {};
+    \node[piece={0.78cm}{0.5cm}] at (1.63,-1.36) (tr42) {};
+    \draw[reuse] (tr12.east) -- (tr21.west);
+    \draw[reuse] (tr11.east) -- (tr41.west);
+    \draw[reuse] (tr42.east) -- (tr32.west);
+    \draw[reuse] (tr22.east) -- (tr31.west);
+    % \node at (2,-1.68) {};
+    % \matrix [below left] at (current bounding box.north east) {
+    % \node [piece={0.5cm}{0.1cm},label=right:Piece] {};\\
+    % \node[reuse,inner sep=0,minimum width=4mm,draw,anchor= south west,label=right:Text Reuse] at ++(1mm,0) {};\\
+    % };
+    \end{scope}
+    \uncover<2->{
+    \begin{scope}[local bounding box=scope2,shift={(scope1.base east)},xshift=3cm]
+    % \draw [help lines] (0,-2) grid (4,4);
+    \file{0}{0}
+    \node at (0.5,1.65) {A};
+    \node[defrag piece={0.8cm}{0.4cm}] at (0.1,0.1) (tr11) {};
+    \node[defrag piece={0.54cm}{0.4cm}] at (0.1,1.1) (tr12) {};
+    \file{1.5}{1.5}
+    \node at (2,3.15) {B};
+    \node[defrag piece={0.8cm}{0.54cm}] at (1.58,1.6) (tr21) {};
+    \file{3}{0}
+    \node at (3.5,1.65) {C};
+    \node[defrag piece={0.54cm}{0.4cm}] at (3.1,0.95) (tr31) {};
+    \node[defrag piece={0.8cm}{0.4cm}] at (3.1,0.1) (tr32) {};
+    \file{1.5}{-1.5}
+    \node at (2,0.15) {D};
+    \node[defrag piece={0.8cm}{0.54cm}] at (1.6,-1.4) (tr41) {};
+    \draw[defrag reuse] (tr12.east) -- (tr21.west);
+    \draw[defrag reuse] (tr11.east) -- (tr41.west);
+    \draw[defrag reuse] (tr41.east) -- (tr32.west);
+    \draw[defrag reuse] (tr21.east) -- (tr31.west);
+    
+    % \draw[cluster] plot [smooth cycle] coordinates{(0.1,1) (3.8,0.95) (3.5,2) (2,2.25) (0.6,2) };
+    % \draw[cluster] plot [smooth cycle] coordinates{(0.0,0.6)  (4,0.6) (3.5,-1) (2,-1.75) (0.55,-1)};
+    \uncover<3->{
+    \draw[cluster] (-0.1,0.9) rectangle (4,2.3) ;
+    \draw[cluster] (-0.1,0.6) rectangle (4,-1.5) ;
+    }
+    \end{scope}
+    \draw [->,black,very thick] ($(scope1.east)!0.1!(scope2.west)$) -- ($(scope1.east)!0.9!(scope2.west)$) node[midway,above,align=center]{Defragment} node[midway,below] {\only<3->{\& Cluster}};
+    }
+    \uncover<4->{
+    \begin{scope}[local bounding box=scope3,shift={(scope2.base east)},xshift=3cm]
+      % \draw [help lines] (0,-2) grid (4,4);
+      \file{0}{0}
+      \node at (0.5,1.65) {A};
+      \node[source piece={0.8cm}{0.4cm}] at (0.1,0.1) (tr11) {};
+      \node[alt=<-4>{defrag piece={0.54cm}{0.4cm}}{destination piece={0.54cm}{0.4cm}}] at (0.1,1.1) (tr12) {};
+      \file{1.5}{1.5}
+      \node at (2,3.15) {B};
+      \node[source piece={0.8cm}{0.54cm}] at (1.58,1.6) (tr21) {};
+      \file{3}{0}
+      \node at (3.5,1.65) {C};
+      \node[alt=<-4>{defrag piece={0.54cm}{0.4cm}}{destination piece={0.54cm}{0.4cm}}] at (3.1,0.95) (tr31) {};
+      \node[alt=<-4>{defrag piece={0.8cm}{0.4cm}}{destination piece={0.8cm}{0.4cm}}] at (3.1,0.1) (tr32) {};
+      \file{1.5}{-1.5}
+      \node at (2,0.15) {D};
+      \node[alt=<-4>{defrag piece={0.8cm}{0.54cm}}{destination piece={0.8cm}{0.54cm}}] at (1.6,-1.4) (tr41) {};
+      \uncover<6->{
+      \draw[reception] (tr11.east) -- (tr41.west);
+      \draw[reception] (tr11.east) -- (tr32.west);
+
+      \draw[reception] (tr21.west) -- (tr12.east);
+      \draw[reception] (tr21.east) -- (tr31.west);
+      }
+    %   \draw[cluster] plot [smooth cycle] coordinates{(0.1,1) (3.8,0.95) (3.5,2) (2,2.25) (0.6,2) };
+    %   \draw[cluster] plot [smooth cycle] coordinates{(0.0,0.6)  (4,0.6) (3.5,-1) (2,-1.75) (0.55,-1)};
+    \draw[cluster] (-0.1,0.9) rectangle (4,2.3) ;
+    \draw[cluster] (-0.1,0.6) rectangle (4,-1.5) ;
+      \end{scope}
+      
+      
+      \draw [->,black,very thick] ($(scope2.east)!0.1!(scope3.west)$) -- ($(scope2.east)!0.9!(scope3.west)$) node[midway,above]{Identify Source}  node[midway,below] {\only<5->{\& Destinations}};
+      
+    }
+    \matrix [draw,matrix anchor = south,yshift=5mm] at (current bounding box.north)
+    % ($(scope1.north west)!0.5!(scope3.north east)$) 
+    {
+    \node [piece={0.5cm}{0.1cm},label=right:Piece] {}; & 
+      \node [defrag piece={0.5cm}{0.1cm},label=right:Defrag Piece] {}; &
+      \node [source piece={0.5cm}{0.1cm},label=right:Src Piece] {}; &
+      \node[draw,cluster,anchor=south west,minimum width=0.5cm,minimum height=0.1cm,rounded corners=2pt,rectangle,label=right:Cluster] {};\\
+    %   \node [destination piece={0.5cm}{0.1cm},label=right:Destination Piece] {}; &\\
+      \node[reuse,inner sep=0,minimum width=4mm,draw,anchor=south west,label=right:Reuse] at ++(0,1mm) {}; &
+      \node[defrag reuse,inner sep=0,minimum width=4mm,draw,anchor= south west,label=right:Defrag Reuse] at ++(0,1mm) {}; &
+      \node [destination piece={0.5cm}{0.1cm},label=right:Dest Piece] {}; &
+      \draw[reception] (0,1mm) -- (5mm,1mm) node[inner sep =0,minimum size =0,right,anchor=west] {Reception};
+      \node [inner sep=0,label=right:Doc,anchor=south west] at (2.2cm,-0.5mm){\faFileTextO};&
+    \\
+    };
+\end{tikzpicture}

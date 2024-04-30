@@ -1,0 +1,66 @@
+
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+\usepackage{bm}
+\usepackage{fontawesome}
+\usepackage{tikz}
+\usepackage{xspace}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage[newfloat]{minted}
+\usetikzlibrary{angles,calc,intersections,quotes,arrows.meta,positioning,shapes.multipart,arrows,tikzmark}
+\tikzset{onslide/.code args={<#1>#2}{%
+  \only<#1>{\pgfkeysalso{#2}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{alt/.code args={<#1>#2#3}{%
+  \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+}}
+\tikzset{temporal/.code args={<#1>#2#3#4}{%
+  \temporal<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}{\pgfkeysalso{#4}} % \pgfkeysalso doesn't change the path
+}}
+% positioning style from https://tex.stackexchange.com/questions/102250/how-to-position-one-node-relative-to-another-node-at-a-certain-angle-in-tikz-tak
+\tikzset{
+    position/.style args={#1:#2 from #3}{
+        at=(#3.#1), anchor=#1+180, shift=(#1:#2)
+    }
+}
+
+\definecolor{uablue}{RGB}{0,61,100}
+\colorlet{uablue100}{uablue}
+\colorlet{uablue75} {uablue!75!white}
+\colorlet{uablue50} {uablue!50!white}
+\colorlet{uablue25} {uablue!25!white}
+\colorlet{uablue10} {uablue!10!white}
+\colorlet{uablue5}  {uablue!5!white}
+
+\definecolor{uared}{RGB}{126,0,47}
+\colorlet{uared100}{uared}
+\colorlet{uared75} {uared!75!white}
+\colorlet{uared50} {uared!50!white}
+\colorlet{uared25} {uared!25!white}
+\colorlet{uared10} {uared!10!white}
+\colorlet{uared5}  {uared!5!white}
+
+
+
+\newmintedfile[sqlcode]{sql}{
+fontfamily=tt,
+fontsize=\tiny,
+linenos=true,
+% numberblanklines=true,
+numbersep=5pt,
+gobble=0,
+autogobble=true,
+% frame=leftline,
+% framerule=0.4pt,
+% framesep=2mm,
+% funcnamehighlighting=true,
+% tabsize=4,
+% obeytabs=false,
+mathescape,
+escapeinside=||,
+% samepage=false, %with this setting you can force the list to appear on the same page
+% showspaces=false,
+% showtabs =false,
+% texcl=false,
+}
