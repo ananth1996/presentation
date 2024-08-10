@@ -73,12 +73,12 @@
   \begin{itemize}
     \item \textbf{BLAST}: Basic Local Alignment Search Tool
     \begin{itemize}
-      \item Bioinformatics algorithm for sequence alignment
-      \item Encodes OCR text into protein-like sequences
-      \item Comparing every document against the entire corpus
-      \item Aligns sequences and returns offsets in document 
+      \item Bioinformatics algorithm for DNA sequence alignment
+      \item Encode OCR text into protein-like sequences
+      \item Compare every document against the entire corpus
+      \item Aligned sequences are returned as  document offsets 
     \end{itemize}
-    \item Raw Data
+    \item<2-> Raw Data
     \begin{itemize}
       \item Collections: \textbf{ECCO}, \textbf{EEBO-TCP} \& British Library \textbf{Newspapers}
       \item 3.8 Billion pieces of text
@@ -120,7 +120,7 @@
   \begin{center}
     
     \begin{tikzpicture}
-      \node[label=above:{Extraction and Processing}] at (0,0) (spark) {\includegraphics[width=0.2\textwidth,clip,trim={0 0 0 4.5cm}]{images/Apache_Spark_logo.pdf}};
+      \node[label={[align=center]above:{Extraction \&\\Processing}}] at (0,0) (spark) {\includegraphics[width=0.1\textwidth,clip,trim={0 0 0 4.5cm}]{images/Apache_Spark_logo.pdf}};
       % \node[right=3cm of spark,label=above:{MariaDB Database}] (db) {\includegraphics[width=0.2\textwidth,clip,trim={0 9cm 20cm 0}]{images/database-svgrepo-com.pdf}};
       \node[left=1cm of spark,label={[align=center]above:{BLAST\\Reuses}}] (reuses) {\Huge \faCloud};
       \node[right=3cm of spark,label={[align=center]above:{MariaDB\\Database}},] (db) {\Huge \faDatabase};
@@ -129,6 +129,7 @@
       \node[label=below:Documents] at  (metadata -| reuses) (docs) {\Huge \faFileTextO};
       \node[label=above:User,right=2cm of db] (user) {\Huge \faUser};
       \draw[draw=none] (docs.north) -- (reuses.south) node[midway,label=left:HPC] (hpc){\Huge \faServer};
+      % \node[circle,draw,below=2cm of user,label=above:{Asset management}]  (dagster) {\includegraphics[width=0.1\textwidth]{images/dagster-primary-vertical.png}};
       \draw[->,thick] (spark) -- (db) node[midway,above] {Load};
       \draw[->,thick] (metadata.east) -- (db) node[midway,below=2mm] {Load};
       \draw[->,thick] (reuses.east) -- (spark);
@@ -510,6 +511,9 @@ LIMIT 100
 
 \begin{frame}
   \frametitle{Interface}
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north east] at (current page.north east) {\href{https://turkunlp.org}{\includegraphics[width=0.1\linewidth]{images/semantic_sim_qr.png}}};
+  \end{tikzpicture}
   \vspace*{-0.1cm}
   \begin{columns}
   \begin{column}{0.5\textwidth}
@@ -519,8 +523,15 @@ LIMIT 100
     \end{column}
   \begin{column}{0.5\textwidth}
       \centering
+      \only<2>{
       {\small French Query}
-      {\includegraphics[width=\textwidth,,height=\textheight,keepaspectratio,clip,trim={2.5cm 0 2.5cm 0}]{images/semantic_french.pdf}}
+      {\includegraphics[width=\textwidth,,height=\textheight,keepaspectratio,clip,trim={2.5cm 0 2.5cm 0}]{images/semantic_french.pdf}}}
+      \only<3>{
+      {\small Spanish Query}
+      {\includegraphics[width=\textwidth,,height=\textheight,keepaspectratio,clip,trim={2.5cm 0 2.5cm 0}]{images/semantic_spanish.pdf}}}
+      \only<4>{
+      {\small Tamil Query}
+      {\includegraphics[width=\textwidth,,height=\textheight,keepaspectratio,clip,trim={2.5cm 0 2.5cm 0}]{images/semantic_tamil.pdf}}}
   \end{column}
   \end{columns}
 \end{frame}
@@ -646,6 +657,23 @@ LIMIT 100
   \end{columns}
   \end{frame}
 
+
+  \begin{frame}
+    \frametitle{Unique Semantic Search Hits}
+    \begin{columns}
+      \begin{column}{0.45\textwidth}
+         \begin{block}{Meaning Match}
+          \small
+          ``ach to animals; and that this similarity, as well as the- difficulty of fixing the precise boundaries by which. these two great.- kingdoms of nature are limited, are diret. cbnfequences of the or-- ganization of vegetables. It. is owing to their organic flruaure- alone, that plants and animals are capable of affording reciprocal- nourishment to each other. This organic firuaure, though greatly- diversified''
+        \end{block}
+      \end{column}
+      \begin{column}{0.49\textwidth}
+        \href{https://gallica-kaiku.rahtiapp.fi/?eccoId=1015500300&offsetStart=715621&offsetEnd=716054}{\small Smellie, William (1740-1795) 1790 - The philosophy of natural history}
+          {\includegraphics[width=0.9\textwidth,keepaspectratio,clip,trim={1.5cmcm 8cm 5cm 8cm}]{images/meaning_match.png}}
+      \end{column}
+    \end{columns}
+    \end{frame}
+  
 
 \section{Discussion Questions}
 
